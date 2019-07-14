@@ -1,10 +1,13 @@
-# Anteform
-Anteform is a retro weird detective game written using the Minima engine for PICO-8.
-
 Anteform
 ========
 
 *A retro weird detective game in the style of the 8-bit Ultima games.*
+
+Not Yet Ready!
+--------------
+
+Anteform is not yet ready to be played. Please do not yet download it and try to play
+it. It'll only lead to heartbreak and (even worse) spoilers.
 
 What Is It?
 -----------
