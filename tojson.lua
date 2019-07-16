@@ -99,6 +99,7 @@ basetypes={
     n="giant ant",
     hp=23,
     ch=0,
+    t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
     exp=8,
     po=1,
     d={"chirp chirp!","gree gree!"}
@@ -228,7 +229,8 @@ basetypes={
     n="queen ant",
     hp=120,
     dmg=35,
-    exp=20
+    exp=20,
+    ch=0
   },{
     i=123,
     fi=1,
@@ -236,7 +238,8 @@ basetypes={
     mva=0,
     hp=10,
     dmg=5,
-    exp=5
+    exp=5,
+    ch=0
   },{
     i=124,
     fi=1,
@@ -244,7 +247,8 @@ basetypes={
     mva=0,
     hp=5,
     dmg=0,
-    exp=10
+    exp=10,
+    ch=0
   },{
     i=106,
     n="large spider",
@@ -306,7 +310,7 @@ basetypes={
     t={17,22,23},
     eat=1,
     exp=2,
-    ch=0
+    ch=1
   },{
     i=98,
     ns={"big catfish","sturgeon"},
@@ -350,6 +354,7 @@ maps={
     signs={
       {x=107,y=27,msg={"an engagement ring; steve","was ready to propose."}},
       {x=102,y=33,msg={"mary studied astronomy","as a hobby."}},
+      {x=105,y=44,msg={"mayor bess & her husband","ralph were planning a trip."}},
       {x=107,y=33,msg={"lou was a mixed martial","arts champion."}}
     },
     i={
@@ -362,12 +367,12 @@ maps={
       {id=thing['grocer'],x=100,y=44},
       {id=thing['bartender'],x=108,y=37},
       {id=thing['lady'],x=87,y=37,d={"welcome to anteform valley.","we\'re all glad you\'re here."}},
-      {id=thing['child'],x=86,y=51},
-      {id=thing['child'],x=80,y=52,d={"greybeard hid his treasure!","it\'s on big sister island!"}},
-      {id=thing['citizen'],x=109,y=40,d={"steve, lou, & mary are gone.","i\'m not straying far."}},
-      {id=thing['citizen'],x=98,y=47,d={"radio square is southwest.","folks are missing there too."}},
+      {id=thing['child'],n="anne",x=86,y=51},
+      {id=thing['child'],n="flip",x=80,y=52,d={"greybeard hid his treasure!","it\'s on big sister island!"}},
+      {id=thing['citizen'],n="gwen",x=109,y=40,d={"steve, lou, & mary are gone.","i\'m not straying far."}},
+      {id=thing['citizen'],n="ralph",x=98,y=47,d={"radio square is southwest.","folks are missing there too."}},
       {id=thing['student'],n="sally",x=108,y=30,d={"please find steve.","our rooms are adjacent."}},
-      {id=thing['cop'],x=105,y=37,mva=1}
+      {id=thing['cop'],n="bruce",x=105,y=37,mva=1}
     }
   },{
     n="thinktank",
@@ -377,16 +382,25 @@ maps={
     sy=23,
     mnx=104,
     mxy=24,
+    signs={
+      {x=120,y=6,msg={"a paper on myrmecology","by dr. greene."}},
+      {x=110,y=6,msg={"a chart tracking recent size","increase of something."}},
+      {x=123,y=13,msg={"historical info about acid","collection in the valley."}},
+      {x=105,y=11,msg={"a paper on natural irregular","growth in animals."}},
+      {x=120,y=11,msg={"data on valley insect","populations."}}
+    },
     i={
       {id=thing['ladder down'],x=123,y=4,tm=3,tx=126,ty=33,tz=0}
     },
     c={
-      {id=thing['cop'],x=116,y=18},
+      {id=thing['cop'],n="artemis",x=116,y=18},
       {id=thing['grocer'],x=110,y=17},
       {id=thing['medic'],x=106,y=1},
-      {id=thing['scientist'],x=109,y=12,d={"natural science is dangerous.","who\'d have thought?"}},
-      {id=thing['scientist'],x=110,y=22,d={"concentrated it can burn.","a simple carboxyl."}},
-      {id=thing['scientist'],x=125,y=15,d={"by \'form\' they meant acid.","it\'s always been here."}}
+      {id=thing['scientist'],n="dr. gaston",x=109,y=12,d={"natural science is dangerous.","who\'d have thought?"}},
+      {id=thing['scientist'],n="dr. greene",x=110,y=22,d={"concentrated it can burn.","a simple carboxyl."}},
+      {id=thing['scientist'],n="dr. tetrado",x=120,y=20,d={"i think dr. tucker has it","all figured out."}},
+      {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","folks researching up north."}},
+      {id=thing['scientist'],n="dr. prova",x=125,y=15,d={"by \'form\' they meant acid.","it\'s always been here."}}
     }
   },{
     n="the basement",
@@ -395,10 +409,18 @@ maps={
     mnx=112,
     mny=32,
     mxy=41,
+    signs={
+      {x=123,y=33,msg={"a paper about insect","pheromones."}},
+      {x=124,y=33,msg={"a paper about formic acid","and its effects."}},
+      {x=123,y=35,msg={"a diagram showing ants","controlling aphids."}},
+      {x=113,y=33,msg={"a diagram of modified","aphid brains."}}
+    },
     i={
       {id=thing['ladder up'],x=126,y=33,tm=2,tx=123,ty=4,tz=0}
     },
     c={
+      {id=thing['scientist'],n="dr. tucker",x=115,y=34,d={"it\'s semiochemicals.","controlled living corpses."}},
+      {id=thing['scientist'],n="dr. agawon",x=119,y=33,d={"they\'re literally brain dead.","higher functions burnt out."}},
     }
   },{
     n="monastery",
@@ -409,7 +431,8 @@ maps={
     mxx=105,
     mxy=24,
     signs={
-      {x=92,y=20,msg="he\'ll rise again!"}
+      {x=92,y=20,msg="he\'ll rise again!"},
+      {x=100,y=9,msg={"a secret prophesy about the"},{"eschaton starting here."}}
     },
     i={
       {id=thing['ladder up'],x=84,y=9,tm=5,tx=113,ty=31,tz=0},
@@ -432,10 +455,16 @@ maps={
     mnx=112,
     mny=24,
     mxy=33,
+    signs={
+      {x=126,y=29,msg={"a list of the missing;"},{"many monks & nuns are gone."}}
+    },
     i={
       {id=thing['ladder down'],x=113,y=31,tm=4,tx=84,ty=9,tz=0}
     },
     c={
+      {id=thing['monk'],n="brother stamos",x=117,y=27,d={"we know of your quest.","we will help as we can."}},
+      {id=thing['monk'],n="mother francine",x=125,y=30,d={"some of us were taken.","they are now possessed."}},
+      {id=thing['monk'],n="father ted",x=126,y=26,d={"our dead brothers & sisters.","they are beset by demons."}},
     }
   },{
     n="hermit cabin",
@@ -446,6 +475,9 @@ maps={
     mnx=103,
     mny=56,
     mxx=113,
+    signs={
+      {x=105,y=61,msg={"no one\'s been here in awhile.","seems the hermit\'s missing too."}}
+    },
     i={
       {id=thing['sailboat'],x=110,y=61}
     }
@@ -458,16 +490,18 @@ maps={
     mnx=112,
     mny=43,
     signs={
-      {x=114,y=53,msg={"a reminder to investigate","monks for radio news show."}}
+      {x=114,y=53,msg={"a reminder to investigate","monks for radio news show."}},
+      {x=114,y=56,msg={"some expired coupons and","a copy of \'coyote waits\'."}},
+      {x=114,y=59,msg={"a zombie comic book; someone","drew a robe on the zombie."}}
     },
     c={
       {id=thing['vendor'],x=114,y=45},
       {id=thing['grocer'],x=123,y=60},
       {id=thing['dealer'],x=123,y=44},
-      {id=thing['hunter'],x=126,y=46,d={"the hermit has a sailboat.","west past the billabong."}},
-      {id=thing['hunter'],x=114,y=48,d={"it\'s in the northeast cabin.","you can borrow my shotgun."}},
-      {id=thing['merchant'],x=121,y=53,i=80,d={"the monks have seen them.","the woods weirdos."}},
-      {id=thing['citizen'],x=124,y=58,d={"hang out in the bar none.","good woods weirdos discussion."}}
+      {id=thing['hunter'],n="becky",x=126,y=46,d={"the hermit has a sailboat.","west past the billabong."}},
+      {id=thing['hunter'],n="jack",x=114,y=48,d={"it\'s in the northeast cabin.","you can borrow my shotgun."}},
+      {id=thing['merchant'],n="dj jazzy joe",x=121,y=53,i=80,d={"the monks have seen them.","the woods weirdos."}},
+      {id=thing['citizen'],n="emma",x=124,y=58,d={"hang out in the bar none.","good woods weirdos discussion."}}
     }
   },{
     n="southern cabin",
@@ -479,7 +513,7 @@ maps={
     mxx=104,
     mny=56,
     c={
-      {id=thing['hunter'],x=101,y=59,d={"you can borrow my vest.","you\'ll need it."}}
+      {id=thing['hunter'],n="sue",x=101,y=59,d={"you can borrow my vest.","you\'ll need it."}}
     }
   },{
     n="pennisula cabin",
@@ -491,8 +525,8 @@ maps={
     mxx=104,
     mny=56,
     c={
-      {id=thing['bodybuilder'],x=99,y=58},
-      {id=thing['sunbather'],x=98,y=58}
+      {id=thing['bodybuilder'],n="jim",x=99,y=58,d={"weird stuff up north.","we\'re vacationing indoors."}},
+      {id=thing['sunbather'],n="daisy",x=98,y=58,d={"i saw the woods weirdo!","i\'m glad we\'ve got locks."}}
     }
   },{
     n="lakeside cabin",
@@ -502,7 +536,11 @@ maps={
     sy=62,
     mnx=96,
     mxx=104,
-    mny=56
+    mny=56,
+    c={
+      {id=thing['bodybuilder'],n="ethan",x=97,y=62},
+      {id=thing['sunbather'],n="crystal",x=98,y=62}
+    }
   },{
     n="western cabin",
     ex=21,
@@ -511,7 +549,10 @@ maps={
     sy=62,
     mnx=96,
     mxx=104,
-    mny=56
+    mny=56,
+    signs={
+      {x=101,y=60,msg={"a sketch of an ant","carrying a rock."}}
+    },
   },{
     n="hunting cabin",
     ex=75,
@@ -585,11 +626,6 @@ maps={
       {id=thing['ladder up'],x=8,y=3,z=2},
       {id=thing['ladder up'],x=8,y=1,z=3},
       {id=thing['chest'],x=4,y=8,z=3}
-    },
-    c={
-      {id=thing['slime'],x=1,y=8,z=3},
-      {id=thing['slime'],x=4,y=3,z=3},
-      {id=thing['slime'],x=3,y=5,z=3}
     }
   },{
     n="vetusaur mine",
