@@ -22,7 +22,7 @@ basetypes={
     dmg=13,
     dex=8,
     hos=1,
-    t={1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,33,38,40,41},
+    t={1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,33,38,40,41},
     mva=1,
     gp=0,
     exp=2,
@@ -96,7 +96,9 @@ basetypes={
     gp=10,
     exp=1
   },{
-    n="giant ant",
+    -- giant ant
+    i=104,
+    dmg=15,
     hp=23,
     ch=0,
     t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
@@ -105,6 +107,8 @@ basetypes={
     d={"chirp chirp!","gree gree!"}
   },{
     n="zombie",
+    i=100,
+    t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
     dmg=14,
     dex=6,
     gp=10,
@@ -208,12 +212,12 @@ basetypes={
     mch='bar',
     i=81
   },{
-    i=100
+    -- zombie
   },{
-    i=102,
-    n="robed zombie"
+    -- robed zombie
+    i=102
   },{
-    n="worker ant"
+    n="worker ant",
   },{
     i=110,
     n="winged ant",
@@ -222,33 +226,33 @@ basetypes={
   },{
     i=118,
     n="soldier ant",
-    hp=50,
+    hp=64,
+    dmg=23,
     exp=12
   },{
     i=125,
     n="queen ant",
-    hp=120,
+    mva=0,
+    hp=235,
     dmg=35,
-    exp=20,
-    ch=0
+    exp=20
   },{
     i=123,
     fi=1,
     n="ant larva",
+    t={22},
     mva=0,
     hp=10,
     dmg=5,
-    exp=5,
-    ch=0
+    exp=5
   },{
     i=124,
-    fi=1,
+    ia=124,
     n="ant eggs",
     mva=0,
     hp=5,
     dmg=0,
-    exp=10,
-    ch=0
+    exp=10
   },{
     i=106,
     n="large spider",
@@ -259,6 +263,7 @@ basetypes={
   },{
     i=108,
     n="large rat",
+    t={1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,33,38,40,41},
     hp=4,
     dmg=10,
     gp=2,
@@ -661,6 +666,7 @@ maps={
       {id=thing['ladder up'],x=1,y=8,z=2}
     },
     c={
+      {id=thing['worker ant'],x=7,y=8,z=1}
     }
   },{
     n="formika mine",
