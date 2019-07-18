@@ -17,6 +17,7 @@ end
 -- Our basetypes structure includes all of our objects and our bestiary.
 basetypes={
   {
+    -- base creature
     hp=10,
     ar=1,
     dmg=13,
@@ -28,6 +29,7 @@ basetypes={
     exp=2,
     ch=1
   },{
+    -- base town
     mn=0,
     mnx=80,
     mxx=128,
@@ -37,6 +39,7 @@ basetypes={
     mxm=0,
     fri=1
   },{
+    -- base dungeon
     mn=0,
     dg=1,
     sx=1,
@@ -89,7 +92,7 @@ basetypes={
     szm=20,
     p=1
   },{
-    n="human",
+    -- base human
     i=80,
     ar=0,
     hos=false,
@@ -116,7 +119,7 @@ basetypes={
     ch=0,
     d={"ahhrg!","urg!"}
   },{
-    n="animal",
+    -- base animal
     hp=12,
     dex=10,
     ar=0,
@@ -391,7 +394,7 @@ maps={
       {x=120,y=6,msg={"a paper on myrmecology","by dr. greene."}},
       {x=110,y=6,msg={"a chart tracking recent size","increase of something."}},
       {x=123,y=13,msg={"historical info about acid","collection in the valley."}},
-      {x=105,y=11,msg={"a paper on natural irregular","growth in animals."}},
+      {x=105,y=11,msg={"a paper on irregular growth","in animals."}},
       {x=120,y=11,msg={"data on valley insect","populations."}}
     },
     i={
