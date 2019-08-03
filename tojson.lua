@@ -53,8 +53,7 @@ basetypes={
     newm=25,
     mxm=27,
     fri=false,
-    c={},
-    ss=17
+    c={}
   },{
     i=70,
     ia=70,
@@ -578,6 +577,7 @@ maps={
     mny=56,
     mxx=96,
     fri=false,
+    ss=14,
     i={
       {id=thing['ladder up'],x=94,y=62,tm=16,tx=3,ty=6,tz=1}
     },
@@ -641,6 +641,7 @@ maps={
     ey=9,
     sx=8,
     sy=8,
+    ss=14,
     l={
       {
         0x00cd,
@@ -677,6 +678,7 @@ maps={
     ey=3,
     sx=4,
     sy=8,
+    ss=14,
     l={
       {
         0x00cc,
@@ -692,8 +694,6 @@ maps={
     i={
       {id=thing['ladder up'],x=4,y=8,z=1},
       {id=thing['ladder down'],x=3,y=6,z=1,tm=13,tx=94,ty=62,tz=0}
-    },
-    c={
     }
   }
 }
