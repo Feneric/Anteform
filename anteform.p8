@@ -96,8 +96,8 @@ end
 fullheight,fullwidth,halfheight,halfwidth=11,13,5,6
 
 -- set up the various messages
-winmsg="\n\n\n\n\n\n  congratulations, you've won!\n\n\n\n\n\n\n\n\n\n    press p to get game menu,\n anything else to continue and\n      explore a bit more."
-losemsg="\n\n\n\n\n\n      you've been killed!\n          you lose!\n\n\n\n\n\n\n\n\n\n\n\n    press p to get game menu"
+winmsg="\n\n\n\n\n\n  congratulations, you've won!\n\n\n\n\n\n\n\n\n\n    press p for game menu,\n anything else to continue and\n      explore a bit more."
+losemsg="\n\n\n\n\n\n      you've been killed!\n          you lose!\n\n\n\n\n\n\n\n\n\n\n\n    press p for game menu"
 helpmsg="anteform commands:\n\na: attack\nc: concentrate on action\nd: dialog, talk, buy\ne: enter, board, mount, climb,\n   descend\np: pause, save, load, help\nf: use flashlight; force chest\ns: sit & wait\nw: wearing & wielding\nx: examine, look (repeat to\n   search or read)\n\nfor commands with options (like\nconcentrating or buying) use the\nfirst character from the list,\nor anything else to cancel."
 msg=helpmsg
 
@@ -126,7 +126,7 @@ end
 
 -- basetypes are the objects we mean to use to make objects.
 -- they inherit (often indirectly) from our root object.
-basetypes=json_parse('[{"hos":1,"t":[1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,33,38,40,41],"ar":1,"dex":8,"exp":2,"ch":1,"gp":0,"hp":10,"dmg":13,"mva":1},{"fri":1,"mn":0,"newm":0,"mxm":0,"mxy":64,"mny":0,"mnx":80,"mxx":128},{"fri":false,"mn":0,"newm":25,"c":{},"mnx":1,"mxm":27,"sz":1,"sy":1,"sx":1,"mxy":9,"mxx":9,"sf":1,"dg":1,"mny":1},{"ia":70,"p":1,"i":70,"f":2,"n":"sailboat","fm":1},{"ia":94,"szm":11,"i":94,"n":"chest","shm":-2,"p":1},{"n":"fountain","fi":1,"szm":14,"i":39,"shm":-2,"iseq":12,"p":1},{"ia":27,"szm":20,"i":27,"n":"ladder up","shm":12,"p":1},{"ia":26,"szm":20,"i":26,"n":"ladder down","shm":-3,"p":1},{"hos":false,"i":80,"exp":1,"gp":10,"ar":0},{"d":["chirp chirp!","gree gree!"],"po":1,"exp":8,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41],"i":104,"hp":23,"dmg":15,"ch":0},{"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41],"dex":6,"n":"zombie","exp":8,"d":["ahhrg!","urg!"],"i":100,"ch":0,"dmg":14,"gp":10},{"exp":5,"ch":3,"ar":0,"hp":12,"dex":10,"gp":0},{"dex":9,"n":"hunter","cs":[{},[[4,5],[15,4]]],"d":["the woods are scary now.","i\'m safer at home."],"i":82,"hp":12,"dmg":20,"ar":3},{"ar":12,"n":"cop","cs":[{},[[15,4]]],"d":["i\'m doing my best.","i\'m trying to stop it."],"i":90,"mva":0,"dmg":60,"hp":85},{"n":"merchant","fi":1,"d":["consume!","stuff makes you happy!"],"i":77,"cs":[{},[[1,4],[4,15],[6,1],[14,13]],[[1,4],[6,5],[14,10]],[[1,4],[4,15],[6,1],[14,3]]]},{"n":"lady","fi":1,"d":["pardon me.","well i never."],"i":81,"cs":[{},[[2,9],[4,15],[13,14]],[[2,10],[4,15],[13,9]],[[2,11],[13,3]]]},{"i":92,"n":"scientist","cs":[{},[[6,12],[15,4]],[[6,12]],[[15,4]]],"d":["this isn\'t right.","this isn\'t even wrong."]},{"n":"sunbather","fi":1,"d":["you\'re blocking the sun!","gonna get toasted!"],"i":78,"dex":12,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]],[[8,14]]]},{"n":"bodybuilder","fi":1,"d":["check out these pecs!","i\'m jacked!"],"i":79,"dex":12,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]]]},{"i":84,"n":"monk","ac":[{},[[2,5],[15,4]],[[2,4]],[2,5]],"d":["be at peace.","meditate on it."]},{"i":86,"n":"student","cs":[{},[[15,4]],[[1,2],[15,4]],[[1,2]]],"d":["gotta do homework.","weekend is almost here."]},{"i":75,"n":"child","cs":[{},[[15,4]],[[11,14],[3,8],[15,4]],[[11,14],[3,8]]],"d":["the animals aren\'t right.","mom says to stay inside."]},{"i":88,"n":"citizen","cs":[{},[[1,5],[8,2],[4,1],[2,12],[15,4]]],"d":["spooky stuff\'s afoot.","missing people; crazy animals."]},{"mch":"food","n":"grocer"},{"mch":"armor","n":"clerk"},{"mch":"weapons","n":"vendor"},{"mch":"hospital","n":"medic"},{"mch":"guild","n":"dealer"},{"i":81,"n":"bartender","mch":"bar"},{},{"i":102},{"n":"worker ant"},{"i":110,"n":"winged ant","exp":9,"t":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,33,38,40,41]},{"n":"soldier ant","exp":12,"i":118,"hp":64,"dmg":23},{"n":"queen ant","exp":20,"i":125,"mva":0,"dmg":35,"hp":235},{"exp":5,"n":"ant larva","fi":1,"t":[22],"i":123,"mva":0,"dmg":5,"hp":10},{"ia":124,"exp":10,"hp":5,"i":124,"mva":0,"dmg":0,"n":"ant eggs"},{"n":"large spider","exp":4,"i":106,"hp":5,"gp":8,"po":1},{"t":[1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,33,38,40,41],"po":1,"n":"large rat","exp":2,"gp":2,"i":108,"hp":4,"dmg":10,"eat":1},{"i":96,"n":"coyote","d":["grrr!"]},{"i":120,"n":"lynx","d":["grar!"]},{"ch":1,"po":1,"t":[4,5,6,7],"i":112,"hp":7,"dmg":8,"ns":["snake","serpent"]},{"n":"rattlesnake","exp":6,"i":114,"hp":8,"ch":1,"po":1},{"n":"large eel","exp":7,"t":[5,12,13,14,15,16],"i":116,"hp":20},{"n":"scorpion","fi":1,"i":95,"hp":8,"ch":1,"po":1},{"cs":[{},[[3,9],[11,10]],[[3,14],[11,15]]],"t":[17,22,23],"n":"slime","fi":1,"gp":10,"i":122,"exp":2,"ch":1,"eat":1},{"exp":9,"t":[12,13,14,15,16],"i":98,"hp":25,"ch":2,"ns":["big catfish","sturgeon"]}]')
+basetypes=json_parse('[{"ch":1,"hp":10,"dmg":13,"hos":1,"t":[1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,33,38,40,41],"ar":1,"exp":2,"gp":0,"mva":1,"dex":8},{"mny":0,"newm":0,"mxm":0,"mnx":80,"mxx":128,"fri":1,"mn":0,"mxy":64},{"dg":1,"mxm":27,"mnx":1,"mxx":9,"fri":false,"mxy":9,"mny":1,"sy":1,"sf":1,"c":{},"newm":25,"sx":1,"mn":0,"sz":1},{"n":"sailboat","p":1,"fm":1,"i":70,"ia":70,"f":2},{"n":"chest","p":1,"szm":11,"i":94,"ia":94,"shm":-2},{"n":"fountain","fi":1,"i":39,"iseq":12,"p":1},{"n":"ladder up","p":1,"szm":20,"i":27,"ia":27,"shm":12},{"n":"ladder down","p":1,"szm":20,"i":26,"ia":26,"shm":-3},{"hos":false,"ar":0,"i":80,"exp":1,"gp":10},{"ch":0,"i":104,"hp":23,"dmg":18,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41],"ar":3,"d":["chirp chirp!"],"exp":8,"po":1},{"n":"zombie","ch":0,"i":100,"dmg":18,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41],"exp":8,"d":["ahhrg!"],"gp":10,"dex":6},{"exp":5,"ch":3,"gp":0,"dex":10},{"n":"hunter","dex":9,"d":["the woods are scary now.","i\'m safer at home."],"ar":3,"cs":[{},[[4,5],[15,4]]],"i":82,"hp":12,"dmg":20},{"n":"cop","dmg":60,"d":["thanks for your help.","this is beyond my skill."],"ar":12,"cs":[{},[[15,4]]],"i":90,"hp":85,"mva":0},{"n":"merchant","i":77,"cs":[{},[[1,4],[4,15],[6,1],[14,13]],[[1,4],[6,5],[14,10]],[[1,4],[4,15],[6,1],[14,3]]],"fi":1},{"n":"lady","i":81,"cs":[{},[[2,9],[4,15],[13,14]],[[2,10],[4,15],[13,9]],[[2,11],[13,3]]],"fi":1},{"n":"scientist","i":92,"cs":[{},[[6,12],[15,4]],[[6,12]],[[15,4]]]},{"n":"sunbather","fi":1,"d":["you\'re blocking the sun!","wanna get toasted!"],"i":78,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]],[[8,14]]],"dex":12},{"n":"bodybuilder","fi":1,"d":["check out these pecs!","i\'m jacked!"],"i":79,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]]],"dex":12},{"n":"monk","i":84,"d":["be at peace.","though times are troubled."],"ac":[{},[[2,5],[15,4]],[[2,4]],[2,5]]},{"n":"student","i":86,"cs":[{},[[15,4]],[[1,2],[15,4]],[[1,2]]]},{"n":"child","i":75,"d":["the animals aren\'t right.","mom says stay inside."],"cs":[{},[[15,4]],[[11,14],[3,8],[15,4]],[[11,14],[3,8]]]},{"n":"citizen","i":88,"cs":[{},[[1,5],[8,2],[4,1],[2,12],[15,4]]]},{"n":"grocer","mch":"food"},{"n":"clerk","mch":"armor"},{"n":"vendor","mch":"weapons"},{"n":"medic","mch":"hospital"},{"n":"dealer","mch":"guild"},{"n":"bartender","i":81,"mch":"bar"},{},{"i":102},{"n":"worker ant"},{"n":"winged ant","i":110,"t":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,33,38,40,41],"exp":9},{"n":"soldier ant","exp":12,"i":118,"hp":64,"dmg":23},{"n":"queen ant","exp":20,"dmg":35,"i":125,"hp":235,"mva":0},{"n":"ant larva","fi":1,"t":[22],"exp":5,"dmg":5,"i":123,"hp":10,"mva":0},{"n":"ant eggs","dmg":0,"exp":10,"hp":5,"i":124,"ia":124,"mva":0},{"n":"large spider","exp":4,"gp":8,"i":106,"hp":5,"po":1},{"n":"large rat","i":108,"hp":4,"dmg":10,"t":[1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,33,38,40,41],"exp":2,"eat":1,"gp":2,"po":1},{"n":"coyote","i":96,"d":["grrr!"]},{"n":"lynx","i":120,"d":["grar!"]},{"ns":["snake","serpent"],"ch":1,"t":[4,5,6,7],"dmg":8,"i":112,"hp":7,"po":1},{"n":"rattlesnake","ch":1,"exp":6,"i":114,"po":1},{"n":"large eel","t":[5,12,13,14,15,16],"exp":7,"i":116,"hp":20},{"n":"scorpion","fi":1,"ch":1,"i":95,"hp":8,"po":1},{"n":"slime","fi":1,"i":122,"gp":10,"t":[17,22,23],"exp":2,"cs":[{},[[3,9],[11,10]],[[3,14],[11,15]]],"ch":1,"eat":1},{"ns":["big catfish","sturgeon"],"ch":2,"t":[12,13,14,15,16],"exp":9,"i":98,"hp":25}]')
 shiptype=basetypes[4]
 
 -- set our base objects base values. the latter portion is
@@ -254,7 +254,7 @@ shop={
       end,
       function()
         hero.gp-=5
-        rumors=json_parse('["they\'re not hunters.","i think they\'re aliens.","funny citronella smell.","they smell like lemons.","they act like zombies.","they look burned.","the cult knows something.","they spook the animals."]')
+        rumors=json_parse('["i think they\'re aliens.","funny citronella smell.","they smell like lemons.","they act like zombies.","they look burned.","the cult knows something.","they spook the animals."]')
         update_lines{"while socializing, you hear:"}
         return '"'..rumors[flr(rnd(8)+1)]..'"'
       end
@@ -310,9 +310,9 @@ end
 function initobjs()
   -- the maps structure holds information about all of the regular
   -- places in the game, dungeons as well as towns.
-  maps=json_parse('[{"signs":[{"y":27,"msg":["an engagement ring; steve","was ready to propose."],"x":107},{"y":33,"msg":["mary studied astronomy","as a hobby."],"x":102},{"y":44,"msg":["mayor bess & her husband","ralph were planning a trip."],"x":105},{"y":33,"msg":["lou was a mixed martial","arts champion."],"x":107}],"c":[{"y":27,"id":26,"x":91},{"y":30,"id":13,"x":89},{"y":27,"id":25,"x":85},{"y":44,"id":24,"x":100},{"y":37,"id":29,"x":108},{"y":37,"id":16,"d":["welcome to anteform valley.","we\'re all glad you\'re here."],"x":87},{"y":51,"id":22,"n":"anne","x":86},{"n":"flip","d":["greybeard hid his treasure!","it\'s on big sister island!"],"y":52,"id":22,"x":80},{"n":"gwen","d":["steve, lou, & mary are gone.","i\'m not straying far."],"y":40,"id":23,"x":109},{"n":"ralph","d":["radio square is southwest.","folks are missing there too."],"y":47,"id":23,"x":98},{"n":"sally","d":["please find steve.","our rooms are adjacent."],"y":30,"id":21,"x":108},{"n":"bruce","y":37,"id":14,"mva":1,"x":105}],"ex":57,"mxx":112,"ey":37,"n":"village","sx":96,"i":[{"y":38,"id":6,"x":103}],"mny":24,"mxy":56,"sy":54},{"signs":[{"y":6,"msg":["a paper on myrmecology","by dr. greene."],"x":120},{"y":6,"msg":["a chart tracking recent size","increase of something."],"x":110},{"y":13,"msg":["historical info about acid","collection in the valley."],"x":123},{"y":11,"msg":["a paper on irregular growth","in animals."],"x":105},{"y":11,"msg":["data on valley insect","populations."],"x":120}],"c":[{"y":18,"id":14,"n":"artemis","x":116},{"y":17,"id":24,"x":110},{"y":1,"id":27,"x":106},{"n":"dr. gaston","d":["natural science is dangerous.","who\'d have thought?"],"y":12,"id":17,"x":109},{"n":"dr. greene","d":["concentrated it can burn.","a simple carboxyl."],"y":22,"id":17,"x":110},{"n":"dr. tetrado","d":["i think dr. tucker has it","all figured out."],"y":20,"id":17,"x":120},{"n":"dr. wong","d":["several of us are missing.","folks researching up north."],"y":22,"id":17,"x":110},{"n":"dr. prova","d":["by \'form\' they meant acid.","it\'s always been here."],"y":15,"id":17,"x":125}],"ex":26,"mnx":104,"ey":33,"n":"thinktank","sx":116,"i":[{"ty":33,"tm":3,"tx":126,"y":4,"id":8,"tz":0,"x":123}],"mxy":24,"sy":23},{"signs":[{"y":33,"msg":["a paper about insect","pheromones."],"x":123},{"y":33,"msg":["a paper about formic acid","and its effects."],"x":124},{"y":35,"msg":["a diagram showing ants","controlling aphids."],"x":123},{"y":33,"msg":["a diagram of modified","aphid brains."],"x":113}],"c":[{"n":"dr. tucker","d":["it\'s semiochemicals.","controlled living corpses."],"y":34,"id":17,"x":115},{"n":"dr. agawon","d":["they\'re literally brain dead.","higher functions burnt out."],"y":33,"id":17,"x":119}],"mnx":112,"n":"the basement","sx":126,"i":[{"ty":4,"tm":2,"tx":123,"y":33,"id":7,"tz":0,"x":126}],"mny":32,"mxy":41,"sy":33},{"signs":[{"y":20,"msg":"he\'ll rise again!","x":92},{"1":["eschaton starting here."],"y":9,"msg":["a secret prophesy about the"],"x":100}],"c":[{"n":"brother meinrad","d":["you are welcome in peace.","you come at a bad time."],"y":21,"id":20,"x":89},{"y":15,"id":27,"x":85},{"y":15,"id":24,"x":99},{"y":11,"id":20,"n":"brother anthony","x":81},{"n":"sister pat","d":["i saw the flash in heaven.","the animals now punish us."],"y":1,"id":20,"x":92},{"n":"learner jo","d":["we have been cursed.","so many have been taken."],"y":6,"id":21,"x":103},{"n":"learner brent","d":["i found the star jelly.","i think it turned the beasts."],"y":5,"id":21,"x":82},{"n":"brother dominic","d":["god sent us a sign.","i saw his star fall to earth."],"y":6,"id":20,"x":90}],"ex":34,"mxx":105,"ey":17,"n":"monastery","sx":92,"i":[{"ty":31,"tm":5,"tx":113,"y":9,"id":7,"tz":0,"x":84},{"y":6,"id":6,"x":92}],"mxy":24,"sy":23},{"signs":[{"1":["many monks & nuns are gone."],"y":29,"msg":["a list of the missing;"],"x":126}],"c":[{"n":"brother stamos","d":["we know of your quest.","we will help as we can."],"y":27,"id":20,"x":117},{"n":"mother francine","d":["some of us were taken.","they are now possessed."],"y":30,"id":20,"x":125},{"n":"father ted","d":["our dead brothers & sisters.","they are beset by demons."],"y":26,"id":20,"x":126}],"mnx":112,"n":"the top floor","sx":113,"i":[{"ty":9,"tm":4,"tx":84,"y":31,"id":8,"tz":0,"x":113}],"mny":24,"mxy":33,"sy":31},{"signs":[{"y":61,"msg":["no one\'s been here in awhile.","seems the hermit\'s missing too."],"x":105}],"ex":3,"mnx":103,"ey":47,"n":"hermit cabin","sx":111,"i":[{"y":61,"id":4,"x":110}],"mny":56,"mxx":113,"sy":57},{"signs":[{"y":53,"msg":["a reminder to investigate","monks for radio news show."],"x":114},{"y":56,"msg":["some expired coupons and","a copy of \'coyote waits\'."],"x":114},{"y":59,"msg":["a zombie comic book; someone","drew a robe on the zombie."],"x":114}],"c":[{"y":45,"id":26,"x":114},{"y":60,"id":24,"x":123},{"y":44,"id":28,"x":123},{"n":"becky","d":["the hermit has a sailboat.","west past the billabong."],"y":46,"id":13,"x":126},{"n":"jack","d":["it\'s in the northeast cabin.","you can borrow my shotgun."],"y":48,"id":13,"x":114},{"n":"dj jazzy joe","d":["the monks have seen them.","the woods weirdos."],"y":53,"id":15,"i":80,"x":121},{"n":"emma","d":["hang out in the bar none.","good woods weirdos discussion."],"y":58,"id":23,"x":124}],"ex":34,"mnx":112,"ey":53,"n":"radio square","sx":119,"mny":43,"sy":62},{"c":[{"n":"sue","d":["you can borrow my vest.","you\'ll need it."],"y":59,"id":13,"x":101}],"ex":38,"mnx":96,"ey":60,"n":"southern cabin","sx":100,"mny":56,"mxx":104,"sy":62},{"c":[{"n":"jim","d":["weird stuff up north.","we\'re vacationing indoors."],"y":58,"id":19,"x":99},{"n":"daisy","d":["i saw the woods weirdo!","i\'m glad we\'ve got locks."],"y":58,"id":18,"x":98}],"ex":56,"mnx":96,"ey":24,"n":"pennisula cabin","sx":100,"mny":56,"mxx":104,"sy":62},{"c":[{"y":62,"id":19,"n":"ethan","x":97},{"y":62,"id":18,"n":"crystal","x":98}],"ex":41,"mnx":96,"ey":39,"n":"lakeside cabin","sx":100,"mny":56,"mxx":104,"sy":62},{"signs":[{"y":60,"msg":["a sketch of an ant","carrying a rock."],"x":101}],"ex":21,"mnx":96,"ey":28,"n":"western cabin","sx":100,"mny":56,"mxx":104,"sy":62},{"sy":62,"n":"hunting cabin","sx":100,"mxx":104,"ex":75,"mny":56,"mnx":96,"ey":3},{"fri":false,"ss":14,"mnx":80,"n":"the queen\'s chamber","sx":113,"c":[{"y":60,"id":35,"x":84},{"y":59,"id":37,"x":83},{"y":60,"id":37,"x":83},{"y":61,"id":37,"x":84},{"y":59,"id":36,"x":84},{"y":58,"id":36,"x":93},{"y":57,"id":34,"x":89},{"y":62,"id":34,"x":89},{"y":57,"id":34,"x":94},{"y":57,"id":33,"x":82},{"y":62,"id":33,"x":82}],"i":[{"ty":6,"tm":16,"tx":3,"y":62,"id":7,"tz":1,"x":94}],"mny":56,"mxx":96,"sy":31},{"n":"greybeard\'s cave","l":[[0,-196,782,13263,15564,12288,16380,16384],[2,-12481,961,12348,16332,12,-3124,192],[12301,13260,192,15612,12348,13056,-3076,192]],"ex":57,"i":[{"y":8,"id":7,"z":1,"x":1},{"y":3,"id":7,"z":2,"x":8},{"y":1,"id":7,"z":3,"x":8},{"y":8,"id":5,"z":3,"x":4}],"sy":8,"ey":33},{"ss":14,"ex":3,"ey":9,"n":"vetusaur mine","sx":8,"l":[[205,15360,2876,16320,12351,-3328,1020,-19711],[48,16128,14332,768,-244,780,13119,28672]],"i":[{"y":8,"id":7,"z":1,"x":8},{"ty":5,"tm":0,"tz":0,"tx":3,"y":1,"id":7,"z":1,"x":8},{"y":3,"id":7,"z":2,"x":3},{"y":8,"id":7,"z":2,"x":1}],"c":[{"y":8,"id":32,"z":1,"x":7}],"sy":8},{"i":[{"y":8,"id":7,"z":1,"x":4},{"ty":62,"tm":13,"tz":0,"tx":94,"y":6,"id":8,"z":1,"x":3}],"n":"formika mine","sx":4,"l":[[204,12480,13308,12300,16332,14348,16380,256]],"ex":7,"ss":14,"sy":8,"ey":3}]')
+  maps=json_parse('[{"n":"village","mxx":112,"i":[{"y":38,"id":6,"x":103}],"mny":24,"signs":[{"y":27,"x":107,"msg":["an engagement ring; steve","was ready to propose."]},{"y":33,"x":102,"msg":["mary studied astronomy","as a hobby."]},{"y":44,"x":105,"msg":["mayor bess & her husband","ralph were planning a trip."]},{"y":33,"x":107,"msg":["lou was a mixed martial","arts champion."]}],"mxy":56,"c":[{"y":27,"id":26,"x":91},{"n":"maddox","y":30,"id":13,"x":89},{"y":27,"id":25,"x":85},{"y":44,"id":24,"x":100},{"y":37,"id":29,"x":108},{"d":["welcome to anteform valley.","we\'re all glad you\'re here."],"y":37,"id":16,"x":87},{"n":"anne","y":51,"id":22,"x":86},{"n":"flip","d":["greybeard hid his treasure!","it\'s on big sister island!"],"y":52,"id":22,"x":80},{"n":"gwen","d":["steve, lou, & mary are gone.","i\'m not straying far."],"y":40,"id":23,"x":109},{"n":"ralph","d":["radio square is southwest.","folks are missing there too."],"y":47,"id":23,"x":98},{"n":"sally","d":["please find steve.","our rooms are adjacent."],"y":30,"id":21,"x":108},{"n":"bruce","x":105,"y":37,"id":14,"mva":1}],"ey":37,"sx":96,"sy":54,"ex":57},{"n":"thinktank","mnx":104,"i":[{"tz":0,"x":123,"tm":3,"tx":126,"y":4,"id":8,"ty":33}],"signs":[{"y":6,"x":120,"msg":["a myrmecology paper","by dr. greene."]},{"y":6,"x":110,"msg":["a chart tracking recent size","increase of something."]},{"y":11,"x":105,"msg":["a paper on irregular growth","in animals."]},{"y":11,"x":120,"msg":["data on valley insect","populations."]}],"mxy":24,"c":[{"n":"artemis","d":["spooky stuff\'s afoot.","missing people; crazy animals."],"y":18,"id":14,"x":116},{"y":17,"id":24,"x":110},{"y":1,"id":27,"x":106},{"n":"dr. gaston","d":["natural science is dangerous.","who\'d have thought?"],"y":12,"id":17,"x":109},{"n":"dr. greene","d":["concentrated it can burn.","a simple carboxyl."],"y":22,"id":17,"x":110},{"n":"dr. tetrado","d":["i think dr. tucker has it","all figured out."],"y":20,"id":17,"x":120},{"n":"dr. wong","d":["several of us are missing.","those researching up north."],"y":22,"id":17,"x":110},{"n":"dr. prova","d":["by \'form\' they meant acid.","it\'s always been here."],"y":15,"id":17,"x":125}],"ey":33,"sx":116,"sy":23,"ex":26},{"n":"the basement","mnx":112,"i":[{"tz":0,"x":126,"tm":2,"tx":123,"y":33,"id":7,"ty":4}],"mny":32,"signs":[{"y":33,"x":123,"msg":["a paper on insect","pheromones."]},{"y":33,"x":124,"msg":["a paper on formic acid","& its effects."]},{"y":35,"x":123,"msg":["a paper on ants","controlling aphids."]},{"y":33,"x":113,"msg":["a diagram of modified","aphid brains."]}],"c":[{"n":"dr. tucker","d":["it\'s semiochemicals.","controlled living corpses."],"y":34,"id":17,"x":115},{"n":"dr. agawon","d":["they\'re literally brain dead.","higher functions burnt out."],"y":33,"id":17,"x":119}],"sx":126,"sy":33,"mxy":41},{"n":"monastery","mxx":105,"i":[{"tz":0,"x":84,"tm":5,"tx":113,"y":9,"id":7,"ty":31},{"y":6,"id":6,"x":92}],"signs":[{"y":20,"x":92,"msg":"he\'ll rise again!"},{"1":["eschaton starting here."],"y":9,"x":100,"msg":["a secret prophesy about the"]}],"mxy":24,"c":[{"n":"bro. meinrad","d":["you are welcome here.","though we are troubled."],"y":21,"id":20,"x":89},{"y":15,"id":27,"x":85},{"y":15,"id":24,"x":99},{"n":"bro. tony","y":11,"id":20,"x":81},{"n":"sis. pat","d":["i saw the flash in heaven.","the animals now punish us."],"y":1,"id":20,"x":92},{"n":"learner jo","d":["we have been cursed.","so many have been taken."],"y":6,"id":21,"x":103},{"n":"learner brent","d":["i found the star jelly.","i think it turned the beasts."],"y":5,"id":21,"x":82},{"n":"sis. gail","d":["god sent us a sign.","i saw his star fall to earth."],"y":6,"id":20,"x":90}],"ey":17,"sx":92,"sy":23,"ex":34},{"n":"the top floor","mnx":112,"i":[{"tz":0,"x":113,"tm":4,"tx":84,"y":31,"id":8,"ty":9}],"mny":24,"signs":[{"1":["many monks & nuns are gone."],"y":29,"x":126,"msg":["a list of the missing;"]}],"c":[{"n":"bro. stamos","d":["we know of your quest.","we will help as we can."],"y":27,"id":20,"x":117},{"n":"mother francine","d":["some of us were taken.","they are now possessed."],"y":30,"id":20,"x":125},{"n":"father ted","d":["our dead brothers & sisters.","they are beset by demons."],"y":26,"id":20,"x":126}],"sx":113,"sy":31,"mxy":33},{"n":"hermit cabin","mnx":103,"mxx":113,"i":[{"y":61,"id":4,"x":110}],"mny":56,"signs":[{"y":61,"x":105,"msg":["no one\'s been here in awhile.","seems the hermit\'s missing too."]}],"ey":47,"sx":111,"sy":57,"ex":3},{"n":"radio square","mnx":112,"mny":43,"signs":[{"y":53,"x":114,"msg":["the dj was investigating","the monks for the news."]},{"y":56,"x":114,"msg":["some expired coupons &","a copy of \'coyote waits\'."]},{"y":59,"x":114,"msg":["a zombie comic book; someone","drew a robe on the zombie."]}],"c":[{"y":45,"id":26,"x":114},{"y":60,"id":24,"x":123},{"y":44,"id":28,"x":123},{"n":"becky","d":["the hermit has a boat.","west past the billabong."],"y":46,"id":13,"x":126},{"n":"jack","d":["it\'s in the n.e. cabin.","you can borrow my shotgun."],"y":48,"id":13,"x":114},{"n":"dj jazzy joe","d":["the monks have seen them.","the woods weirdos."],"i":80,"y":53,"id":15,"x":121},{"n":"emma","d":["hang out in the bar none.","good woods weirdos discussion."],"y":58,"id":23,"x":124}],"ey":53,"sx":119,"sy":62,"ex":34},{"n":"southern cabin","mnx":96,"mxx":104,"mny":56,"c":[{"n":"sue","d":["you can borrow my vest.","you\'ll need it."],"y":59,"id":13,"x":101}],"ey":60,"sx":100,"sy":62,"ex":38},{"n":"pennisula cabin","mnx":96,"mxx":104,"mny":56,"c":[{"n":"jim","d":["weird stuff up north.","we\'re vacationing indoors."],"y":58,"id":19,"x":99},{"n":"daisy","d":["i saw the weirdo!","i\'m glad we\'ve got locks."],"y":58,"id":18,"x":98}],"ey":24,"sx":100,"sy":62,"ex":56},{"n":"lakeside cabin","mnx":96,"mxx":104,"mny":56,"c":[{"n":"ethan","y":62,"id":19,"x":97},{"n":"crystal","y":62,"id":18,"x":98}],"ey":39,"sx":100,"sy":62,"ex":41},{"n":"western cabin","mnx":96,"mxx":104,"mny":56,"signs":[{"y":60,"x":101,"msg":["a sketch of an ant","moving a rock."]}],"ey":28,"sx":100,"sy":62,"ex":21},{"n":"hunting cabin","mny":56,"mxx":104,"mnx":96,"ey":3,"sx":100,"sy":62,"ex":75},{"n":"the queen\'s chamber","mnx":80,"mxx":96,"fri":false,"mny":56,"c":[{"y":60,"id":35,"x":84},{"y":59,"id":37,"x":83},{"y":60,"id":37,"x":83},{"y":61,"id":37,"x":84},{"y":59,"id":36,"x":84},{"y":58,"id":36,"x":93},{"y":57,"id":34,"x":89},{"y":62,"id":34,"x":89},{"y":57,"id":34,"x":94},{"y":57,"id":33,"x":82},{"y":62,"id":33,"x":82}],"i":[{"tz":1,"x":94,"tm":16,"tx":3,"y":62,"id":7,"ty":6}],"sx":113,"sy":31,"ss":14},{"n":"greybeard\'s cave","l":[[0,-196,782,13263,15564,12288,16380,16384],[2,-12481,961,12348,16332,12,-3124,192],[12301,13260,192,15612,12348,13056,-3076,192]],"ey":33,"i":[{"z":1,"y":8,"id":7,"x":1},{"z":2,"y":3,"id":7,"x":8},{"z":3,"y":1,"id":7,"x":8},{"z":3,"y":8,"id":5,"x":4}],"sy":8,"ex":57},{"n":"vetusaur mine","l":[[205,15360,2876,16320,12351,-3328,1020,-19711],[48,16128,14332,768,-244,780,13119,28672]],"i":[{"z":1,"y":8,"id":7,"x":8},{"tz":0,"x":8,"tx":3,"tm":0,"z":1,"y":1,"id":7,"ty":5},{"z":2,"y":3,"id":7,"x":3},{"z":2,"y":8,"id":7,"x":1}],"ss":14,"c":[{"z":1,"y":8,"id":32,"x":7}],"ey":9,"sx":8,"sy":8,"ex":3},{"n":"formika mine","i":[{"z":1,"y":8,"id":7,"x":4},{"tz":0,"x":3,"tx":94,"tm":13,"z":1,"y":6,"id":8,"ty":62}],"l":[[204,12480,13308,12300,16332,14348,16380,256]],"ss":14,"ey":3,"sx":4,"sy":8,"ex":7}]')
   -- map 0 is special; it's the world map, the overview map.
-  maps[0]=json_parse('{"n":"world","mnx":0,"mny":0,"mxx":80,"mxy":64,"wrap":false,"newm":10,"mxm":11,"fri":false,"ss":0,"signs":[{"x":66,"y":43,"msg":"northwest - village"},{"x":68,"y":40,"msg":"north - monastery"},{"x":68,"y":40,"msg":"west - thinktank"},{"x":58,"y":21,"msg":"west - monastery"},{"x":24,"y":3,"msg":["a meteorite hit here. it\'s","corrupted the water."]},{"x":67,"y":50,"msg":["nothing\'s here now. you\'re","on your own."]}]}')
+  maps[0]=json_parse('{"n":"world","mnx":0,"mny":0,"mxx":80,"mxy":64,"newm":10,"mxm":11,"fri":false,"ss":0,"signs":[{"x":64,"y":43,"msg":"nw village"},{"x":68,"y":40,"msg":"n monastery"},{"x":68,"y":40,"msg":"w thinktank"},{"x":58,"y":21,"msg":"w monastery"},{"x":24,"y":3,"msg":["a meteorite hit here. it\'s","corrupted the water."]}]}')
 
   -- the creatures structure holds the live copy saying which
   -- creatures (both human and monster) are where in the world.
@@ -366,10 +366,8 @@ function initobjs()
   mapnum=0
   setmap()
 
-  boatx,boaty=0,0
-  phase,cycle,turn,turnmade=0,0,0,false
-  _update=world_update
-  _draw=world_draw
+  boatx,boaty,phase,cycle,turn,turnmade=0,0,0,0,0,false
+  _update,_draw=world_update,world_draw
   draw_state=world_draw
 end
 
@@ -387,7 +385,7 @@ function _init()
   menuitem(3,"load game",loadgame)
   menuitem(4,"new game",run)
   processinput=cocreate(inputprocessor)
-  cartdata("minima0")
+  cartdata("anteform0")
 end
 
 function listcommands()
@@ -614,7 +612,7 @@ function inputprocessor(cmd)
     elseif cmd=='f' then
       turnmade=true
       if curobjname=='chest' then
-        local chestgold=ceil(rnd(100)+230)
+        local chestgold=ceil(rnd(100)+500)
         hero.gp+=chestgold
         update_lines{"you find "..chestgold.." gp."}
         contents[xcoord][ycoord][zcoord]=nil
@@ -852,7 +850,7 @@ function checkdungeonmove(direction)
 end
 
 function checkexit(xcoord,ycoord)
-  if not curmap.wrap and(xcoord>=curmap.mxx or xcoord<curmap.mnx or ycoord>=curmap.mxy or ycoord<curmap.mny) then
+  if xcoord>=curmap.mxx or xcoord<curmap.mnx or ycoord>=curmap.mxy or ycoord<curmap.mny then
     update_lines{cmd,"exiting "..curmap.n.."."}
     mapnum=0
     return true
@@ -1057,13 +1055,7 @@ end
 
 function squaredistance(x1,y1,x2,y2)
   local dx=abs(x1-x2)
-  if curmap.wrap and dx>curmap.w/2 then
-    dx=curmap.w-dx;
-  end
   local dy=abs(y1-y2)
-  if curmap.wrap and dy>curmap.h/2 then
-    dy=curmap.h-dy;
-  end
   return dx+dy
 end
 
@@ -1072,11 +1064,9 @@ function calculatemoves(creature)
   local creaturex,creaturey=creature.x,creature.y
   local eastspot,westspot=(creaturex+curmap.w-1)%maxx,(creaturex+1)%maxx
   local northspot,southspot=(creaturey+curmap.h-1)%maxy,(creaturey+1)%maxy
-  if not curmap.wrap then
-    northspot,southspot,eastspot,westspot=creaturey-1,creaturey+1,creaturex-1,creaturex+1
-    if creature~=hero then
-      northspot,southspot,eastspot,westspot=max(northspot,curmap.mny),min(southspot,maxy-1),max(eastspot,curmap.mnx),min(westspot,maxx-1)
-    end
+  northspot,southspot,eastspot,westspot=creaturey-1,creaturey+1,creaturex-1,creaturex+1
+  if creature~=hero then
+    northspot,southspot,eastspot,westspot=max(northspot,curmap.mny),min(southspot,maxy-1),max(eastspot,curmap.mnx),min(westspot,maxx-1)
   end
   return {northspot,eastspot,southspot,westspot}
 end
@@ -1489,44 +1479,24 @@ end
 
 function world_draw()
   local maxx,maxy,minx,miny=curmap.mxx,curmap.mxy,curmap.mnx,curmap.mny
-  local width,height,wrap=curmap.w,curmap.h,curmap.wrap
+  local width,height=curmap.w,curmap.h
   local xtraleft,xtratop,xtrawidth,xtraheight,scrtx,scrty,left,right=0,0,0,0,0,0,hero.x-halfwidth,hero.x+halfwidth
   if left<minx then
     xtrawidth=minx-left
     scrtx=xtrawidth
-    if wrap then
-      xtraleft=left%width+minx
-    end
     left=minx
   elseif right>=maxx then
-    if wrap then
-      xtrawidth=fullwidth-right+maxx-1
-      scrtx=xtrawidth
-      xtraleft=left
-      left,right=minx,right%width+minx
-    else
-      xtrawidth=right-maxx+1
-      right=maxx
-    end
+    xtrawidth=right-maxx+1
+    right=maxx
   end
   local top,bottom=hero.y-halfheight,hero.y+halfheight
   if top<miny then
     xtraheight=miny-top
     scrty=xtraheight
-    if wrap then
-      xtratop=top%height+miny
-    end
     top=miny
   elseif bottom>=maxy then
-    if wrap then
-      xtraheight=fullheight-bottom+maxy-1
-      scrty=xtraheight
-      scrty,xtratop=xtraheight,top
-      top,bottom=miny,bottom%height+miny
-    else
-      xtraheight=bottom-maxy+1
-      bottom=maxy
-    end
+    xtraheight=bottom-maxy+1
+    bottom=maxy
   end
   local mainwidth,mainheight=min(fullwidth-xtrawidth,curmap.w),min(fullheight-xtraheight,curmap.h)
   if cycle%16==0 then
@@ -1536,20 +1506,6 @@ function world_draw()
   end
   cycle+=1
   cls()
-  if wrap then
-    if xtrawidth then
-      -- we have an edge
-      draw_map(xtraleft,top,0,scrty,xtrawidth,mainheight)
-    end
-    if xtraheight then
-      -- we have a top
-      draw_map(left,xtratop,scrtx,0,mainwidth,xtraheight)
-    end
-    if xtrawidth and xtraheight then
-      -- we have a corner
-      draw_map(xtraleft,xtratop,0,0,xtrawidth,xtraheight)
-    end
-  end
   draw_map(left,top,scrtx,scrty,mainwidth,mainheight)
   palt(0,false)
   if hero.color==4 and hero.i==0 then
@@ -1655,7 +1611,7 @@ f8888565000300000004000040004000000300300000000000330333500050000500000505000d00
 908080c0c0c0c0c01060606060101010101010101010101001101010101030202020303010d01030304020101020204010404020202020202010101010101010
 1010101010202030707070708080909020202020202020202020202020201120209191919191911010101010101020204141414141414141d141414141414141
 908090807070101010606060101010101010101010c0c0c0c0104040302020202020202010d01010103020202020203010202030302020302020202020101010
-1010f110102020202070807080808090209191919191919191919120202011202091f28383d29110919191919191202091919191919120919191919191919191
+f1101010102020202070807080808090209191919191919191919120202011202091f28383d29110919191919191202091919191919120919191919191919191
 9090808070706060604010101010101010c0c0c0c0c0101010102030203020202020202010d0d0d0102020303020202010203030302030303020202020202020
 20201010102030202070808080808090209154c3c213838353549120202011204091111111119110919282111191202091a273d3e29120911111111111111191
 90908080907040101010404010101010c0c0c01010101020202020202020202020202020101010d0103020203030202010303020202030303020202020202020
@@ -1697,134 +1653,134 @@ f8888565000300000004000040004000000300300000000000330333500050000500000505000d00
 90909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090
 909090909090909090909090909090904141414141414141414141414141414120202020202020202020202020c0c0c020202020202020202020202020202020
 __label__
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-000000000000000000000000000000000000000000000000000000000000000000001d6776d00000000000000000000000000000000000000000000000000000
-000000000001d50000000000000000000000000000000000000000000000000000056776777d0000000000000000000000000000000000000000000000000000
-00000000056776000000000000000000000000000000000000000000000000000016775577760000000000000000000000000000000000000000000000000000
-00000000067776000000000000000000000000000005d500000000000000000000d77600677d0000000000000000000000000000000000000000000000000000
-000000001777775000000000000000000000000005677d0000000000000000000177760005500000000000000000000000000000000000000000000000000000
-00000000d77777600000000000000000000000000d777d0000000000000000000577760000000000000000000000000000000000000000000000000000000000
-0000000067d777710000000000000000000000000677750000000000000000000577760000000000000000000000000000000000000000000000000000000000
-0000000d7617777d000000015ddd001d6d50000056777d551000005d66d100005d7776555000001dd66d500000015d6d01d650015ddd001d6d50001d66500000
-00000006750677760000006777771d77777d000d77777777600056777776500d7777777771000d777777761000677776167771d777775d7777751d77777d0000
-00000057600d7777100000567777676777771005d67776dd5005677516777105d67776ddd000d77750d7776100d6777667777556777777677777776777771000
-00000067d0017777d0000001777765006777500006777500000677600d777d000d7776000005777d00067776000577776d7760007777d101777761016777d000
-000001775111677760000000677710006777d0000677750000d777d0057776000d7776000006777500057777500177775055100067775000677750006777d000
-00000d777777777775000000677710006777d0000677750000677766667776000d7776000007777500007777d0017777000000006777500067775000d777d000
-00000676ddddd7777d000000677710006777d000067775000067776666666d000d7776000057777500006777d0017777000000006777500067775000d777d000
-000057600000067776000000677710006777d0000677750001777750000000000d7776000057777500006777d0017777000000006777500067775000d777d000
-000067d00000057777500000677710006777d00006777500006777d0000000000d7776000017777500006777d0017777000000006777500067775000d777d000
-000177500000006777d00000677710006777d000067775000067776000005d000d7776000006777d000067775001777700000000677750006777d000d777d000
-000676000000006777610001777750006777d00006777d0000d77776505d76000d777600000d7777100177760005777700000000677750006777d00067776000
-01d77651000001d7777d50157777d105677765100d777766d006777777777501567777510000677761167775001d7777d10000157777d1057777610567776510
-5777777d0000d77777777d6777777d577777776005777776500167777776500d7777777600000d77777776500577777776000067777776577777765777777760
-1555555500001555555551555555550555555550005d66d1000005d666500005555555550000001d666d50000055555555000055555555155555550555555550
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-09999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999990
-99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-99910000000100000003000050005000000660050003003000010000000100000001000000010000000300000003000040004000000400000004000000040999
-99900000000000000000000300050500006006000000033300000000000000000000000000000000000000030000000300040400000000040000000400000999
-99900101010001010000000000500500056006500030003001000101010001010100010101000101000000000000000000400400000000000000000000000999
-99901010101010100000300005000050506006000333000010101010101010101010101010101010000030000000300004000040000040000000400000004999
-99910000000100003000000000000000006006000030000000010000000100000001000000010000300000003000000000000000400000004000000040000999
-99901110000000000000000000000300000003000000000000000000000011100000111000000000000003000000030000000400000004000000040000000999
-99910100010001010100010103000000030000000100010101000101001101000011010001000101030000000300000004000000004040400400000004000999
-99900010101010101010101000000000000000001010101010101010110000101100001010101010000000000000000000000000040400040000000000000999
-99900000000100000001000000030000000300000001000000010000000000000000000000010000000300000003000000040000400040000004000000040999
-99911100000000000000000000000003000000030000000000000000000111000001110000000000000000030000000300000004000404000000000400000999
-99901000010001010100010100000000000000000100010101000101011010000110100001000101000000000000000000000000004004000000000000000999
-99900101101010101010101000003000000030001010101010101010100001011000010110101010000030000000300000004000040000400000400000004999
-99900000000100000001000030000000300000000001000000010000000000000000000000010000300000003000000040000000000000004000000040000999
-99901110000011100000000000000000000000000000000000001110000011100000000000000000000003000000030000000300000003000000040000000999
-99910100001101000100010101000101010001010100010100110100001101000100010101000101030000000300000003000000030000000400000000404999
-99900010110000101010101010101010101010101010101011000010110000101010101010101010000000000000000000000000000000000000000004040999
-99900000000000000001000000010000000100000001000000000000000000000001000000010000000300000003000000030000000300000004000040004999
-99911100000111000000000000000000000000000000000000011100000111000000000000000000000000030000000300000003000000030000000400040999
-99901000011010000100010101000101010001010100010101101000011010000100010101000101000000000000000000000000000000000000000000400999
-99900101100001011010101010101010101010101010101010000101100001011010101010101010000030000000300000003000000030000000400004000999
-99900000000000000001000000010000000100000001000000000000000000000001000000010000300000003000000030000000300000004000000000000999
-99901110000000000000000000000000000000000000000000000000000000000000000000000300000003000000030000000400000003000000030000000999
-99910100010001010100010101000101010001010100010101000101010001010100010103000000030000000300000000404040030000000300000000404999
-99900010101010101010101010101010101010101010101010101010101010101010101000000000000000000000000004040004000000000000000004040999
-99900000000100000001000000010000000100000001000000010000000100000001000000030000000300000003000040004000000300000003000040004999
-99911100000000000000000000000000000000000000000000000000000000000000000000000003000000030000000300040400000000030000000300040999
-99901000010001010100010101000101010001010100010101000101010001010100010100000000000000000000000000400400000000000000000000400999
-99900101101010101010101010101010101010101010101010101010101010101010101000003000000030000000300004000040000030000000300004000999
-99900000000100000001000000010000000100000001000000010000000100000001000030000000300000003000000000000000300000003000000000000999
-99900000000000000000000000000000000040000000030000000300000000000000000000000300000003000000030000000400000004000000030000000999
-99900101010001010100010101000101000444000300000003000000010001010100010103000000030000000300000004000000004040400300000004000999
-99901010101010101010101010101010000425000000000000000000101010101010101000000000000000000000000000000000040400040000000000000999
-99910000000100000001000000010000000524000003000000030000000100000001000000030000000300000003000000040000400040000003000000040999
-99900000000000000000000000000000040044400000000300000003000000000000000000000003000000030000000300000004000404000000000300000999
-99900101010001010100010101000101444042400000000000000000010001010100010100000000000000000000000000000000004004000000000000000999
-99901010101010101010101010101010424042400000300000003000101010101010101000003000000030000000300000004000040000400000300000004999
-99910000000100000001000000010000424000003000000030000000000100000001000030000000300000003000000040000000000000003000000040000999
-99900300000000000000030000000000000003000000030000000000000000000000000000000300000003000000030000000400000004000000030000000999
-99900000000300000300000000030000030000000300000000030000000300000003000003000000030000000300000004000000040000000300000004000999
-99900000003330000000000000333000000000000000000000333000003330000033300000000000000000000000000000000000000000000000000000000999
-99930000000300300003000000030030000300000003000000030030000300300003003000030000000300000003000000040000000400000003000000040999
-99900003000003330000000300000333000000030000000300000333000003330000033300000003000000030000000300000004000000040000000300000999
-99900000003000300000000000300030000000000000000000300030003000300030003000000000000000000000000000000000000000000000000000000999
-99903000033300000000300003330000000030000000300003330000033300000333000000003000000030000000300000004000000040000000300000004999
-99900000003000003000000000300000300000003000000000300000003000000030000030000000300000003000000040000000400000003000000040000999
-99900300000003000000000000000000000000000000030000000300000000000004400000000300000003000000030000000400000004000000030000000999
-99900000030000000003000000030000000300000300000003000000000300000004456503000000030000000300000000404040040000000300000004000999
-99900000000000000033300000333000003330000000000000000000003330000088867600000000000000000000000004040004000000000000000000000999
-99930000000300000003003000030030000300300003000000030000000300304888856500030000000300000003000040004000000400000003000000040999
-999000030000000300000333000003330000033300000003000000030000033308ccc50000000003000000030000000300040400000000040000000300000999
-999000000000000000300030003000300030003000000000000000000030003000c0cc0000000000000000000000000000400400000000000000000000000999
-999030000000300003330000033300000333000000003000000030000333000000c00c0000003000000030000000300004000040000040000000300000004999
-99900000300000000030000000300000003000003000000030000000003000000110011030000000300000003000000000000000400000003000000040000999
-99900300000000000000050000000500000000000000030000000300000003000000030000000300000003000000040000000400000004000000030000000999
-99900000000300000050505000505050000300000300000003000000030000000300000003000000030000000040404000404040004040400300000000055999
-99900000003330000505000505050005003330000000000000000000000000000000000000000000000000000404000404040004040400040000000004444999
-9993000000030030500050005000500000030030000300000003000000030000000300000003000000030000400040004000400040004000000300000777f999
-9990000300000333000505000005050000000333000000030000000300000003000000030000000300000003000404000004040000040400000000030777f999
-9990000000300030005005000050050000300030000000000000000000000000000000000000000000000000004004000040040000400400000000000777f999
-99903000033300000500005005000050033300000000300000003000000030000000300000003000000030000400004004000040040000400000300000055999
-99900000003000000000000000000000003000003000000030000000300000003000000030000000300000000000000000000000000000003000000000055999
-99900300000003000000030000000300000003000000000000000300000003000000030000000300000003000000030000000000000000000000030000000999
-99900000030000000300000003000000030000000003000003000000030000000300000003000000030000000300000000030000000300000300000003000999
-99900000000000000000000000000000000000000033300000000000000000000000000000000000000000000000000000333000003330000000000000000999
-99930000000300000003000000030000000300000003003000030000000300000003000000030000000300000003000000030030000300300003000000030999
-99900003000000030000000300000003000000030000033300000003000000030000000300000003000000030000000300000333000003330000000300000999
-99900000000000000000000000000000000000000030003000000000000000000000000000000000000000000000000000300030003000300000000000000999
-99903000000030000000300000003000000030000333000000003000000030000000300000003000000030000000300003330000033300000000300000003999
-99900000300000003000000030000000300000000030000030000000300000003000000030000000300000003000000000300000003000003000000030000999
-99900400000004000000040000000400000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000000999
-99900000040000000400000004000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000999
-99900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000999
-99940000000400000004000000040000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030999
-99900004000000040000000400000004000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000999
-99900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000999
-99904000000040000000400000004000000030000000300000003000000030000000300000003000000030000000300000003000000030000000300000003999
-99900000400000004000000040000000300000003000000030000000300000003000000030000000300000003000000030000000300000003000000030000999
-99900400000004000000040000000400000004000000040000000400000004000000030000000300000003000000030000000300000000000000030000000999
-99900000040000000040404004000000040000000400000004000000040000000300000003000000030000000300000003000000000550000300000003000999
-99900000000000000404000400000000000000000000000000000000000000000000000000000000000000000000000000000000044444400000000000000999
-99940000000400004000400000040000000400000004000000040000000400000003000000030000000300000003000000030000077777700003000000030999
-99900004000000040004040000000004000000040000000400000004000000040000000300000003000000030000000300000003077777700000000300000999
-99900000000000000040040000000000000000000000000000000000000000000000000000000000000000000000000000000000077777700000000000000999
-99904000000040000400004000004000000040000000400000004000000040000000300000003000000030000000300000003000000550000000300000003999
-99900000400000000000000040000000400000004000000040000000400000003000000030000000300000003000000030000000000550003000000030000999
-99900400000004000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000003000000030000000999
-99900000004040400040404000404040040000000400000004000000040000000400000004000000040000000400000004000000030000000300000003000999
-99900000040400040404000404040004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000999
-99940000400040004000400040004000000400000004000000040000000400000004000000040000000400000004000000040000000300000003000000030999
-99900004000404000004040000040400000000040000000400000004000000040000000400000004000000040000000400000004000000030000000300000999
-99900000004004000040040000400400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000999
-99904000040000400400004004000040000040000000400000004000000040000000400000004000000040000000400000004000000030000000300000003999
-99900000000000000000000000000000400000004000000040000000400000004000000040000000400000004000000040000000300000003000000030000999
-99900400000004000000040000000400000004000000040000000400000004000000040000000400000004000000040000000400000003000000030000000999
-99900000004040400040404000404040040000000400000004000000040000000400000004000000040000000040404004000000030000000300000003000999
-99900000040400040404000404040004000000000000000000000000000000000000000000000000000000000404000400000000000000000000000000000999
-99940000400040004000400040004000000400000004000000040000000400000004000000040000000400004000400000040000000300000003000000030999
-99900004000404000004040000040400000000040000000400000004000000040000000400000004000000040004040000000004000000030000000300000999
-99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-09999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999990
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888228228888228822888222822888888822888888ff8888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888882288822888222222888222822888882282888888fff888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888882288822888282282888222888888228882888888f88888
+888888888888888888888888888888888888888888888888888888888888888888888888888888888822888228882222228888882228882288828888fff88888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888882288822888822228888228222888882282888ffff88888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888228228888828828888228222888888822888fff888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+55555555555555555555555555555555555555555f5859505555a5b5c505555d5e5f5055558595a505555b5c5d50555555555555555555555555555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+55555555555555555555555555555555555555556666666665566666666655666666666556666666665577777777755555555555555555555555555555555555
+555566656665666566656665666566555555e55565566566655655665556556556655565565566555655755575557555e5555555551555555555555555555555
+55556565656556555655655565656565555ee55566566566655665666656556656656565566566565655777575757555ee555555551155555155155511115555
+5555666566655655565566556655656555eee55566566555655665666656556656655565566566555655755575757555eee55551111115551155155511115555
+55556555656556555655655565656565555ee55566566565655665666656556656656565566566665655757775157555ee555551001105511111155511115555
+555565556565565556556665656565655555e55565556555655655566656556555655565565556665655755571717555e5555551551055501100055511115555
+55555555555555555555555555555555555555556666666665566666666655666666666556666666665577777177155555555550550555550155555500005555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555177715555555555555555555055555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555177771555555555555555555555555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555177115555555555555555555555555555555555
+55555555555500000000055555555555555555555550000000005555555555555555555555000000000555555511715555555555555555555555555555555555
+55555666665506660666055555555555555566666550600066605555555555555556666655060006600555555555555555666665555555555555555555555555
+55555655565506000606055555555555555565556550600060605555555555555556555655060000600555555555555555655565555555555555555555555555
+55555657565506660666055555555555555565756550666060605555555555555556575655066600600555555555555555655565555555555555555555555555
+55555655565500060006055555555555555565556550606060605555555555555556555655060600600555555555555555655565555555555555555555555555
+55555666665506660006055555555555555566666550666066605555555555555556666655066606660555555555555555666665555555555555555555555555
+55555555555500000000055555555555555555555550000000005555555555555555555555000000000555555555555555555555555555555555555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005500000000000000000000000000000555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500100010001000010000100001000550010001000100001000010000100055001000100010000100001000010005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555000000000000000000000000000005507700000066600ee000ccc00000005507770000066600eee00ccc00000005505555555555555555555555555550555
+5550000000000000000000000000000055070700000006000e00000c0000000550700000006060000e0000c00000005505555555555555555555555555550555
+5550000000000000000000000000000055070700000666000e000ccc000000055077000000606000ee00ccc00000005505555555555555555555555555550555
+5550000000000000000000000000000055070700000600000e000c000000000550700000006060000e00c0000000005505555555555555555555555555550555
+555001000100010000100001000010005507770000066600eee00ccc000d0005507770000066600eee00ccc000d0005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555000000000000000000000000000005507700000066600ee000ccc00ddd005507770000066600eee00ccc00ddd005505555555555555555555555555550555
+5550000000000000000000000000000055070700000006000e00000c00d0000550700000006060000e0000c00d00005505555555555555555555555555550555
+5550000000000000000000000000000055070700000666000e000ccc00ddd0055077000000606000ee00ccc00ddd005505555555555555555555555555550555
+5550000000000000000000000000000055070700000600000e000c000000d00550700000006060000e00c000000d005505555555555555555555555555550555
+555001000100010000100001000010005507770000066600eee00ccc00ddd005507770000066600eee00ccc00ddd005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500100010001000010000100001000550010001000100001000010000100055001000100010000100001000010005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507770000066600ee000ccc00ddd00550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555070700000006000e00000c00d0000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555077000000666000e000ccc00ddd00550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555070700000600000e000c000000d00550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507770000066600eee00ccc00ddd00550010001000100001000010000100055001000100010000100001000010005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55501111111aaaaa1111111111111110550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507771111a66aa1eee11ccc1111110550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507171111aa6aa1e1e11c111111110550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507711111aa6aa1e1e11ccc1111110550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507171111aa6aa1e1e1111c1111110550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507771111a666a1eee11ccc111d110550010001000100001000010000100055001000100010000100001000010005505555555555555555555555555550555
+55501111111aaaaa1111111111111110550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55505050505050505050505050505050550505050505050505050505050505055050505050505050505050505050505505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500100010001000010000100001000550010001000100001000010000100055001000100010000100001000010005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555000000000000000000000000000005500770000066600ee000ccc00000005507700000066600eee00ccc00000005505555555555555555555555555550555
+5550000000000000000000000000000055070000000006000e00000c0000000550707000006060000e0000c00000005505555555555555555555555555550555
+5550000000000000000000000000000055070000000666000e000ccc000000055070700000606000ee00ccc00000005505555555555555555555555555550555
+5550000000000000000000000000000055070000000600000e000c000000000550707000006060000e00c0000000005505555555555555555555555555550555
+555001000100010000100001000010005500770000066600eee00ccc000d0005507770000066600eee00ccc000d0005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+555000000000000000000000000000005500770000066600ee000ccc00ddd005507700000066600eee00ccc00ddd005505555555555555555555555555550555
+5550000000000000000000000000000055070000000006000e00000c00d0000550707000006060000e0000c00d00005505555555555555555555555555550555
+5550000000000000000000000000000055070000000666000e000ccc00ddd0055070700000606000ee00ccc00ddd005505555555555555555555555555550555
+5550000000000000000000000000000055070000000600000e000c000000d00550707000006060000e00c000000d005505555555555555555555555555550555
+555001000100010000100001000010005500770000066600eee00ccc00ddd005507770000066600eee00ccc00ddd005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500100010001000010000100001000550010001000100001000010000100055001000100010000100001000010005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005505555555555555555555555555550555
+55507770000066600ee000ccc00ddd005507770000066000ee000ccc00ddd005500770000066600eee00ccc00ddd005505555555555555555555555555550555
+555070000000006000e00000c00d000055070700000060000e00000c00d0000550700000006060000e0000c00d00005505555555555555555555555555550555
+555077000000666000e000ccc00ddd0055077000000060000e000ccc00ddd0055070000000606000ee00ccc00ddd005505555555555555555555555555550555
+555070000000600000e000c000000d0055070700000060000e000c000000d00550707000006060000e00c000000d005505555555555555555555555555550555
+55507770000066600eee00ccc00ddd005507770000066600eee00ccc00ddd005507770000066600eee00ccc00ddd005505555555555555555555555555550555
+55500000000000000000000000000000550000000000000000000000000000055000000000000000000000000000005500000000000000000000000000000555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
 __gff__
 0000000101010201020b00000484048400000800080000080808000008080000010000000000000000000808080808080808080808080808080808080808080808080808080808000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -1919,10 +1875,10 @@ __sfx__
 01180000241252812028125244002440024400244002440000000214002140021400000000000000000000001f1251c1251f12524120241252340023125201252312528125241252612528120281252812528125
 011800001a1201a1201a1251f1251a1251f1251f1251f1201f125211252212022125211252212022125241252212022120221202212022125221252112021120211253440034400344001f125000000000000000
 01180000344000e32534300343001332534300343000e32535300353001332535300003000e32500300003001132534300343000e32538300383001232538300393000e325393003930013325000000000000000
-011800002612524125261202612526125261202612523125241202412524125241252312521125231202312523125231252412526125281202812539400394003b4003b400261253b40000000000000000000000
+011800002612524125261202612526125261202612523125241202412524125241252312521125231202312523125231252412526125281202812539400394003b4003b400261202612500000000000000000000
 0118000034400344001d125394003c4003b40039400394051c12539400394003940000000000001a125000003c4003b4003c400394003b400394003b4001f1201f125394003940039400000001d1201d12500000
 011800001c3001c3001132523300283002830023300233000f32524300243002430000300003000e325003001d3001d300233002330028300283002b30007320073252f3002f3002f30000300053200532500000
-011800002412024125234002340028400284002312523400244002440024400244001c125211252112521120211251f125211202112021125214001f4001e4002112021120211251c40000000000002112500000
+011800002412024125234002340028400284002312023125244002440024400244001c125211252112521120211251f125211202112021125214001f4001e4002112021120211251c40000000000002112021125
 01180000000002d4002d4001a1201a1253940039400344003440018120181253540017125000000000000000000002d4002d40034400344001a1201a1251a1252612026125241252212022125211251f12500000
 01180000000002d4002d4000432004325394003940034400344000232002325354000732500000000000000000000344003440035400354000e3200e3250e3251a3201a325183251732017325153251332500000
 011000000000022120221250000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -1942,16 +1898,16 @@ __music__
 00 24252644
 00 27686944
 02 285a6244
-00 292a2b44
+01 292a2b44
 00 2c2d2e44
 00 2f303144
 00 32333444
 00 35363744
 00 38393a44
-00 252b3744
-00 242c3844
 00 3b3c3d44
-02 3e3f7a44
+02 3e3f7f44
+00 7b7c7d44
+00 7e7f7a44
 00 656f7b44
 00 64707c44
 00 65717d44

@@ -73,8 +73,6 @@ basetypes={
     fi=1,
     iseq=12,
     n="fountain",
-    shm=-2,
-    szm=14,
     p=1
   },{
     i=27,
@@ -100,28 +98,27 @@ basetypes={
   },{
     -- giant ant
     i=104,
-    dmg=15,
+    dmg=18,
+    ar=3,
     hp=23,
     ch=0,
     t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
     exp=8,
     po=1,
-    d={"chirp chirp!","gree gree!"}
+    d={"chirp chirp!"}
   },{
     n="zombie",
     i=100,
     t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
-    dmg=14,
+    dmg=18,
     dex=6,
     gp=10,
     exp=8,
     ch=0,
-    d={"ahhrg!","urg!"}
+    d={"ahhrg!"}
   },{
     -- base animal
-    hp=12,
     dex=10,
-    ar=0,
     gp=0,
     exp=5,
     ch=3
@@ -142,31 +139,28 @@ basetypes={
     hp=85,
     dmg=60,
     ar=12,
-    d={"i\'m doing my best.","i\'m trying to stop it."}
+    d={"thanks for your help.","this is beyond my skill."}
   },{
     i=77,
     fi=1,
     cs={{},{{1,4},{4,15},{6,1},{14,13}},{{1,4},{6,5},{14,10}},{{1,4},{4,15},{6,1},{14,3}}},
-    n="merchant",
-    d={"consume!","stuff makes you happy!"}
+    n="merchant"
   },{
     i=81,
     fi=1,
     cs={{},{{2,9},{4,15},{13,14}},{{2,10},{4,15},{13,9}},{{2,11},{13,3}}},
-    n="lady",
-    d={"pardon me.","well i never."}
+    n="lady"
   },{
     i=92,
     n="scientist",
-    cs={{},{{6,12},{15,4}},{{6,12}},{{15,4}}},
-    d={"this isn\'t right.","this isn\'t even wrong."}
+    cs={{},{{6,12},{15,4}},{{6,12}},{{15,4}}}
   },{
     i=78,
     fi=1,
     n="sunbather",
     cs={{},{{8,12},{15,4}},{{8,12}},{{15,4}},{{8,14}}},
     dex=12,
-    d={"you\'re blocking the sun!","gonna get toasted!"}
+    d={"you\'re blocking the sun!","wanna get toasted!"}
   },{
     i=79,
     fi=1,
@@ -178,22 +172,20 @@ basetypes={
     i=84,
     ac={{},{{2,5},{15,4}},{{2,4}},{2,5}},
     n="monk",
-    d={"be at peace.","meditate on it."}
+    d={"be at peace.","though times are troubled."}
   },{
     n="student",
     i=86,
-    cs={{},{{15,4}},{{1,2},{15,4}},{{1,2}}},
-    d={"gotta do homework.","weekend is almost here."}
+    cs={{},{{15,4}},{{1,2},{15,4}},{{1,2}}}
   },{
     n="child",
     i=75,
     cs={{},{{15,4}},{{11,14},{3,8},{15,4}},{{11,14},{3,8}}},
-    d={"the animals aren\'t right.","mom says to stay inside."}
+    d={"the animals aren\'t right.","mom says stay inside."}
   },{
     i=88,
     cs={{},{{1,5},{8,2},{4,1},{2,12},{15,4}}},
-    n="citizen",
-    d={"spooky stuff\'s afoot.","missing people; crazy animals."}
+    n="citizen"
   },{
     n="grocer",
     mch='food'
@@ -291,7 +283,6 @@ basetypes={
   },{
     i=114,
     n="rattlesnake",
-    hp=8,
     po=1,
     exp=6,
     ch=1
@@ -369,7 +360,7 @@ maps={
     },
     c={
       {id=thing['vendor'],x=91,y=27},
-      {id=thing['hunter'],x=89,y=30},
+      {id=thing['hunter'],n="maddox",x=89,y=30},
       {id=thing['clerk'],x=85,y=27},
       {id=thing['grocer'],x=100,y=44},
       {id=thing['bartender'],x=108,y=37},
@@ -390,9 +381,8 @@ maps={
     mnx=104,
     mxy=24,
     signs={
-      {x=120,y=6,msg={"a paper on myrmecology","by dr. greene."}},
+      {x=120,y=6,msg={"a myrmecology paper","by dr. greene."}},
       {x=110,y=6,msg={"a chart tracking recent size","increase of something."}},
-      {x=123,y=13,msg={"historical info about acid","collection in the valley."}},
       {x=105,y=11,msg={"a paper on irregular growth","in animals."}},
       {x=120,y=11,msg={"data on valley insect","populations."}}
     },
@@ -400,13 +390,13 @@ maps={
       {id=thing['ladder down'],x=123,y=4,tm=3,tx=126,ty=33,tz=0}
     },
     c={
-      {id=thing['cop'],n="artemis",x=116,y=18},
+      {id=thing['cop'],n="artemis",x=116,y=18,d={"spooky stuff\'s afoot.","missing people; crazy animals."}},
       {id=thing['grocer'],x=110,y=17},
       {id=thing['medic'],x=106,y=1},
       {id=thing['scientist'],n="dr. gaston",x=109,y=12,d={"natural science is dangerous.","who\'d have thought?"}},
       {id=thing['scientist'],n="dr. greene",x=110,y=22,d={"concentrated it can burn.","a simple carboxyl."}},
       {id=thing['scientist'],n="dr. tetrado",x=120,y=20,d={"i think dr. tucker has it","all figured out."}},
-      {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","folks researching up north."}},
+      {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","those researching up north."}},
       {id=thing['scientist'],n="dr. prova",x=125,y=15,d={"by \'form\' they meant acid.","it\'s always been here."}}
     }
   },{
@@ -417,9 +407,9 @@ maps={
     mny=32,
     mxy=41,
     signs={
-      {x=123,y=33,msg={"a paper about insect","pheromones."}},
-      {x=124,y=33,msg={"a paper about formic acid","and its effects."}},
-      {x=123,y=35,msg={"a diagram showing ants","controlling aphids."}},
+      {x=123,y=33,msg={"a paper on insect","pheromones."}},
+      {x=124,y=33,msg={"a paper on formic acid","& its effects."}},
+      {x=123,y=35,msg={"a paper on ants","controlling aphids."}},
       {x=113,y=33,msg={"a diagram of modified","aphid brains."}}
     },
     i={
@@ -446,14 +436,14 @@ maps={
       {id=thing['fountain'],x=92,y=6}
     },
     c={
-      {id=thing['monk'],n="brother meinrad",x=89,y=21,d={"you are welcome in peace.","you come at a bad time."}},
+      {id=thing['monk'],n="bro. meinrad",x=89,y=21,d={"you are welcome here.","though we are troubled."}},
       {id=thing['medic'],x=85,y=15},
       {id=thing['grocer'],x=99,y=15},
-      {id=thing['monk'],n="brother anthony",x=81,y=11},
-      {id=thing['monk'],n="sister pat",x=92,y=1,d={"i saw the flash in heaven.","the animals now punish us."}},
+      {id=thing['monk'],n="bro. tony",x=81,y=11},
+      {id=thing['monk'],n="sis. pat",x=92,y=1,d={"i saw the flash in heaven.","the animals now punish us."}},
       {id=thing['student'],n="learner jo",x=103,y=6,d={"we have been cursed.","so many have been taken."}},
       {id=thing['student'],n="learner brent",x=82,y=5,d={"i found the star jelly.","i think it turned the beasts."}},
-      {id=thing['monk'],n="brother dominic",x=90,y=6,d={"god sent us a sign.","i saw his star fall to earth."}}
+      {id=thing['monk'],n="sis. gail",x=90,y=6,d={"god sent us a sign.","i saw his star fall to earth."}}
     }
   },{
     n="the top floor",
@@ -469,7 +459,7 @@ maps={
       {id=thing['ladder down'],x=113,y=31,tm=4,tx=84,ty=9,tz=0}
     },
     c={
-      {id=thing['monk'],n="brother stamos",x=117,y=27,d={"we know of your quest.","we will help as we can."}},
+      {id=thing['monk'],n="bro. stamos",x=117,y=27,d={"we know of your quest.","we will help as we can."}},
       {id=thing['monk'],n="mother francine",x=125,y=30,d={"some of us were taken.","they are now possessed."}},
       {id=thing['monk'],n="father ted",x=126,y=26,d={"our dead brothers & sisters.","they are beset by demons."}},
     }
@@ -497,16 +487,16 @@ maps={
     mnx=112,
     mny=43,
     signs={
-      {x=114,y=53,msg={"a reminder to investigate","monks for radio news show."}},
-      {x=114,y=56,msg={"some expired coupons and","a copy of \'coyote waits\'."}},
+      {x=114,y=53,msg={"the dj was investigating","the monks for the news."}},
+      {x=114,y=56,msg={"some expired coupons &","a copy of \'coyote waits\'."}},
       {x=114,y=59,msg={"a zombie comic book; someone","drew a robe on the zombie."}}
     },
     c={
       {id=thing['vendor'],x=114,y=45},
       {id=thing['grocer'],x=123,y=60},
       {id=thing['dealer'],x=123,y=44},
-      {id=thing['hunter'],n="becky",x=126,y=46,d={"the hermit has a sailboat.","west past the billabong."}},
-      {id=thing['hunter'],n="jack",x=114,y=48,d={"it\'s in the northeast cabin.","you can borrow my shotgun."}},
+      {id=thing['hunter'],n="becky",x=126,y=46,d={"the hermit has a boat.","west past the billabong."}},
+      {id=thing['hunter'],n="jack",x=114,y=48,d={"it\'s in the n.e. cabin.","you can borrow my shotgun."}},
       {id=thing['merchant'],n="dj jazzy joe",x=121,y=53,i=80,d={"the monks have seen them.","the woods weirdos."}},
       {id=thing['citizen'],n="emma",x=124,y=58,d={"hang out in the bar none.","good woods weirdos discussion."}}
     }
@@ -533,7 +523,7 @@ maps={
     mny=56,
     c={
       {id=thing['bodybuilder'],n="jim",x=99,y=58,d={"weird stuff up north.","we\'re vacationing indoors."}},
-      {id=thing['sunbather'],n="daisy",x=98,y=58,d={"i saw the woods weirdo!","i\'m glad we\'ve got locks."}}
+      {id=thing['sunbather'],n="daisy",x=98,y=58,d={"i saw the weirdo!","i\'m glad we\'ve got locks."}}
     }
   },{
     n="lakeside cabin",
@@ -558,7 +548,7 @@ maps={
     mxx=104,
     mny=56,
     signs={
-      {x=101,y=60,msg={"a sketch of an ant","carrying a rock."}}
+      {x=101,y=60,msg={"a sketch of an ant","moving a rock."}}
     },
   },{
     n="hunting cabin",
