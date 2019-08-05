@@ -57,7 +57,7 @@ basetypes={
   },{
     i=70,
     ia=70,
-    n="sailboat",
+    n="boat",
     fm=1,
     f=2,
     p=1
@@ -126,10 +126,7 @@ basetypes={
     i=82,
     cs={{},{{4,5},{15,4}}},
     n="hunter",
-    hp=12,
-    ar=3,
     dmg=20,
-    dex=9,
     d={"the woods are scary now.","i\'m safer at home."}
   },{
     i=90,
@@ -139,7 +136,7 @@ basetypes={
     hp=85,
     dmg=60,
     ar=12,
-    d={"thanks for your help.","this is beyond my skill."}
+    d={"thanks for your help.","this is beyond my ability."}
   },{
     i=77,
     fi=1,
@@ -159,20 +156,18 @@ basetypes={
     fi=1,
     n="sunbather",
     cs={{},{{8,12},{15,4}},{{8,12}},{{15,4}},{{8,14}}},
-    dex=12,
-    d={"you\'re blocking the sun!","wanna get toasted!"}
+    d={"you\'re blocking the sun!","i wanna get toasted!"}
   },{
     i=79,
     fi=1,
     cs={{},{{8,12},{15,4}},{{8,12}},{{15,4}}},
     n="bodybuilder",
-    dex=12,
     d={"check out these pecs!","i\'m jacked!"}
   },{
     i=84,
     ac={{},{{2,5},{15,4}},{{2,4}},{2,5}},
     n="monk",
-    d={"be at peace.","though times are troubled."}
+    d={"you are welcome here.","though we are troubled."}
   },{
     n="student",
     i=86,
@@ -352,7 +347,6 @@ maps={
     signs={
       {x=107,y=27,msg={"an engagement ring; steve","was ready to propose."}},
       {x=102,y=33,msg={"mary studied astronomy","as a hobby."}},
-      {x=105,y=44,msg={"mayor bess & her husband","ralph were planning a trip."}},
       {x=107,y=33,msg={"lou was a mixed martial","arts champion."}}
     },
     i={
@@ -382,7 +376,7 @@ maps={
     mxy=24,
     signs={
       {x=120,y=6,msg={"a myrmecology paper","by dr. greene."}},
-      {x=110,y=6,msg={"a chart tracking recent size","increase of something."}},
+      {x=110,y=6,msg={"a chart tracking recent size","increases."}},
       {x=105,y=11,msg={"a paper on irregular growth","in animals."}},
       {x=120,y=11,msg={"data on valley insect","populations."}}
     },
@@ -393,7 +387,6 @@ maps={
       {id=thing['cop'],n="artemis",x=116,y=18,d={"spooky stuff\'s afoot.","missing people; crazy animals."}},
       {id=thing['grocer'],x=110,y=17},
       {id=thing['medic'],x=106,y=1},
-      {id=thing['scientist'],n="dr. gaston",x=109,y=12,d={"natural science is dangerous.","who\'d have thought?"}},
       {id=thing['scientist'],n="dr. greene",x=110,y=22,d={"concentrated it can burn.","a simple carboxyl."}},
       {id=thing['scientist'],n="dr. tetrado",x=120,y=20,d={"i think dr. tucker has it","all figured out."}},
       {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","those researching up north."}},
@@ -436,13 +429,11 @@ maps={
       {id=thing['fountain'],x=92,y=6}
     },
     c={
-      {id=thing['monk'],n="bro. meinrad",x=89,y=21,d={"you are welcome here.","though we are troubled."}},
+      {id=thing['monk'],n="bro. meinrad",x=89,y=21},
       {id=thing['medic'],x=85,y=15},
       {id=thing['grocer'],x=99,y=15},
-      {id=thing['monk'],n="bro. tony",x=81,y=11},
       {id=thing['monk'],n="sis. pat",x=92,y=1,d={"i saw the flash in heaven.","the animals now punish us."}},
-      {id=thing['student'],n="learner jo",x=103,y=6,d={"we have been cursed.","so many have been taken."}},
-      {id=thing['student'],n="learner brent",x=82,y=5,d={"i found the star jelly.","i think it turned the beasts."}},
+      {id=thing['student'],n="learner jo",x=82,y=5,d={"i found the star jelly.","i think it turned the beasts."}},
       {id=thing['monk'],n="sis. gail",x=90,y=6,d={"god sent us a sign.","i saw his star fall to earth."}}
     }
   },{
@@ -476,7 +467,7 @@ maps={
       {x=105,y=61,msg={"no one\'s been here in awhile.","seems the hermit\'s missing too."}}
     },
     i={
-      {id=thing['sailboat'],x=110,y=61}
+      {id=thing['boat'],x=110,y=61}
     }
   },{
     n="radio square",
@@ -576,13 +567,11 @@ maps={
       {id=thing['ant eggs'],x=83,y=59},
       {id=thing['ant eggs'],x=83,y=60},
       {id=thing['ant eggs'],x=84,y=61},
-      {id=thing['ant larva'],x=84,y=59},
       {id=thing['ant larva'],x=93,y=58},
       {id=thing['soldier ant'],x=89,y=57},
       {id=thing['soldier ant'],x=89,y=62},
       {id=thing['soldier ant'],x=94,y=57},
-      {id=thing['winged ant'],x=82,y=57},
-      {id=thing['winged ant'],x=82,y=62}
+      {id=thing['winged ant'],x=82,y=57}
     }
   },{
     n="greybeard\'s cave",
