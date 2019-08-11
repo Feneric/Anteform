@@ -3,6 +3,10 @@ Anteform
 
 *A retro weird detective game in the style of the 8-bit Ultima games.*
 
+.. image:: AnteformLogo.png
+  :alt: Anteform Logo
+  :align: right
+
 Not Yet Ready!
 --------------
 
@@ -22,7 +26,29 @@ setting, and characters.
 
 It was written using the Minima engine for `PICO-8`_, and when completed will be playable
 online through the Lexaloffle PICO-8 site and available for download for Linux, macOS,
-and MS-Windows through the itch.io site.
+MS-Windows, and Raspberry Pi through the `Anteform Itch.io page`.
+
+.. image:: AnteformValley.png
+  :alt: Anteform world view
+  :align: center
+
+Screenshot of the valley view in Anteform. There's a sign to the north, a coyote coming
+down from the northwest, a helicopter pad to the southeast, and plains to the south and hills
+all around.
+
+.. image:: AnteformDungeon.png
+  :alt: Anteform dungeon view
+  :align: center
+
+Screenshot of the cave view in one of Anteform's mines. The player is trying to
+retreat from a rat of unusual size (shown directly ahead), but has bumped into a wall. Uh-oh!
+
+.. image:: AnteformTown.png
+  :alt: Anteform town view
+  :align: center
+
+Screenshot of the settlement view in one of Anteform's villages. A fountain, merchant, bartender,
+customer, cop, and guy in camo are all present.
 
 What Is It About?
 -----------------
@@ -40,29 +66,30 @@ the valley overall. It's up to you to stop it.
 It's recommended that you try to get to the main village first. There you'll find both
 Sally and the mayor. You start off without any weapons or armor, and this is a very
 precarious situation to be in. You'll want to rectify it as quickly as possible. If
-you've not done so yet, you should peruse the manual (once it's available) and get some
-tips about surviving in Anteform Valley as well as basic information about game
-controls. If you are too impatient to skim through the manual, the basic game controls
-are accessible from within the pause menu of the game itself. Pressing the `p` key (or
-the `enter` key on some platforms) should bring up this menu.
+you've not done so yet, you should peruse the manual and get some tips about surviving
+in Anteform Valley as well as basic information about game controls. If you are too
+impatient to skim through the manual, the basic game controls are accessible from
+within the pause menu of the game itself. Pressing the `p` key (or the `enter` key on
+some platforms) should bring up this menu.
 
 Relationship to Minima
 ----------------------
 
-This was written using the Minima engine and was deliberately made to use similar controls
+This was written using the Minima Engine and was deliberately made to use similar controls
 whenever possible. If you are comfortable with one game you'll be comfortable with the
 other, too. They aren't set in the same place, though, and while Minima is a large-scale
 fantasy game with towns and castles set across a world, Anteform is a weird detective game
 of more intimate scale with squares and buildings set across a valley. Anteform has no
 magic, but definitely has sci-fi / horror elements that you'll discover on your own as
 you progress through the story. It has no spells, but has some special actions that
-provide similar (albeit weaker) effects. It has a bit less fighting than Minima, but a
-bit more talking, breaking & entering, and searching.
+provide similar (albeit weaker) effects. It has a bit less fighting than Minima, but
+more talking, breaking & entering, and searching.
 
 Minima can be downloaded from the `Minima Itch.io page`_ and its source code can be
 downloaded from the `Minima GitHub page`_. It can be played online at the
 `Minima at Lexaloffle page`_.
 
+.. _Anteform Itch.io page: https://feneric.itch.io/anteform
 .. _Minima Itch.io page: https://feneric.itch.io/minima
 .. _Minima GitHub page: https://github.com/Feneric/Minima
 .. _Minima at Lexaloffle page: https://www.lexaloffle.com/bbs/?tid=31831

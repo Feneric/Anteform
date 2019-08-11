@@ -607,7 +607,7 @@ function inputprocessor(cmd)
       turnmade=true
       if curobjname=='chest' then
         hero.gp+=500
-        update_lines{"you find 500 gp."}
+        update_lines{"you find $500."}
         contents[xcoord][ycoord][zcoord]=nil
       elseif curmap.dg and hero.lit<1 then
         if hero.ts>1 then
@@ -1005,7 +1005,7 @@ function attack_results(adir,xcoord,ycoord,magic)
         hero.gp=not_over_32767(hero.gp+creature.gp)
         increasexp(creature.exp)
         contents[xcoord][ycoord][zcoord]=nil
-        update_lines{cmd,creature.n..' killed; xp+'..creature.exp..' gp+'..creature.gp}
+        update_lines{cmd,creature.n..' killed; xp+'..creature.exp..' $+'..creature.gp}
         if creature.ch==-1 then
           phase,basetypes[30].ch,basetypes[31].ch=2,3,4
           update_lines{'a zombie?!'}
