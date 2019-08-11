@@ -23,7 +23,7 @@ basetypes={
     dmg=13,
     dex=8,
     hos=1,
-    t={1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,33,38,40,41},
+    t={1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,38,40,41},
     mva=1,
     gp=0,
     exp=2,
@@ -102,31 +102,27 @@ basetypes={
     ar=3,
     hp=23,
     ch=0,
-    t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
-    exp=8,
+    t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41},
+    exp=9,
     po=1,
     d={"chirp chirp!"}
   },{
     n="zombie",
     i=100,
-    t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,33,38,40,41},
+    t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41},
     dmg=18,
-    dex=6,
     gp=10,
     exp=8,
     ch=0,
     d={"ahhrg!"}
   },{
     -- base animal
-    dex=10,
-    gp=0,
     exp=5,
-    ch=3
+    ch=2
   },{
     i=82,
     cs={{},{{4,5},{15,4}}},
     n="hunter",
-    dmg=20,
     d={"the woods are scary now.","i\'m safer at home."}
   },{
     i=90,
@@ -156,13 +152,13 @@ basetypes={
     fi=1,
     n="sunbather",
     cs={{},{{8,12},{15,4}},{{8,12}},{{15,4}},{{8,14}}},
-    d={"you\'re blocking the sun!","i wanna get toasted!"}
+    d={"i saw the weirdo!","i\'m glad we\'ve got locks."}
   },{
     i=79,
     fi=1,
     cs={{},{{8,12},{15,4}},{{8,12}},{{15,4}}},
     n="bodybuilder",
-    d={"check out these pecs!","i\'m jacked!"}
+    d={"weird stuff up north.","we\'re vacationing indoors."}
   },{
     i=84,
     ac={{},{{2,5},{15,4}},{{2,4}},{2,5}},
@@ -210,8 +206,7 @@ basetypes={
   },{
     i=110,
     n="winged ant",
-    t={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,33,38,40,41},
-    exp=9
+    t={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,38,40,41}
   },{
     i=118,
     n="soldier ant",
@@ -221,10 +216,8 @@ basetypes={
   },{
     i=125,
     n="queen ant",
-    mva=0,
     hp=235,
-    dmg=35,
-    exp=20
+    dmg=42
   },{
     i=123,
     fi=1,
@@ -238,10 +231,7 @@ basetypes={
     i=124,
     ia=124,
     n="ant eggs",
-    mva=0,
-    hp=5,
-    dmg=0,
-    exp=10
+    hp=5
   },{
     i=106,
     n="large spider",
@@ -252,9 +242,9 @@ basetypes={
   },{
     i=108,
     n="large rat",
-    t={1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,33,38,40,41},
+    t={1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,38,40,41},
     hp=4,
-    dmg=10,
+    dmg=9,
     gp=2,
     po=1,
     eat=1,
@@ -262,25 +252,26 @@ basetypes={
   },{
     i=96,
     n="coyote",
-    d={"grrr!"}
+    d={"grrr!"},
+    ch=3
   },{
     i=120,
     n="lynx",
-    d={"grar!"}
+    d={"grar!"},
+    ch=3
   },{
     i=112,
     ns={"snake","serpent"},
     hp=7,
     po=1,
-    dmg=8,
+    dmg=9,
     t={4,5,6,7},
     ch=1
   },{
     i=114,
     n="rattlesnake",
     po=1,
-    exp=6,
-    ch=1
+    exp=6
   },{
     i=116,
     n="large eel",
@@ -300,17 +291,15 @@ basetypes={
     fi=1,
     n="slime",
     gp=10,
-    t={17,22,23},
+    t={22,23},
     eat=1,
-    exp=2,
-    ch=1
+    exp=2
   },{
     i=98,
     ns={"big catfish","sturgeon"},
     hp=25,
     t={12,13,14,15,16},
-    exp=9,
-    ch=2
+    exp=9
   }
 }
 -- We want to make a table of nd i so we can refer to them easily
@@ -344,7 +333,7 @@ maps={
     mny=24,
     mxx=112,
     mxy=56,
-    signs={
+    sn={
       {x=107,y=27,msg={"an engagement ring; steve","was ready to propose."}},
       {x=102,y=33,msg={"mary studied astronomy","as a hobby."}},
       {x=107,y=33,msg={"lou was a mixed martial","arts champion."}}
@@ -354,7 +343,7 @@ maps={
     },
     c={
       {id=thing['vendor'],x=91,y=27},
-      {id=thing['hunter'],n="maddox",x=89,y=30},
+      {id=thing['hunter'],n="fred",x=89,y=30},
       {id=thing['clerk'],x=85,y=27},
       {id=thing['grocer'],x=100,y=44},
       {id=thing['bartender'],x=108,y=37},
@@ -374,9 +363,8 @@ maps={
     sy=23,
     mnx=104,
     mxy=24,
-    signs={
+    sn={
       {x=120,y=6,msg={"a myrmecology paper","by dr. greene."}},
-      {x=110,y=6,msg={"a chart tracking recent size","increases."}},
       {x=105,y=11,msg={"a paper on irregular growth","in animals."}},
       {x=120,y=11,msg={"data on valley insect","populations."}}
     },
@@ -388,9 +376,8 @@ maps={
       {id=thing['grocer'],x=110,y=17},
       {id=thing['medic'],x=106,y=1},
       {id=thing['scientist'],n="dr. greene",x=110,y=22,d={"concentrated it can burn.","a simple carboxyl."}},
-      {id=thing['scientist'],n="dr. tetrado",x=120,y=20,d={"i think dr. tucker has it","all figured out."}},
-      {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","those researching up north."}},
-      {id=thing['scientist'],n="dr. prova",x=125,y=15,d={"by \'form\' they meant acid.","it\'s always been here."}}
+      {id=thing['scientist'],n="dr. tetrado",x=120,y=20,d={"find dr. tucker.","he\'s figured it out."}},
+      {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","those researching up north."}}
     }
   },{
     n="the basement",
@@ -399,10 +386,10 @@ maps={
     mnx=112,
     mny=32,
     mxy=41,
-    signs={
+    sn={
       {x=123,y=33,msg={"a paper on insect","pheromones."}},
       {x=124,y=33,msg={"a paper on formic acid","& its effects."}},
-      {x=123,y=35,msg={"a paper on ants","controlling aphids."}},
+      {x=123,y=35,msg={"a paper on ants controlling","aphids."}},
       {x=113,y=33,msg={"a diagram of modified","aphid brains."}}
     },
     i={
@@ -420,9 +407,9 @@ maps={
     sy=23,
     mxx=105,
     mxy=24,
-    signs={
+    sn={
       {x=92,y=20,msg="he\'ll rise again!"},
-      {x=100,y=9,msg={"a secret prophesy about the"},{"eschaton starting here."}}
+      {x=100,y=9,msg={"a secret prophesy about the","eschaton starting here."}}
     },
     i={
       {id=thing['ladder up'],x=84,y=9,tm=5,tx=113,ty=31,tz=0},
@@ -443,8 +430,8 @@ maps={
     mnx=112,
     mny=24,
     mxy=33,
-    signs={
-      {x=126,y=29,msg={"a list of the missing;"},{"many monks & nuns are gone."}}
+    sn={
+      {x=126,y=29,msg={"a list of the missing;","many monks & nuns are gone."}}
     },
     i={
       {id=thing['ladder down'],x=113,y=31,tm=4,tx=84,ty=9,tz=0}
@@ -463,7 +450,7 @@ maps={
     mnx=103,
     mny=56,
     mxx=113,
-    signs={
+    sn={
       {x=105,y=61,msg={"no one\'s been here in awhile.","seems the hermit\'s missing too."}}
     },
     i={
@@ -477,7 +464,7 @@ maps={
     sy=62,
     mnx=112,
     mny=43,
-    signs={
+    sn={
       {x=114,y=53,msg={"the dj was investigating","the monks for the news."}},
       {x=114,y=56,msg={"some expired coupons &","a copy of \'coyote waits\'."}},
       {x=114,y=59,msg={"a zombie comic book; someone","drew a robe on the zombie."}}
@@ -526,8 +513,7 @@ maps={
     mxx=104,
     mny=56,
     c={
-      {id=thing['bodybuilder'],n="ethan",x=97,y=62},
-      {id=thing['sunbather'],n="crystal",x=98,y=62}
+      {id=thing['sunbather'],n="jane",x=98,y=58,d={"find my friend to the south.","she\'ll help."}}
     }
   },{
     n="western cabin",
@@ -538,7 +524,7 @@ maps={
     mnx=96,
     mxx=104,
     mny=56,
-    signs={
+    sn={
       {x=101,y=60,msg={"a sketch of an ant","moving a rock."}}
     },
   },{
@@ -559,19 +545,20 @@ maps={
     mxx=96,
     fri=false,
     ss=14,
+    newm=20,
+    mxm=15,
     i={
-      {id=thing['ladder up'],x=94,y=62,tm=16,tx=3,ty=6,tz=1}
+      {id=thing['ladder up'],x=94,y=62,tm=16,tx=3,ty=6,tz=1},
+      {id=thing['ant eggs'],x=83,y=59},
+      {id=thing['ant eggs'],x=84,y=59},
+      {id=thing['ant eggs'],x=84,y=61}
     },
     c={
-      {id=thing['queen ant'],x=84,y=60},
-      {id=thing['ant eggs'],x=83,y=59},
-      {id=thing['ant eggs'],x=83,y=60},
-      {id=thing['ant eggs'],x=84,y=61},
+      {id=thing['queen ant'],x=83,y=60},
       {id=thing['ant larva'],x=93,y=58},
       {id=thing['soldier ant'],x=89,y=57},
       {id=thing['soldier ant'],x=89,y=62},
-      {id=thing['soldier ant'],x=94,y=57},
-      {id=thing['winged ant'],x=82,y=57}
+      {id=thing['soldier ant'],x=94,y=57}
     }
   },{
     n="greybeard\'s cave",
@@ -649,7 +636,7 @@ maps={
       {id=thing['ladder up'],x=1,y=8,z=2}
     },
     c={
-      {id=thing['worker ant'],x=7,y=8,z=1}
+      {id=thing['worker ant'],x=7,y=8,z=1,ch=-2}
     }
   },{
     n="formika mine",
