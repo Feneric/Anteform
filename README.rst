@@ -26,7 +26,7 @@ setting, and characters.
 
 It was written using the Minima engine for `PICO-8`_, and when completed will be playable
 online through the Lexaloffle PICO-8 site and available for download for Linux, macOS,
-MS-Windows, and Raspberry Pi through the `Anteform Itch.io page`.
+MS-Windows, and Raspberry Pi through the `Anteform Itch.io page`_.
 
 .. image:: AnteformValley.png
   :alt: Anteform world view
@@ -48,7 +48,7 @@ retreat from a rat of unusual size (shown directly ahead), but has bumped into a
   :align: center
 
 Screenshot of the settlement view in one of Anteform's villages. A fountain, merchant, bartender,
-customer, cop, and guy in camo are all present.
+customer, and cop are all present.
 
 What Is It About?
 -----------------
