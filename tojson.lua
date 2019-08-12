@@ -551,7 +551,7 @@ maps={
       {id=thing['ladder up'],x=94,y=62,tm=16,tx=3,ty=6,tz=1},
       {id=thing['ant eggs'],x=83,y=59},
       {id=thing['ant eggs'],x=84,y=59},
-      {id=thing['ant eggs'],x=84,y=61}
+      {id=thing['ant eggs'],x=84,y=60}
     },
     c={
       {id=thing['queen ant'],x=83,y=60},
