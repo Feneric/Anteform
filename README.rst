@@ -83,6 +83,49 @@ Minima can be downloaded from the `Minima Itch.io page`_ and its source code can
 downloaded from the `Minima GitHub page`_. It can be played online at the
 `Minima at Lexaloffle page`_.
 
+Supported Platforms
+-------------------
+
+Anteform will run everywhere that PICO-8 runs. By design it does not require the latest
+& greatest version of PICO-8, so it'll even run on PocketC.H.I.P.
+
+Challenges
+----------
+
+The constraints of building something within the PICO-8 environment make a project like
+this fairly tough. This game pretty much maxes out PICO-8 capacity; there's not a
+lot of space left and I'd likely have to trim out some already-present features to
+shoehorn in anything else. All the PICO-8 graphic space (both for sprites and maps) are
+fully used. All the sound effects slots are used. The final version here
+is a careful balance between maxing out the token count and the compressed size. The raw
+size is already too large to fit without minimization, too, and even with that many
+manual tweaks are required making the code quite ugly in places.
+
+Building Anteform
+-----------------
+
+Normally PICO-8 applications are written in a special dialect of Lua and are immediately
+interpreted within the PICO-8 environment without any special build steps. Anteform is a
+little larger and more complicated than most PICO-8 applications, and it is too large to
+run directly without a special minimization step. The `picotool`_ utility does most of
+what's needed, but at the moment unless this `special branch of picotool`_ is run with the
+`luamin2` argument, it'll break Anteform.
+
+Design Notes
+------------
+
+Anteform is mostly data-driven using the "Minima Engine". It uses a JSON data structure
+to define the people, creatures, and objects, and another JSON data structure to define
+all the maps and dungeons. Command sequencing uses coroutines in order to avoid
+overly-complicated state machines.
+
+Other Notes
+-----------
+
+This version makes use of a stripped-down version of Tyler Neylon's `json.lua`_ routine
+to parse JSON data. The additional `Lua`_ utility script `convert.lua` is used to make it
+easier to lay out a dungeon map and turn it into something the game can use.
+
 .. _Anteform at Lexaloffle page: https://www.lexaloffle.com/bbs/?tid=35093
 .. _Anteform Itch.io page: https://feneric.itch.io/anteform
 .. _Minima Itch.io page: https://feneric.itch.io/minima
@@ -90,3 +133,7 @@ downloaded from the `Minima GitHub page`_. It can be played online at the
 .. _Minima at Lexaloffle page: https://www.lexaloffle.com/bbs/?tid=31831
 .. _Ultima games: https://en.wikipedia.org/wiki/Ultima_(series)
 .. _PICO-8: https://www.lexaloffle.com/pico-8.php
+.. _picotool: https://github.com/dansanderson/picotool
+.. _special branch of picotool: https://github.com/Feneric/picotool
+.. _json.lua: https://gist.github.com/tylerneylon/59f4bcf316be525b30ab
+.. _Lua: https://www.lua.org/docs.html
