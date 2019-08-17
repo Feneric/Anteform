@@ -50,8 +50,7 @@ function parse_num_val(wrkstr,pos,val)
   --   assert'end of input found while parsing string.'
   -- end
   local c=sub(wrkstr,pos,pos)
-  -- support base 10, 16 and 2 numbers
-  if(not match(c,"-xb0123456789abcdef.")) return tonum(val),pos
+  if(not match(c,"-0123456789.")) return tonum(val),pos
   return parse_num_val(wrkstr,pos+1,val..c)
 end
 -- public values and functions.
@@ -111,7 +110,7 @@ end
 
 -- the types of terrain that exist in the game. each is
 -- given a name and a list of allowed monster types.
-terrains={"plains","bare ground","hills","scrub","swamp","forest","foothills","mountains","tall mountain","filing cabinet","bed","water","water","deep water","deep water","brick","brick road","brick","mismatched brick","stone","stone","road","barred window","window","bridge","ladder down","ladder up","door","locked door","open door","sign","crater","cave","facility","monastery","town","village","helipad","fountain","chair","desk"}
+terrains={"plains","bare ground","hills","scrub","swamp","forest","foothills","mountains","tall mountain","filing cabinet","bed","water","water","deep water","deep water","bridge","brick road","brick","mismatched brick","stone","stone","road","barred window","window","brick","ladder down","ladder up","door","locked door","open door","sign","crater","cave","facility","monastery","cabin","village","helipad","fountain","chair","desk"}
 -- counter terrain types are special as they can be talked
 -- over (essential for purchasing). there are a lot of them
 -- as all the letters are represented.
@@ -126,12 +125,12 @@ end
 
 -- basetypes are the objects we mean to use to make objects.
 -- they inherit (often indirectly) from our root object.
-basetypes=json_parse('[{"dex":8,"mva":1,"ar":1,"dmg":13,"hp":10,"ch":1,"gp":0,"t":[1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,38,40,41],"exp":2,"hos":1},{"fri":1,"newm":0,"mn":0,"mxm":0,"mnx":80,"mny":0,"mxy":64,"mxx":128},{"mn":0,"mxm":27,"mxx":9,"mny":1,"dg":1,"fri":false,"newm":25,"mxy":9,"c":{},"mnx":1,"sy":1,"sx":1,"sf":1,"sz":1},{"i":70,"p":1,"ia":70,"f":2,"fm":1,"n":"boat"},{"i":94,"shm":-2,"ia":94,"p":1,"szm":11,"n":"chest"},{"i":39,"p":1,"iseq":12,"fi":1,"n":"fountain"},{"i":27,"shm":12,"ia":27,"p":1,"szm":20,"n":"ladder up"},{"i":26,"shm":-3,"ia":26,"p":1,"szm":20,"n":"ladder down"},{"i":80,"ar":0,"exp":1,"gp":10,"hos":false},{"i":104,"ar":3,"dmg":18,"hp":23,"ch":0,"po":1,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41],"d":["chirp chirp!"],"exp":9},{"i":100,"ch":0,"d":["ahhrg!"],"gp":10,"dmg":18,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41],"exp":8,"n":"zombie"},{"exp":5,"ch":2},{"i":82,"d":["the woods are scary now.","i\'m safer at home."],"cs":[{},[[4,5],[15,4]]],"n":"hunter"},{"i":90,"dmg":60,"mva":0,"ar":12,"cs":[{},[[15,4]]],"d":["thanks for your help.","this is beyond my ability."],"hp":85,"n":"cop"},{"i":77,"fi":1,"cs":[{},[[1,4],[4,15],[6,1],[14,13]],[[1,4],[6,5],[14,10]],[[1,4],[4,15],[6,1],[14,3]]],"n":"merchant"},{"i":81,"fi":1,"cs":[{},[[2,9],[4,15],[13,14]],[[2,10],[4,15],[13,9]],[[2,11],[13,3]]],"n":"lady"},{"i":92,"cs":[{},[[6,12],[15,4]],[[6,12]],[[15,4]]],"n":"scientist"},{"i":78,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]],[[8,14]]],"fi":1,"d":["i saw the weirdo!","i\'m glad we\'ve got locks."],"n":"sunbather"},{"i":79,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]]],"fi":1,"d":["weird stuff up north.","we\'re vacationing indoors."],"n":"bodybuilder"},{"i":84,"d":["you are welcome here.","though we are troubled."],"ac":[{},[[2,5],[15,4]],[[2,4]],[2,5]],"n":"monk"},{"i":86,"cs":[{},[[15,4]],[[1,2],[15,4]],[[1,2]]],"n":"student"},{"i":75,"d":["the animals aren\'t right.","mom says stay inside."],"cs":[{},[[15,4]],[[11,14],[3,8],[15,4]],[[11,14],[3,8]]],"n":"child"},{"i":88,"cs":[{},[[1,5],[8,2],[4,1],[2,12],[15,4]]],"n":"citizen"},{"mch":"food","n":"grocer"},{"mch":"armor","n":"clerk"},{"mch":"weapons","n":"vendor"},{"mch":"hospital","n":"medic"},{"mch":"guild","n":"dealer"},{"i":81,"mch":"bar","n":"bartender"},{},{"i":102},{"n":"worker ant"},{"i":110,"t":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,38,40,41],"n":"winged ant"},{"i":118,"dmg":23,"exp":12,"hp":64,"n":"soldier ant"},{"i":125,"dmg":42,"hp":235,"n":"queen ant"},{"i":123,"exp":5,"mva":0,"hp":10,"dmg":5,"fi":1,"t":[22],"n":"ant larva"},{"i":124,"hp":5,"ia":124,"n":"ant eggs"},{"i":106,"gp":8,"po":1,"exp":4,"hp":5,"n":"large spider"},{"i":108,"dmg":9,"n":"large rat","hp":4,"gp":2,"po":1,"t":[1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,38,40,41],"exp":2,"eat":1},{"i":96,"d":["grrr!"],"ch":3,"n":"coyote"},{"i":120,"d":["grar!"],"ch":3,"n":"lynx"},{"i":112,"ns":["snake","serpent"],"ch":1,"po":1,"t":[4,5,6,7],"dmg":9,"hp":7},{"i":114,"exp":6,"po":1,"n":"rattlesnake"},{"i":116,"exp":7,"t":[5,12,13,14,15,16],"hp":20,"n":"large eel"},{"i":95,"ch":1,"po":1,"fi":1,"hp":8,"n":"scorpion"},{"i":122,"exp":2,"eat":1,"gp":10,"cs":[{},[[3,9],[11,10]],[[3,14],[11,15]]],"fi":1,"t":[22,23],"n":"slime"},{"i":98,"ns":["big catfish","sturgeon"],"t":[12,13,14,15,16],"exp":9,"hp":25}]')
+basetypes=json_parse('[{"gp":0,"hp":10,"ch":1,"dmg":13,"t":[1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,38,40,41],"hos":1,"ar":1,"dex":8,"exp":2,"mva":1},{"mny":0,"newm":0,"mxm":0,"mxy":64,"fri":1,"mxx":128,"mn":0,"mnx":80},{"sf":1,"fri":false,"dg":1,"mnx":1,"mxm":27,"mxy":9,"newm":25,"mxx":9,"mny":1,"sy":1,"sz":1,"mn":0,"sx":1},{"i":70,"p":1,"ia":70,"n":"boat","fm":1,"f":2},{"i":94,"p":1,"ia":94,"n":"chest","szm":11,"shm":-2},{"i":39,"p":1,"iseq":12,"fi":1,"n":"fountain"},{"i":27,"p":1,"ia":27,"n":"ladder up","szm":20,"shm":12},{"i":26,"p":1,"ia":26,"n":"ladder down","szm":20,"shm":-3},{"i":80,"ar":0,"exp":1,"gp":10,"hos":false,"t":[1,2,3,4,11,17,22,30,40]},{"i":104,"hp":23,"ch":0,"dmg":18,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41],"ar":3,"po":1,"d":["chirp chirp!"],"exp":9},{"i":102,"gp":10,"d":["ahhrg!"],"ch":0,"dmg":18,"n":"zombie","exp":8,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41]},{"exp":5,"ch":2},{"i":82,"cs":[{},[[4,5],[15,4]]],"n":"hunter","d":["the woods are scary now.","i\'m safer at home."]},{"i":90,"ar":12,"hp":85,"dmg":60,"cs":[{},[[15,4]]],"n":"cop","d":["thanks for your help.","this is beyond my ability."]},{"i":77,"fi":1,"n":"merchant","cs":[{},[[1,4],[4,15],[6,1],[14,13]],[[1,4],[6,5],[14,10]],[[1,4],[4,15],[6,1],[14,3]]]},{"i":81,"fi":1,"n":"lady","cs":[{},[[2,9],[4,15],[13,14]],[[2,10],[4,15],[13,9]],[[2,11],[13,3]]]},{"i":92,"n":"scientist","cs":[{},[[6,12],[15,4]],[[6,12]],[[15,4]]]},{"i":78,"n":"sunbather","fi":1,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]],[[8,14]]],"d":["i saw the weirdo!","i\'m glad we\'ve got locks."]},{"i":79,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]]],"fi":1,"n":"bodybuilder","d":["weird stuff up north.","we\'re vacationing indoors."]},{"i":84,"n":"monk","d":["you are welcome here.","though we are troubled."],"ac":[{},[[2,5],[15,4]],[[2,4]],[2,5]]},{"i":86,"n":"student","cs":[{},[[15,4]],[[1,2],[15,4]],[[1,2]]]},{"i":75,"n":"child","cs":[{},[[15,4]],[[11,14],[3,8],[15,4]],[[11,14],[3,8]]],"d":["the animals aren\'t right.","mom says stay inside."]},{"i":88,"cs":[{},[[1,5],[8,2],[4,1],[2,12],[15,4]]],"n":"citizen"},{"mch":"food","n":"grocer"},{"mch":"armor","n":"clerk"},{"mch":"weapons","n":"vendor"},{"mch":"hospital","n":"medic"},{"mch":"guild","n":"dealer"},{"i":81,"n":"bartender","mch":"bar"},{"i":100},{},{"n":"woods weirdo","ch":-1,"t":[6]},{"n":"worker ant"},{"i":110,"n":"winged ant","t":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,38,40,41]},{"i":118,"hp":64,"dmg":23,"n":"soldier ant","exp":12},{"i":125,"n":"queen ant","hp":235,"dmg":42},{"i":123,"exp":5,"mva":0,"hp":10,"dmg":5,"fi":1,"n":"ant larva","t":[22]},{"i":124,"n":"ant eggs","hp":5,"ia":124},{"i":106,"gp":8,"hp":5,"po":1,"exp":4,"n":"large spider"},{"i":108,"gp":2,"hp":4,"dmg":9,"t":[1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,38,40,41],"po":1,"n":"large rat","exp":2,"eat":1},{"i":96,"n":"coyote","ch":3,"d":["grrr!"]},{"i":120,"n":"lynx","ch":3,"d":["grar!"]},{"i":112,"hp":7,"po":1,"dmg":9,"ch":1,"ns":["snake","serpent"],"t":[4,5,6,7]},{"i":114,"n":"rattlesnake","exp":6,"po":1},{"i":116,"hp":20,"exp":7,"n":"large eel","t":[5,12,13,14,15,16]},{"i":95,"hp":8,"po":1,"fi":1,"ch":1,"n":"scorpion"},{"i":122,"gp":10,"eat":1,"fi":1,"exp":2,"cs":[{},[[3,9],[11,10]],[[3,14],[11,15]]],"n":"slime","t":[22,23]},{"i":98,"hp":25,"exp":9,"ns":["big catfish","sturgeon"],"t":[12,13,14,15,16]}]')
 shiptype=basetypes[4]
 
 -- set our base objects base values. the latter portion is
 -- our bestiary. it holds all the different monster types that can
--- be encountered in the game. it builds off of the basic types
+-- be epython ordereddictncountered in the game. it builds off of the basic types
 -- already defined so most do not need many changes. actual
 -- monsters in the game are instances of creatures found in the
 -- bestiary.
@@ -146,9 +145,9 @@ for basetypenum=1,#basetypes do
     basetype=basetypes[9]
   elseif basetypenum<30 then
     basetype=basetypes[15]
-  elseif basetypenum<32 then
+  elseif basetypenum<33 then
     basetype=basetypes[11]
-  elseif basetypenum<38 then
+  elseif basetypenum<39 then
     basetype=basetypes[10]
   else
     basetype=basetypes[12]
@@ -310,7 +309,7 @@ end
 function initobjs()
   -- the maps structure holds information about all of the regular
   -- places in the game, dungeons as well as towns.
-  maps=json_parse('[{"ex":57,"ey":37,"i":[{"id":6,"x":103,"y":38}],"n":"village","c":[{"id":26,"x":91,"y":27},{"n":"fred","id":13,"x":89,"y":30},{"id":25,"x":85,"y":27},{"id":24,"x":100,"y":44},{"id":29,"x":108,"y":37},{"d":["welcome to anteform valley.","we\'re all glad you\'re here."],"id":16,"x":87,"y":37},{"n":"anne","id":22,"x":86,"y":51},{"x":80,"y":52,"n":"flip","id":22,"d":["greybeard hid his treasure!","it\'s on big sister island!"]},{"x":109,"y":40,"n":"gwen","id":23,"d":["steve, lou, & mary are gone.","i\'m not straying far."]},{"x":98,"y":47,"n":"ralph","id":23,"d":["radio square is southwest.","folks are missing there too."]},{"x":108,"y":30,"n":"sally","id":21,"d":["please find steve.","our rooms are adjacent."]},{"mva":1,"x":105,"y":37,"n":"bruce","id":14}],"mny":24,"sn":[{"msg":["an engagement ring; steve","was ready to propose."],"x":107,"y":27},{"msg":["mary studied astronomy","as a hobby."],"x":102,"y":33},{"msg":["lou was a mixed martial","arts champion."],"x":107,"y":33}],"mxx":112,"mxy":56,"sx":96,"sy":54},{"ex":26,"ey":33,"i":[{"ty":33,"tm":3,"x":123,"y":4,"id":8,"tz":0,"tx":126}],"n":"thinktank","mnx":104,"c":[{"x":116,"y":18,"n":"artemis","id":14,"d":["spooky stuff\'s afoot.","missing people; crazy animals."]},{"id":24,"x":110,"y":17},{"id":27,"x":106,"y":1},{"x":110,"y":22,"n":"dr. greene","id":17,"d":["concentrated it can burn.","a simple carboxyl."]},{"x":120,"y":20,"n":"dr. tetrado","id":17,"d":["find dr. tucker.","he\'s figured it out."]},{"x":110,"y":22,"n":"dr. wong","id":17,"d":["several of us are missing.","those researching up north."]}],"sn":[{"msg":["a myrmecology paper","by dr. greene."],"x":120,"y":6},{"msg":["a paper on irregular growth","in animals."],"x":105,"y":11},{"msg":["data on valley insect","populations."],"x":120,"y":11}],"mxy":24,"sx":116,"sy":23},{"i":[{"ty":4,"tm":2,"x":126,"y":33,"id":7,"tz":0,"tx":123}],"n":"the basement","mnx":112,"c":[{"x":115,"y":34,"n":"dr. tucker","id":17,"d":["it\'s semiochemicals.","controlled living corpses."]},{"x":119,"y":33,"n":"dr. agawon","id":17,"d":["they\'re literally brain dead.","higher functions burnt out."]}],"sn":[{"msg":["a paper on insect","pheromones."],"x":123,"y":33},{"msg":["a paper on formic acid","& its effects."],"x":124,"y":33},{"msg":["a paper on ants controlling","aphids."],"x":123,"y":35},{"msg":["a diagram of modified","aphid brains."],"x":113,"y":33}],"mny":32,"mxy":41,"sx":126,"sy":33},{"ex":34,"ey":17,"i":[{"ty":31,"tm":5,"x":84,"y":9,"id":7,"tz":0,"tx":113},{"id":6,"x":92,"y":6}],"n":"monastery","c":[{"n":"bro. meinrad","id":20,"x":89,"y":21},{"id":27,"x":85,"y":15},{"id":24,"x":99,"y":15},{"x":92,"y":1,"n":"sis. pat","id":20,"d":["i saw the flash in heaven.","the animals now punish us."]},{"x":82,"y":5,"n":"learner jo","id":21,"d":["i found the star jelly.","i think it turned the beasts."]},{"x":90,"y":6,"n":"sis. gail","id":20,"d":["god sent us a sign.","i saw his star fall to earth."]}],"sn":[{"msg":"he\'ll rise again!","x":92,"y":20},{"msg":["a secret prophesy about the","eschaton starting here."],"x":100,"y":9}],"mxx":105,"mxy":24,"sx":92,"sy":23},{"i":[{"ty":9,"tm":4,"x":113,"y":31,"id":8,"tz":0,"tx":84}],"n":"the top floor","mnx":112,"c":[{"x":117,"y":27,"n":"bro. stamos","id":20,"d":["we know of your quest.","we will help as we can."]},{"x":125,"y":30,"n":"mother francine","id":20,"d":["some of us were taken.","they are now possessed."]},{"x":126,"y":26,"n":"father ted","id":20,"d":["our dead brothers & sisters.","they are beset by demons."]}],"sn":[{"msg":["a list of the missing;","many monks & nuns are gone."],"x":126,"y":29}],"mny":24,"mxy":33,"sx":113,"sy":31},{"ex":3,"ey":47,"i":[{"id":4,"x":110,"y":61}],"n":"hermit cabin","mnx":103,"sn":[{"msg":["no one\'s been here in awhile.","seems the hermit\'s missing too."],"x":105,"y":61}],"mxx":113,"mny":56,"sx":111,"sy":57},{"ex":34,"ey":53,"n":"radio square","mnx":112,"c":[{"id":26,"x":114,"y":45},{"id":24,"x":123,"y":60},{"id":28,"x":123,"y":44},{"x":126,"y":46,"n":"becky","id":13,"d":["the hermit has a boat.","west past the billabong."]},{"x":114,"y":48,"n":"jack","id":13,"d":["it\'s in the n.e. cabin.","you can borrow my shotgun."]},{"x":121,"y":53,"n":"dj jazzy joe","id":15,"d":["the monks have seen them.","the woods weirdos."],"i":80},{"x":124,"y":58,"n":"emma","id":23,"d":["hang out in the bar none.","good woods weirdos discussion."]}],"sn":[{"msg":["the dj was investigating","the monks for the news."],"x":114,"y":53},{"msg":["some expired coupons &","a copy of \'coyote waits\'."],"x":114,"y":56},{"msg":["a zombie comic book; someone","drew a robe on the zombie."],"x":114,"y":59}],"mny":43,"sx":119,"sy":62},{"ex":38,"ey":60,"n":"southern cabin","mnx":96,"c":[{"x":101,"y":59,"n":"sue","id":13,"d":["you can borrow my vest.","you\'ll need it."]}],"mny":56,"mxx":104,"sx":100,"sy":62},{"ex":56,"ey":24,"n":"pennisula cabin","mnx":96,"c":[{"x":99,"y":58,"n":"jim","id":19,"d":["weird stuff up north.","we\'re vacationing indoors."]},{"x":98,"y":58,"n":"daisy","id":18,"d":["i saw the weirdo!","i\'m glad we\'ve got locks."]}],"mny":56,"mxx":104,"sx":100,"sy":62},{"ex":41,"ey":39,"n":"lakeside cabin","mnx":96,"c":[{"x":98,"y":58,"n":"jane","id":18,"d":["find my friend to the south.","she\'ll help."]}],"mny":56,"mxx":104,"sx":100,"sy":62},{"ex":21,"ey":28,"n":"western cabin","mnx":96,"sn":[{"msg":["a sketch of an ant","moving a rock."],"x":101,"y":60}],"mny":56,"mxx":104,"sx":100,"sy":62},{"ex":75,"ey":3,"mny":56,"mxx":104,"n":"hunting cabin","mnx":96,"sx":100,"sy":62},{"newm":20,"i":[{"ty":6,"tm":16,"x":94,"y":62,"id":7,"tz":1,"tx":3},{"id":37,"x":83,"y":59},{"id":37,"x":84,"y":59},{"id":37,"x":84,"y":60}],"n":"the queen\'s chamber","mnx":80,"mxm":15,"fri":false,"c":[{"id":35,"x":83,"y":60},{"id":36,"x":93,"y":58},{"id":34,"x":89,"y":57},{"id":34,"x":89,"y":62},{"id":34,"x":94,"y":57}],"ss":14,"mxx":96,"mny":56,"sx":113,"sy":31},{"ex":57,"ey":33,"i":[{"z":1,"id":7,"x":1,"y":8},{"z":2,"id":7,"x":8,"y":3},{"z":3,"id":7,"x":8,"y":1},{"z":3,"id":5,"x":4,"y":8}],"n":"greybeard\'s cave","l":[[0,-196,782,13263,15564,12288,16380,16384],[2,-12481,961,12348,16332,12,-3124,192],[12301,13260,192,15612,12348,13056,-3076,192]],"sy":8},{"ex":3,"ey":9,"i":[{"z":1,"id":7,"x":8,"y":8},{"z":1,"tm":0,"x":8,"y":1,"tz":0,"id":7,"ty":5,"tx":3},{"z":2,"id":7,"x":3,"y":3},{"z":2,"id":7,"x":1,"y":8}],"n":"vetusaur mine","l":[[205,15360,2876,16320,12351,-3328,1020,-19711],[48,16128,14332,768,-244,780,13119,28672]],"ss":14,"c":[{"z":1,"x":7,"y":8,"id":32,"ch":-2}],"sx":8,"sy":8},{"ex":7,"ey":3,"l":[[204,12480,13308,12300,16332,14348,16380,256]],"i":[{"z":1,"id":7,"x":4,"y":8},{"z":1,"tm":13,"x":3,"y":6,"tz":0,"id":8,"ty":62,"tx":94}],"n":"formika mine","ss":14,"sx":4,"sy":8}]')
+  maps=json_parse('[{"mny":24,"sn":[{"x":107,"msg":["an engagement ring; steve","was ready to propose."],"y":27},{"x":102,"msg":["mary studied astronomy","as a hobby."],"y":33},{"x":107,"msg":["lou was a mixed martial","arts champion."],"y":33}],"n":"village","mxx":112,"c":[{"x":91,"y":27,"id":26},{"pn":"fred","y":30,"x":89,"id":13},{"x":85,"y":27,"id":25},{"x":100,"y":44,"id":24},{"x":108,"y":37,"id":29},{"x":87,"d":["welcome to anteform valley.","we\'re all glad you\'re here."],"y":37,"id":16},{"pn":"anne","y":51,"x":86,"id":22},{"x":80,"y":52,"pn":"flip","d":["greybeard hid his treasure!","it\'s on big sister island!"],"id":22},{"x":109,"y":40,"pn":"gwen","d":["steve, lou, & mary are gone.","i\'m not straying far."],"id":23},{"x":98,"y":47,"pn":"ralph","d":["radio square is southwest.","folks are missing there too."],"id":23},{"x":108,"y":30,"pn":"sally","d":["please find steve.","our rooms are adjacent."],"id":21},{"pn":"bruce","y":37,"x":105,"id":14}],"mxy":56,"i":[{"x":103,"y":38,"id":6}],"ex":57,"sy":54,"sx":96,"ey":37},{"sn":[{"x":120,"msg":["a myrmecology paper by","dr. greene."],"y":6},{"x":105,"msg":["a paper on irregular growth","in animals."],"y":11},{"x":120,"msg":["data on valley insect","populations."],"y":11}],"n":"thinktank","c":[{"x":116,"mva":0,"y":18,"pn":"artemis","d":["spooky stuff\'s afoot.","missing people; crazy animals."],"id":14},{"x":110,"y":17,"id":24},{"x":106,"y":1,"id":27},{"x":111,"y":7,"pn":"dr. wong","d":["concentrated it can burn.","a simple carboxyl."],"id":17},{"x":120,"y":20,"pn":"dr. tetrado","d":["find dr. tucker.","he\'s figured it out."],"id":17},{"x":110,"y":22,"pn":"dr. greene","d":["several of us are missing.","those researching up north."],"id":17}],"i":[{"x":123,"tm":3,"y":4,"tz":0,"tx":126,"ty":33,"id":8}],"mxy":24,"mnx":104,"ex":26,"sy":23,"sx":116,"ey":33},{"mny":32,"sn":[{"x":123,"msg":["a paper on insect","pheromones."],"y":33},{"x":124,"msg":["a paper on formic acid","& its effects."],"y":33},{"x":123,"msg":["a paper on ants controlling","aphids."],"y":35},{"x":113,"msg":["a diagram of modified aphid","brains."],"y":33}],"n":"the basement","c":[{"x":115,"y":34,"pn":"dr. tucker","d":["it\'s semiochemicals.","controlled living corpses."],"id":17},{"x":119,"y":33,"pn":"dr. agawon","d":["they\'re literally brain dead.","higher functions burnt out."],"id":17}],"mnx":112,"mxy":43,"sy":33,"sx":126,"i":[{"x":126,"tm":2,"y":33,"tz":0,"tx":123,"ty":4,"id":7}]},{"sn":[{"x":92,"msg":"he\'ll rise again!","y":20},{"x":100,"msg":["a secret prophesy about the","eschaton starting here."],"y":9}],"n":"monastery","mxx":105,"c":[{"pn":"bro. meinrad","y":21,"x":89,"id":20},{"x":85,"y":15,"id":27},{"x":99,"y":15,"id":24},{"x":92,"y":1,"pn":"sis. pat","d":["i saw the flash in heaven.","the animals now punish us."],"id":20},{"x":82,"y":5,"pn":"learner jo","d":["i found the star jelly.","i think it turned the beasts."],"id":21},{"x":90,"y":6,"pn":"sis. gail","d":["god sent us a sign.","i saw his star fall to earth."],"id":20}],"mxy":24,"i":[{"x":84,"tm":5,"y":9,"tz":0,"tx":113,"ty":31,"id":7},{"x":92,"y":6,"id":6}],"ex":34,"sy":23,"sx":92,"ey":17},{"mny":24,"sn":[{"x":126,"msg":["a list of the missing;","many monks & nuns are gone."],"y":29}],"n":"the top floor","c":[{"x":117,"y":27,"pn":"bro. stamos","d":["we know of your quest.","we will help as we can."],"id":20},{"x":125,"y":30,"pn":"mother francine","d":["some of us were taken.","they are now possessed."],"id":20},{"x":126,"y":26,"pn":"father ted","d":["our dead brothers & sisters.","they are beset by demons."],"id":20}],"mnx":112,"mxy":33,"sy":31,"sx":113,"i":[{"x":113,"tm":4,"y":31,"tz":0,"tx":84,"ty":9,"id":8}]},{"mny":56,"sn":[{"x":105,"msg":["no one\'s been here in awhile.","seems the hermit\'s missing too."],"y":61}],"n":"hermit cabin","mxx":113,"i":[{"x":110,"y":61,"id":4}],"mnx":103,"ex":3,"sy":57,"sx":111,"ey":47},{"mny":43,"sn":[{"x":114,"msg":["the dj was investigating","the monks for the news."],"y":53},{"x":114,"msg":["some expired coupons & a","copy of \'coyote waits\'."],"y":56},{"x":114,"msg":["a zombie comic book; someone","drew a robe on the zombie."],"y":59}],"n":"radio square","c":[{"x":114,"y":45,"id":26},{"x":123,"y":60,"id":24},{"x":123,"y":44,"id":28},{"x":126,"y":46,"pn":"becky","d":["the hermit has a boat.","west past the billabong."],"id":13},{"x":114,"y":48,"pn":"jack","d":["it\'s in the n.e. cabin.","you can borrow my shotgun."],"id":13},{"x":121,"y":53,"pn":"dj jazzy joe","d":["the monks have seen them.","the woods weirdos."],"i":80,"id":15},{"x":124,"y":58,"pn":"emma","d":["hang out in the bar none.","good woods weirdos discussion."],"id":23}],"mnx":112,"ex":34,"sy":62,"sx":119,"ey":53},{"mny":56,"n":"southern cabin","mxx":104,"c":[{"x":101,"y":59,"pn":"sue","d":["you can borrow my vest.","you\'ll need it."],"id":13}],"mnx":96,"ex":38,"sy":62,"sx":100,"ey":60},{"mny":56,"n":"pennisula cabin","mxx":104,"c":[{"x":99,"y":58,"pn":"jim","d":["weird stuff up north.","we\'re vacationing indoors."],"id":19},{"x":98,"y":58,"pn":"daisy","d":["i saw the weirdo!","i\'m glad we\'ve got locks."],"id":18}],"mnx":96,"ex":56,"sy":62,"sx":100,"ey":24},{"mny":56,"n":"lakeside cabin","mxx":104,"c":[{"x":98,"y":58,"pn":"jane","d":["find my friend to the south.","she\'ll help."],"id":18}],"mnx":96,"ex":41,"sy":62,"sx":100,"ey":39},{"mny":56,"sn":[{"x":101,"msg":["a sketch of an ant","moving a rock."],"y":60}],"n":"western cabin","mxx":104,"mnx":96,"ex":21,"sy":62,"sx":100,"ey":28},{"mny":56,"mxx":104,"sx":100,"mnx":96,"ex":75,"sy":62,"n":"hunting cabin","ey":3},{"mny":56,"mxm":15,"n":"the queen\'s chamber","mxx":96,"ss":14,"c":[{"x":83,"y":60,"id":36},{"x":93,"y":58,"id":37},{"x":89,"y":57,"id":35},{"x":89,"y":62,"id":35},{"x":94,"y":57,"id":35}],"i":[{"x":94,"tm":16,"y":62,"tz":1,"tx":3,"ty":6,"id":7},{"x":83,"y":59,"id":38},{"x":84,"y":59,"id":38},{"x":84,"y":60,"id":38}],"mnx":80,"newm":26,"sy":31,"sx":113,"fri":false},{"l":[[0,-196,782,13263,15564,12288,16380,16384],[2,-12481,961,12348,16332,12,-3124,192],[12301,13260,192,15612,12348,13056,-3076,192]],"i":[{"x":1,"y":8,"z":1,"id":7},{"x":8,"y":3,"z":2,"id":7},{"x":8,"y":1,"z":3,"id":7},{"x":4,"y":8,"z":3,"id":5}],"ex":57,"sy":8,"n":"greybeard\'s cave","ey":33},{"l":[[205,15360,2876,16320,12351,-3328,1020,-19711],[48,16128,14332,768,-244,780,13119,28672]],"n":"vetusaur mine","ss":14,"c":[{"x":7,"z":1,"y":8,"ch":-2,"id":33}],"i":[{"x":8,"y":8,"z":1,"id":7},{"x":8,"tm":0,"z":1,"y":1,"tz":0,"tx":3,"ty":5,"id":7},{"x":3,"y":3,"z":2,"id":7},{"x":1,"y":8,"z":2,"id":7}],"ex":3,"sy":8,"sx":8,"ey":9},{"ss":14,"sx":4,"l":[[204,12480,13308,12300,16332,14348,16380,256]],"i":[{"x":4,"y":8,"z":1,"id":7},{"x":3,"tm":13,"z":1,"y":6,"tz":0,"tx":94,"ty":62,"id":8}],"ex":7,"sy":8,"n":"formika mine","ey":3}]')
   -- map 0 is special; it's the world map, the overview map.
   maps[0]=json_parse('{"n":"anteform valley","mnx":0,"mny":0,"mxx":80,"mxy":64,"newm":10,"mxm":11,"fri":false,"ss":0,"sn":[{"x":64,"y":43,"msg":"nw village"},{"x":68,"y":40,"msg":"n monastery"},{"x":68,"y":40,"msg":"w thinktank"},{"x":58,"y":21,"msg":"w monastery"},{"x":24,"y":3,"msg":["a meteorite hit here. it\'s","corrupted the water."]}]}')
 
@@ -443,7 +442,7 @@ function loadgame()
     storagenum+=1
   end
   boatx,boaty=separatevalues(dget(storagenum))
-  phase=dset(storagenum+1)
+  phase=dget(storagenum+1)
   if boatx>0 or boaty>0 then
     maps[0].con[boatx][boaty][0]=makemetaobj{ot=basetypes[4]}
   end
@@ -694,7 +693,7 @@ function inputprocessor(cmd)
     cmd=yield()
     if phase==0 then
       phase=1
-      definemonster{ot=basetypes[31],x=31,y=4,mn=0,t={6},ch=-1,n="woods weirdo"}
+      definemonster{ot=basetypes[32],x=31,y=4,mn=0}
     end
   end
 end
@@ -734,9 +733,7 @@ function definemonster(monster)
   local objtype,xcoord,ycoord,zcoord=monster.ot,monster.x,monster.y,monster.z or 0
   monster.ot=objtype
   makemetaobj(monster)
-  if monster.pn then
-    monster.n=monster.pn
-  elseif objtype.ns then
+  if objtype.ns then
     monster.n=objtype.ns[flr(rnd(#objtype.ns)+1)]
   end
   --if(objtype.is)monster.i=objtype.is[flr(rnd(#objtype.is)+1)]
@@ -956,7 +953,7 @@ function look_results(ldir,xcoord,ycoord)
   if signcontents then
     update_lines{cmd..signcontents[1],signcontents[2]}
   elseif content then
-    update_lines{cmd,content.n}
+    update_lines{cmd,(content.pn or content.n)}
   elseif curmap.dg then
     update_lines{cmd,getdungeonblk(xcoord,ycoord,hero.z)==0 and 'passage' or 'wall'}
   else
@@ -996,6 +993,7 @@ function attack_results(adir,xcoord,ycoord,magic)
     --logit('creature: nil '..xcoord..','..ycoord..' '..adir)
   --end
   if creature and creature.hp then
+    articlecreach=(creature.pn or "the "..creature.n)
     if magic or rnd(hero.dex+hero.lvl*8)>rnd(creature.dex+creature.ar) then
       damage-=rnd(creature.ar)
       creature.hd=3
@@ -1011,26 +1009,24 @@ function attack_results(adir,xcoord,ycoord,magic)
           update_lines{'a zombie?!'}
         elseif creature.ch==-2 then -- vetusaur mine
           update_lines{'an ant bigger than a cow!'}
-          phase,basetypes[32].ch,basetypes[33].ch,basetypes[34].ch,basetypes[36].ch,basetypes[30].ch,basetypes[31].ch,basetypes[39].ch=3,7,3,5,2,2,3,0
+          phase,basetypes[33].ch,basetypes[34].ch,basetypes[35].ch,basetypes[37].ch,basetypes[30].ch,basetypes[31].ch,basetypes[40].ch=3,7,3,5,2,2,3,0
         elseif creature.i>124 then
           msg=winmsg
           _draw=msg_draw
         end
         del(creatures[mapnum],creature)
       else
-        update_lines{cmd,'you hit the '..creature.n..'!'}
+        update_lines{cmd,'you hit '..articlecreach..'!'}
       end
       if curmap.fri then
         for townie in all(creatures[mapnum]) do
           townie.hos=1
           townie.d={"criminal!"}
-          if townie.n=='cop' then
-            townie.mva=1
-          end
+          townie.mva=1
         end
       end
     else
-      update_lines{cmd,'you miss the '..creature.n..'!'}
+      update_lines{cmd,'you miss '..articlecreach..'!'}
     end
   elseif mget(xcoord,ycoord)==29 then
     -- bash locked door
@@ -1585,25 +1581,25 @@ f8888565000300000004000040004000000300300000000000330333500050000500000505000d00
 909090807070704040606060606060606010101010404010101010c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c0c0404010c0c0c0c010
 10303020203070907070707080809090202020401111402020204011114020202020209191919191111191919191912041414141414141414141414141414141
 909090807070404040606060606060106060601010101040101022c0c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c010701240c0c0c0c010
-103020202030708080709080809090902020202011111111111111111111112020202091118292911111919282119120419282614192826151a0a0a0a041b141
+103020202030708080709080809090902020202011111111111111111111112020202091118292911111919282119120419282114192821151a0a0a0a041b141
 90909080707040404060606060601010606060101010104010101010c0c0c0c0c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c0c01010c0c0e0e0c010
-102030202030708090707080809080902020202020202020202020202020112020202091b01111d11111d11111b0912041616161416161614141414141416141
+102030202030708090707080809080902020202020202020202020202020112020202091b01111d11111d11111b0912041111111411111114141414141411141
 90908080704040606060606060606060601060601010101010104010c0101010c0c0c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c0c0c0c0e0e0c0c010
-10101020307080908090709080908090202020209191919191919191202011202020209191919191c1c191919191912041615454416154544182929282416141
+10101020307080908090709080908090202020209191919191919191202011202020209191919191c1c191919191912041115454411154544182929282411141
 9080808070704060606060606060106060101010404010101040c0c0c01010101010c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c0c0c0c0c0c0c0c01010
-10301010303080807070707080808090202020209154d38304735491202011202020202020111111111191b2a2b3912041616192416161924161616161416141
+10301010303080807070707080808090202020209154d38304735491202011202020202020111111111191b2a2b3912041111192411111924111111111411141
 90908080707040404040404010101010101010101010101010100110101010101010c0c0e0e0e0c0c0e0e0e0e0e0e0e0e0c0c0c0c0c0c0c0c0521010c0c01010
-102030102020307070707070808090902020202091a011111111a0914020112020202020111140c0401191111111912041616182416161824161616161416141
+102030102020307070707070808090902020202091a011111111a0914020112020202020111140c0401191111111912041111182411111824111111111411141
 9090908070704040101010101010101010101010404040401010c01010101010101010c0c0c0c0c0c0c0c0c0c0e0e0e0c0c0c0c0c01040104010104040401010
-1020201020203030303070708080909020202020915413a25353549140401111111111111140c072c091738373e291204141d1414141d1414141d14141416141
+1020201020203030303070708080909020202020915413a25353549140401111111111111140c072c091738373e2912041111111411111114111111111411141
 9090808070701010c0c0c0c0c0c0c0101010c0c0c0c0c0c0c0c0c010401040401010101010d0101010421010c0c0c0c0c0c0c010101010404040101040101010
-103020102020203030307070809090902020202091111111111111111111112020202020111140c0401111111111912041616161616161616161616161d16141
+103020102020203030307070809090902020202091111111111111111111112020202020111140c040111111111191204141d1414141d1414141d14141411141
 90908080707010c0c01010101010c0c0c0c0c01010101010c0101040401040402010101010d01010101010101010101010101010101040707040101010101010
-30303010f12030202030707080809090202020209111111111111191404011202020202020111111111111111111912041414141414141414141414141414141
+30303010f12030202030707080809090202020209111111111111191404011202020202020111111111111111111912041111111a0111111a011111111d11141
 90908080707010c010101010101010101010101010101010c0104040401040203010101010011010401010101010101010101010101010101010401010101010
-1040401010202020203070708080909020202020919191919191919140201120202020202010101091919191919191204161616141b141616161616161616141
+10404010102020202030707080809090202020209191919191919191402011202020202020101010919191919191912041a011111111111111111111a041a041
 908080c0c0c0c0c01060606060101010101010101010101001101010101030202020303010d01030304020101020204010404020202020202010101010101010
-1010101010202030707070708080909020202020202020202020202020201120209191919191911010101010101020204141414141414141d141414141414141
+10101010102020307070707080809090202020202020202020202020202011202091919191919110101010101010202041414141414141414141414141414141
 908090807070101010606060101010101010101010c0c0c0c0104040302020202020202010d01010103020202020203010202030302020302020202020101010
 f1101010102020202070807080808090209191919191919191919120202011202091f28383d29110919191919191202091919191919120919191919191919191
 9090808070706060604010101010101010c0c0c0c0c0101010102030203020202020202010d0d0d0102020303020202010203030302030303020202020202020
@@ -1624,15 +1620,15 @@ f1101010102020202070807080808090209191919191919191919120202011202091f28383d29110
 2010101010102030303070708080909020911111111111111111c111111111101010101010101010111091111111912020202020202020212121212121212020
 908080807070404040404040103030303030202020201010202020202020202040101010c01010809090909090303030202020d0d02030302030203030303020
 202010101020203030307070808090902091919191919191919191401040111111111111111111111111d111118291202091919191202021b3a2d22383212020
-908080807070704040403030303030303030303030303020202020202020204040105210c01090707070707090302030303030d0303030202030203030303030
-30202020202030303030707080809090201010101010101010101010101020201120202010101010101091118292912020919282914020216161616161212020
-909080807070704040303030303030303030303030303030303030303020304040401010c01090709090907070802020202020d0202020202020203030808030
-3020303030303030307070809080909020101010101010101010101010102020112020201010101010109191919191202091b011c12020c16161616161212020
-909080807070807070803030307030303030303030303030303030303030303040404070c01090709070707070707030303030d0303020707070203030707070
+908080807070704040403030303030303030303030303020202020202020204040105210c01090907070707090302030303030d0303030202030203030303030
+30202020202030303030707080809090201010101010101010101010101020201120202010101010101091118292912020919282914020211111111111212020
+909080807070704040303030303030303030303030303030303030303020304040401010c01090708090907070802020202020d0202020202020203030808030
+3020303030303030307070809080909020101010101010101010101010102020112020201010101010109191919191202091b011c12020c11111111111212020
+909080807070807070803030307030303030303030303030303030303030303040404070c01090709070709080707030303030d0303020707070203030707070
 3030303030303070708070708080909020202020202020202020202020202020112020202020202020202020202020202091919191402021435353b354212020
 909080808070707080703030708080307070707070707030303030303030303080808070c080907090709090909090803030d0d0303020708080703080808080
 80303030303080808080808080809090414141414141414141414141414141412020202020202020202020202020202020919282914020212121212121212020
-90908080908070907070803030308070707070808080703030303030307070808070c0c0c080907070707070709070707030d030707070707080708070909090
+90908080908070907070803030308070707070808080703030303030307070808070c0c0c080907070707070709080707030d030707070707080708070909090
 7070303030307070708090808090909041616161616161614161416161616141209191919191912091919191401020202091b011c12020202020202020202020
 90908080809080708070707070807070707080808070707070707070707070707070c080909070909090909070907070d0d0d080807070707070707090709070
 70707070707070808080908080909090416141514161616141616161616161412091b0b01111912091b011911010102020919191914020204082828282824020
@@ -1643,7 +1639,7 @@ f1101010102020202070807080808090209191919191919191919120202011202091f28383d29110
 90809090809080808080909080808080808080808080808070808080809090909080c08090808080809090808090909080808080808080809080808080808080
 9090909080808080808080808080909041614141416161614161616161416141209191d191919120919282911001c0c02091b0b0914020209163e373c2139120
 90808080809090909090909080909090908080809090909090908080909080808080909090909090908080809090808080808080909090909090909090909080
-808090909090908090908080909090904161616161616161416141616141b14120201061102020209191919140c0c0c020919191912020204082828282824020
+808090909090908090908080909090904161616161616161416141616141b14120201020101020209191919140c0c0c020919191912020204082828282824020
 90909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090
 909090909090909090909090909090904141414141414141414141414141414120202020202020202020202020c0c0c020202020202020202020202020202020
 __label__
@@ -1781,29 +1777,29 @@ __gff__
 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __map__
 0909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909141414141418141414141414181414141414141814141414141414141414141814141414141414141814141414141414
-0909090909090909090909090808090909090909090808090909080809090909080909080808090909090908080909090909090909090909090909080808080909090809090909090909090909090909140404010101010101010104040401010101010101010404141111111404161616161616161616161616161616040414
-090909080808080808090909090808080808080908080808080909080908080807080909090808080807080808080809090808080808080808080808080808080908080808080809090808080808090914040114141414141414010101010114141414141414010414362e2d1416161616161616161616161616161616160414
-09090808080808210908080808080808080808080c0c0c082009080806060608080808080809080808080808080808080808080908080808080808080808090808080808090809080808092408080909140101140b110b110b141814181418140b110b110b140101141111111c16141414141414141414141414141414161614
-090909080709090907070707070707070707080808070c0c0c07070606070606060606080907070707070707070707080807080808070707070708090809070909080909090809080909080909080909140101140b110b110b141111111111140b110b110b140101141111111404151616161616161616161616161a14161614
-090908210907070707070707070707070c0c0707070707070c0707070606060706060707070d0d0d0d0d0d0d0d0d0d070707080808070707070708080807070709070809090808080808090808090909140101140b110b110b14110c0c0c11140b110b110b140101141414141414141414141414141414141414141414161614
-0909090909070505070505050505050c0c070707040407040c07070404060607070707070d0d06060606060606060d0d0d0d0707070d0d0d0d0d0d07070709070909080909080709090809080808090914010114111111111114110c270c11141111111111140101142928161614292816161429281616142928161614161614
-0909080c0c0c0c0c0c050505050c0c0c05060606060404040c0c0c0c04040606040407070d0606060606060606060607070d0d0d0d0d040207070d07070707080808090809090709070808090908080918010114292811111114110c0c0c11141111112829140101181616161614161616161416161616141616161614161618
-09090809080707050c0c0c0c0c0c050c05060606060604040404040c0c0c040406060d0d0d0606060606060606060606060707020202020202020d0203070707030707080809090907090808090808091401011414141411111d11111111111d11111414141401011414141d141414141d141414141d141414141d1414161614
-0909092109080805050505050505050c050606060606060606060604040c01040d0d0d06060606060606060606060606060606040204040202030d020203030302030307070809090908090809080909140101141b111d11111418141114181411111d110a140101141616161616161616161616161616161616161614161614
-0909080c0c080707050505050505050c050606060606060606060606040c010110040604060606060606060606060606060606040404020202020d0d0d0d0d0d020202030708080808080908080809091401011414141414141401141c14011414141414141401011414171414171414171414141d1414141414141414161614
-090808080c070705050c0c0c0c0c050c050406060606060606060606010c0c0c0c0c0c060406060606060606060606060606060404020204020202020203020d0d0d0202070708080908070809090909140101010404040404010101110101010404040404010101140a161616161616160a14161616140a0a0a0a0a14161614
-090908080c070505050c0505050c050c0504060606060606060606060604040404040c0c06040606060606060606060606060604040204020202020202020202030d0d0d020707080908090708080809140101010101010101010101110101010101010101010101141616161616161616161d1616161d161616160a14161614
-090909080c0705050c0c0505050c0c0c0c0104040406060606060606060604040404010c0c0606060606060606060606060404040202020402020202020202020202030d0d0d0d070808080909080909140119191919191919190101110101191919191919191901143d313237343d2a373414161616140a0a0a0a0a14161614
-0909080c0c0c0c0c0c050505050505050c0c0c01040404040406060606040404040401040c0c06060606060606060606040404020402040202020202020202020302020202030d0d0d080708080809091401193c39323b323d190401110104194535322f2e4419011414141414141414141414141d1414141414141414161614
-0909080807050505050505050505050505010c0c0c0c0c01040404040404040404040104040c040404060606060606040401020402020202040202020202020202020202020202020d0d0d0d0d0d0909140119111111111111190401110104191111111111111901141616161616161616040404160404041616161616160414
-090808070707050505050505050505010101010101050c0c0c0c0c0c0104010401010101040c040404040404060606040101010101010202020202020202020202020202020202030202070708090909180119312e2a353d3119040111010419452b3b2e2a2d1901181612121212121212121216161616161616161616040418
-0909070707070505050505050505050101010101010101010c01010c0c0c0101010c2301010c04040404040404040404010101010101010101010202020202020202020203020202020707070809080914011911111111111119040111010419111111111111190114161211111111111111121616161414141414141d141414
-090907080705050c0c0c0c0505050505050101010101010c0c010101010c0c0c0c0c0101010c0101040104010101010101010101010101010101010102020202020202020202020702020708080908091401191111111111111904011101041911111111111119011416122c2a373d2e2e371216161614112829141111110b14
-090908080c0c0c0c05050c0c0c0c0c0c0505010c0c0c0c0c01010101010101010c0d01010110010101010101010101010101010101010101010101010202020202020303020202020707070708080809140119191911191919190111111101191919191119191901141612161616161616161216161614111128142811111114
-0909080807070505050505050505050c0c0c0c0c010101010101010401010101010d0d01010d0101010101010101010101010101010101010101010101020302020202020202030207070707080809091401010104110401010101111f110101010104110401010114161216161616161616121616161d111111142928111114
-090909080707040505050505050501010101010c01010101040101010101010101010d0d010d0d0101010c0c0c0c0c0c010101010101010404011f010101020303020202020202070207070808080909140101010111111111111111111111111111111101010101141612121212161212121216161614111111142811111114
-0909080807040404040404010101010101010c0c0101040101010101010101010c0c0c0c0c0c0c0c0c0c0c010c0c0e0c0c0c0c0c0c0c0c0c040101010101010103020202030202020207070808090909140101010101010101040404110404040101010101010101141616161616161616161616161614110b0b1411110b0b14
-090808080707040407070701010101010c0c0c0101010101040104010101010c0c0e0e0c0c01010c0e0e0c0c0c0e0e0e0e0e0e0e0e0e0c0c040104040101010101020202020202020207070708080909141414141418141414140411111104141414141814141414141414141414141814141416161614141414141414141414
+0909090909090909090909090808090909090909090808090909080809090909080909080808090909090908080909090909090909090909090909080808080909090809090909090909090909090909140404010101010101010104040401010101010101010404141111111404010101010101010101010101010101040414
+090909080808080808090909090808080808080908080808080909080908080807080909090808080807080808080809090808080808080808080808080808080908080808080809090808080808090914040114141414141414010101010114141414141414010414362e2d1401010101010101010101010101010101010414
+09090808080808210908080808080808080808080c0c0c082009080806060608080808080809080808080808080808080808080908080808080808080808090808080808090809080808092408080909140101140b110b110b141814181418140b110b110b140101141111111c02141414141414141414141414141414010114
+090909080709090907070707070707070707080808070c0c0c07070606070606060606080907070707070707070707080807080808070707070708090809070909080909090809080909080909080909140101140b110b110b141111111111140b110b110b140101141111111404151111111111111111111111111a14010114
+090908210907070707070707070707070c0c0707070707070c0707070606060706060707070d0d0d0d0d0d0d0d0d0d070707080808070707070708080807070709070809090808080808090808090909140101140b110b110b14110c0c0c11140b110b110b140101141414141414141414141414141414141414141414010114
+0909090909070505070505050505050c0c070707040407040c07070404060607070707070d0d06060606060606060d0d0d0d0707070d0d0d0d0d0d07070709070909080909080709090809080808090914010114111111111114110c270c11141111111111140101142928111114292811111429281111142928111114010114
+0909080c0c0c0c0c0c050505050c0c0c05060606060404040c0c0c0c04040606040407070d0606060606060606060607070d0d0d0d0d040207070d07070707080808090809090709070808090908080918010114292811111114110c0c0c11141111112829140101181111111114111111111411111111141111111114010118
+09090809080707050c0c0c0c0c0c050c05060606060604040404040c0c0c040406060d0d0d0606060606060606060606060707020202020202020d0203070707030707080809090907090808090808091401011414141411111d11111111111d11111414141401011414141d141414141d141414141d141414141d1414010114
+0909092109080805050505050505050c050606060606060606060604040c01040d0d0d06060606060606060606060606060606040204040202030d020203030302030307070809090908090809080909140101141b111d11111418141114181411111d110a140101141111111111111111111111111111111111111114010114
+0909080c0c080707050505050505050c050606060606060606060606040c010110040604060606060606060606060606060606040404020202020d0d0d0d0d0d020202030708080808080908080809091401011414141414141401141c14011414141414141401011414171414171414171414141d1414141414141414010114
+090808080c070705050c0c0c0c0c050c050406060606060606060606010c0c0c0c0c0c060406060606060606060606060606060404020204020202020203020d0d0d0202070708080908070809090909140101010404040404010101110101010404040404010101140a111111111111110a14111111140a0a0a0a0a14010114
+090908080c070505050c0505050c050c0504060606060606060606060604040404040c0c06040606060606060606060606060604040204020202020202020202030d0d0d020707080908090708080809140101010101010101010101110101010101010101010101141111111111111111111d1111111d111111110a14010114
+090909050c0705050c0c0505050c0c0c0c0104040406060606060606060604040404010c0c0606060606060606060606060404040202020402020202020202020202030d0d0d0d070808080909080909140119191919191919190101110101191919191919191901143d313237343d2a373414111111140a0a0a0a0a14010114
+09090c0c0c0c0c0c0c050505050505050c0c0c01040404040406060606040404040401040c0c06060606060606060606040404020402040202020202020202020302020202030d0d0d080708080809091401193c39323b323d190401110104194535322f2e4419011414141414141414141414141d1414141414141414010114
+09090c0807050505050505050505050505010c0c0c0c0c01040404040404040404040104040c040404060606060606040401020402020202040202020202020202020202020202020d0d0d0d0d0d0909140119111111111111190401110104191111111111111901140101010101010101040404020404040101010101010414
+090c0c070707050505050505050505010101010101050c0c0c0c0c0c0104010401010101040c040404040404060606040101010101010202020202020202020202020202020202030202070708090909180119312e2a353d3119040111010419452b3b2e2a2d1901180112121212121212121201020101010101010101040418
+0909070707070505050505050505050101010101010101010c01010c0c0c0101010c2301010c04040404040404040404010101010101010101010202020202020202020203020202020707070809080914011911111111111119040111010419111111111111190114011211111111111111120102011414141414141d141414
+090907080705050c0c0c0c0505050505050101010101010c0c010101010c0c0c0c0c0101010c0101040104010101010101010101010101010101010102020202020202020202020702020708080908091401191111111111111904011101041911111111111119011401122c2a373d2e2e371201020114112829141111110b14
+090908080c0c0c0c05050c0c0c0c0c0c0505010c0c0c0c0c01010101010101010c0d01010110010101010101010101010101010101010101010101010202020202020303020202020707070708080809140119191911191919190111111101191919191119191901140112111111111111111201020114111128142811111114
+0909080807070505050505050505050c0c0c0c0c010101010101010401010101010d0d01010d0101010101010101010101010101010101010101010101020302020202020202030207070707080809091401010104110401010101111f110101010104110401010114011211111111111111120102021d111111142928111114
+090909080707040505050505050501010101010c01010101040101010101010101010d0d010d0d0101010c0c0c0c0c0c010101010101010404011f010101020303020202020202070207070808080909140101010111111111111111111111111111111101010101140112121212111212121201020114111111142811111114
+0909080807040404040404010101010101010c0c0101040101010101010101010c0c0c0c0c0c0c0c0c0c0c010c0c0e0c0c0c0c0c0c0c0c0c040101010101010103020202030202020207070808090909140101010101010101040404110404040101010101010101140101010101020202020202020114110b0b1411110b0b14
+090808080707040407070701010101010c0c0c0101010101040104010101010c0c0e0e0c0c01010c0e0e0c0c0c0e0e0e0e0e0e0e0e0e0c0c040104040101010101020202020202020207070708080909141414141418141414140411111104141414141814141414141414141414141814141402020214141414141414141414
 090808080707070707070c0c0c0c0c0c0c01010101040101010101010101010c0e0e0e0e0c0c0c0c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c2401040c0101010101020302020202030202070708080909020202020202020202020202020202020202020202020202020202020202020214141414141414141414141414141414
 0909080c0c0c0c0c0c0c0c07070c010101010101010101040101010101010c0c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c01010c0c0c0c0c0101030202020202020202070708080909021919191919191919191919191919190202021919191919191919191919190214111d111111111d11110b140b111114
 090909080707070707070707070c010104010101010101010101010101010c0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0c0c0c0c0c0c0c0c0c010303020202020202020707080808090219332a2c342e3d19313e373d454619040202192a392a3b3d362e373d3c190214111411111128142811111411112814

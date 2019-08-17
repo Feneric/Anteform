@@ -52,8 +52,7 @@ basetypes={
     mxy=9,
     newm=25,
     mxm=27,
-    fri=false,
-    c={}
+    fri=false
   },{
     i=70,
     ia=70,
@@ -92,6 +91,7 @@ basetypes={
     -- base human
     i=80,
     ar=0,
+    t={1,2,3,4,11,17,22,30,40},
     hos=false,
     gp=10,
     exp=1
@@ -108,7 +108,7 @@ basetypes={
     d={"chirp chirp!"}
   },{
     n="zombie",
-    i=100,
+    i=102,
     t={1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41},
     dmg=18,
     gp=10,
@@ -128,7 +128,6 @@ basetypes={
     i=90,
     cs={{},{{15,4}}},
     n="cop",
-    mva=0,
     hp=85,
     dmg=60,
     ar=12,
@@ -198,9 +197,13 @@ basetypes={
     i=81
   },{
     -- zombie
+    i=100
   },{
     -- robed zombie
-    i=102
+  },{
+    n="woods weirdo",
+    t={6},
+    ch=-1
   },{
     n="worker ant",
   },{
@@ -343,17 +346,17 @@ maps={
     },
     c={
       {id=thing['vendor'],x=91,y=27},
-      {id=thing['hunter'],n="fred",x=89,y=30},
+      {id=thing['hunter'],pn="fred",x=89,y=30},
       {id=thing['clerk'],x=85,y=27},
       {id=thing['grocer'],x=100,y=44},
       {id=thing['bartender'],x=108,y=37},
       {id=thing['lady'],x=87,y=37,d={"welcome to anteform valley.","we\'re all glad you\'re here."}},
-      {id=thing['child'],n="anne",x=86,y=51},
-      {id=thing['child'],n="flip",x=80,y=52,d={"greybeard hid his treasure!","it\'s on big sister island!"}},
-      {id=thing['citizen'],n="gwen",x=109,y=40,d={"steve, lou, & mary are gone.","i\'m not straying far."}},
-      {id=thing['citizen'],n="ralph",x=98,y=47,d={"radio square is southwest.","folks are missing there too."}},
-      {id=thing['student'],n="sally",x=108,y=30,d={"please find steve.","our rooms are adjacent."}},
-      {id=thing['cop'],n="bruce",x=105,y=37,mva=1}
+      {id=thing['child'],pn="anne",x=86,y=51},
+      {id=thing['child'],pn="flip",x=80,y=52,d={"greybeard hid his treasure!","it\'s on big sister island!"}},
+      {id=thing['citizen'],pn="gwen",x=109,y=40,d={"steve, lou, & mary are gone.","i\'m not straying far."}},
+      {id=thing['citizen'],pn="ralph",x=98,y=47,d={"radio square is southwest.","folks are missing there too."}},
+      {id=thing['student'],pn="sally",x=108,y=30,d={"please find steve.","our rooms are adjacent."}},
+      {id=thing['cop'],pn="bruce",x=105,y=37}
     }
   },{
     n="thinktank",
@@ -364,7 +367,7 @@ maps={
     mnx=104,
     mxy=24,
     sn={
-      {x=120,y=6,msg={"a myrmecology paper","by dr. greene."}},
+      {x=120,y=6,msg={"a myrmecology paper by","dr. greene."}},
       {x=105,y=11,msg={"a paper on irregular growth","in animals."}},
       {x=120,y=11,msg={"data on valley insect","populations."}}
     },
@@ -372,12 +375,12 @@ maps={
       {id=thing['ladder down'],x=123,y=4,tm=3,tx=126,ty=33,tz=0}
     },
     c={
-      {id=thing['cop'],n="artemis",x=116,y=18,d={"spooky stuff\'s afoot.","missing people; crazy animals."}},
+      {id=thing['cop'],pn="artemis",x=116,y=18,mva=0,d={"spooky stuff\'s afoot.","missing people; crazy animals."}},
       {id=thing['grocer'],x=110,y=17},
       {id=thing['medic'],x=106,y=1},
-      {id=thing['scientist'],n="dr. greene",x=110,y=22,d={"concentrated it can burn.","a simple carboxyl."}},
-      {id=thing['scientist'],n="dr. tetrado",x=120,y=20,d={"find dr. tucker.","he\'s figured it out."}},
-      {id=thing['scientist'],n="dr. wong",x=110,y=22,d={"several of us are missing.","those researching up north."}}
+      {id=thing['scientist'],pn="dr. wong",x=111,y=7,d={"concentrated it can burn.","a simple carboxyl."}},
+      {id=thing['scientist'],pn="dr. tetrado",x=120,y=20,d={"find dr. tucker.","he\'s figured it out."}},
+      {id=thing['scientist'],pn="dr. greene",x=110,y=22,d={"several of us are missing.","those researching up north."}}
     }
   },{
     n="the basement",
@@ -385,19 +388,19 @@ maps={
     sy=33,
     mnx=112,
     mny=32,
-    mxy=41,
+    mxy=43,
     sn={
       {x=123,y=33,msg={"a paper on insect","pheromones."}},
       {x=124,y=33,msg={"a paper on formic acid","& its effects."}},
       {x=123,y=35,msg={"a paper on ants controlling","aphids."}},
-      {x=113,y=33,msg={"a diagram of modified","aphid brains."}}
+      {x=113,y=33,msg={"a diagram of modified aphid","brains."}}
     },
     i={
       {id=thing['ladder up'],x=126,y=33,tm=2,tx=123,ty=4,tz=0}
     },
     c={
-      {id=thing['scientist'],n="dr. tucker",x=115,y=34,d={"it\'s semiochemicals.","controlled living corpses."}},
-      {id=thing['scientist'],n="dr. agawon",x=119,y=33,d={"they\'re literally brain dead.","higher functions burnt out."}},
+      {id=thing['scientist'],pn="dr. tucker",x=115,y=34,d={"it\'s semiochemicals.","controlled living corpses."}},
+      {id=thing['scientist'],pn="dr. agawon",x=119,y=33,d={"they\'re literally brain dead.","higher functions burnt out."}},
     }
   },{
     n="monastery",
@@ -416,12 +419,12 @@ maps={
       {id=thing['fountain'],x=92,y=6}
     },
     c={
-      {id=thing['monk'],n="bro. meinrad",x=89,y=21},
+      {id=thing['monk'],pn="bro. meinrad",x=89,y=21},
       {id=thing['medic'],x=85,y=15},
       {id=thing['grocer'],x=99,y=15},
-      {id=thing['monk'],n="sis. pat",x=92,y=1,d={"i saw the flash in heaven.","the animals now punish us."}},
-      {id=thing['student'],n="learner jo",x=82,y=5,d={"i found the star jelly.","i think it turned the beasts."}},
-      {id=thing['monk'],n="sis. gail",x=90,y=6,d={"god sent us a sign.","i saw his star fall to earth."}}
+      {id=thing['monk'],pn="sis. pat",x=92,y=1,d={"i saw the flash in heaven.","the animals now punish us."}},
+      {id=thing['student'],pn="learner jo",x=82,y=5,d={"i found the star jelly.","i think it turned the beasts."}},
+      {id=thing['monk'],pn="sis. gail",x=90,y=6,d={"god sent us a sign.","i saw his star fall to earth."}}
     }
   },{
     n="the top floor",
@@ -437,9 +440,9 @@ maps={
       {id=thing['ladder down'],x=113,y=31,tm=4,tx=84,ty=9,tz=0}
     },
     c={
-      {id=thing['monk'],n="bro. stamos",x=117,y=27,d={"we know of your quest.","we will help as we can."}},
-      {id=thing['monk'],n="mother francine",x=125,y=30,d={"some of us were taken.","they are now possessed."}},
-      {id=thing['monk'],n="father ted",x=126,y=26,d={"our dead brothers & sisters.","they are beset by demons."}},
+      {id=thing['monk'],pn="bro. stamos",x=117,y=27,d={"we know of your quest.","we will help as we can."}},
+      {id=thing['monk'],pn="mother francine",x=125,y=30,d={"some of us were taken.","they are now possessed."}},
+      {id=thing['monk'],pn="father ted",x=126,y=26,d={"our dead brothers & sisters.","they are beset by demons."}},
     }
   },{
     n="hermit cabin",
@@ -466,17 +469,17 @@ maps={
     mny=43,
     sn={
       {x=114,y=53,msg={"the dj was investigating","the monks for the news."}},
-      {x=114,y=56,msg={"some expired coupons &","a copy of \'coyote waits\'."}},
+      {x=114,y=56,msg={"some expired coupons & a","copy of \'coyote waits\'."}},
       {x=114,y=59,msg={"a zombie comic book; someone","drew a robe on the zombie."}}
     },
     c={
       {id=thing['vendor'],x=114,y=45},
       {id=thing['grocer'],x=123,y=60},
       {id=thing['dealer'],x=123,y=44},
-      {id=thing['hunter'],n="becky",x=126,y=46,d={"the hermit has a boat.","west past the billabong."}},
-      {id=thing['hunter'],n="jack",x=114,y=48,d={"it\'s in the n.e. cabin.","you can borrow my shotgun."}},
-      {id=thing['merchant'],n="dj jazzy joe",x=121,y=53,i=80,d={"the monks have seen them.","the woods weirdos."}},
-      {id=thing['citizen'],n="emma",x=124,y=58,d={"hang out in the bar none.","good woods weirdos discussion."}}
+      {id=thing['hunter'],pn="becky",x=126,y=46,d={"the hermit has a boat.","west past the billabong."}},
+      {id=thing['hunter'],pn="jack",x=114,y=48,d={"it\'s in the n.e. cabin.","you can borrow my shotgun."}},
+      {id=thing['merchant'],pn="dj jazzy joe",x=121,y=53,i=80,d={"the monks have seen them.","the woods weirdos."}},
+      {id=thing['citizen'],pn="emma",x=124,y=58,d={"hang out in the bar none.","good woods weirdos discussion."}}
     }
   },{
     n="southern cabin",
@@ -488,7 +491,7 @@ maps={
     mxx=104,
     mny=56,
     c={
-      {id=thing['hunter'],n="sue",x=101,y=59,d={"you can borrow my vest.","you\'ll need it."}}
+      {id=thing['hunter'],pn="sue",x=101,y=59,d={"you can borrow my vest.","you\'ll need it."}}
     }
   },{
     n="pennisula cabin",
@@ -500,8 +503,8 @@ maps={
     mxx=104,
     mny=56,
     c={
-      {id=thing['bodybuilder'],n="jim",x=99,y=58,d={"weird stuff up north.","we\'re vacationing indoors."}},
-      {id=thing['sunbather'],n="daisy",x=98,y=58,d={"i saw the weirdo!","i\'m glad we\'ve got locks."}}
+      {id=thing['bodybuilder'],pn="jim",x=99,y=58,d={"weird stuff up north.","we\'re vacationing indoors."}},
+      {id=thing['sunbather'],pn="daisy",x=98,y=58,d={"i saw the weirdo!","i\'m glad we\'ve got locks."}}
     }
   },{
     n="lakeside cabin",
@@ -513,7 +516,7 @@ maps={
     mxx=104,
     mny=56,
     c={
-      {id=thing['sunbather'],n="jane",x=98,y=58,d={"find my friend to the south.","she\'ll help."}}
+      {id=thing['sunbather'],pn="jane",x=98,y=58,d={"find my friend to the south.","she\'ll help."}}
     }
   },{
     n="western cabin",
@@ -545,7 +548,7 @@ maps={
     mxx=96,
     fri=false,
     ss=14,
-    newm=20,
+    newm=26,
     mxm=15,
     i={
       {id=thing['ladder up'],x=94,y=62,tm=16,tx=3,ty=6,tz=1},

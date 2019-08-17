@@ -7,12 +7,6 @@ Anteform
   :alt: Anteform Logo
   :align: right
 
-Not Yet Ready!
---------------
-
-Anteform is not yet ready to be played. Please do not yet download it and try to play
-it. It'll only lead to heartbreak and (even worse) spoilers.
-
 What Is It?
 -----------
 
@@ -24,8 +18,8 @@ effects, and music that should help one recollect those classics. More important
 it is a fully playable (although not yet winnable) game with its own backstory, plot,
 setting, and characters.
 
-It was written using the Minima engine for `PICO-8`_, and when completed will be playable
-online through the Lexaloffle PICO-8 site and available for download for Linux, macOS,
+It was written using the Minima Engine for `PICO-8`_, and can be played online on the
+`Anteform at Lexaloffle page`_ and available for download for Linux, macOS,
 MS-Windows, and Raspberry Pi through the `Anteform Itch.io page`_.
 
 .. image:: AnteformValley.png
@@ -89,6 +83,7 @@ Minima can be downloaded from the `Minima Itch.io page`_ and its source code can
 downloaded from the `Minima GitHub page`_. It can be played online at the
 `Minima at Lexaloffle page`_.
 
+.. _Anteform at Lexaloffle page: https://www.lexaloffle.com/bbs/?tid=35093
 .. _Anteform Itch.io page: https://feneric.itch.io/anteform
 .. _Minima Itch.io page: https://feneric.itch.io/minima
 .. _Minima GitHub page: https://github.com/Feneric/Minima
