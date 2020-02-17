@@ -4,15 +4,14 @@ __lua__
 -- anteform
 -- by feneric
 
+
+
 -- a function for logging to an output log file.
 -- function logit(entry)
 --   printh(entry,'anteform.out')
 -- end
 
 -- register json context here
-_tok={
- ['true']=true,
- ['false']=false}
 _g={}
 
 -- json parser
@@ -26,7 +25,7 @@ function match(s,tokens)
   return false
 end
 
-function skip_delim(wrkstr, pos, delim, err_if_missing)
+function skip_delim(wrkstr, pos, delim) -- , err_if_missing)
  if sub(wrkstr,pos,pos)!=delim then
   -- if(err_if_missing) assert'delimiter missing'
   return pos,false
@@ -34,14 +33,15 @@ function skip_delim(wrkstr, pos, delim, err_if_missing)
  return pos+1,true
 end
 
-function parse_str_val(wrkstr, pos, val)
+function parse_str_val(wrkstr, pos, quoted, val)
   val=val or ''
   -- if pos>#wrkstr then
   --   assert'end of input found while parsing string.'
   -- end
   local c=sub(wrkstr,pos,pos)
-  if(c=='"') return _g[val] or val,pos+1
-  return parse_str_val(wrkstr,pos+1,val..c)
+  if(quoted and c=='"') return _g[val] or val,pos+1
+  if(not quoted and match(c,":,]}")) return _g[val] or val,pos
+  return parse_str_val(wrkstr,pos+1,quoted,val..c)
 end
 
 function parse_num_val(wrkstr,pos,val)
@@ -50,7 +50,7 @@ function parse_num_val(wrkstr,pos,val)
   --   assert'end of input found while parsing string.'
   -- end
   local c=sub(wrkstr,pos,pos)
-  if(not match(c,"-0123456789.")) return tonum(val),pos
+  if(not tonum(c.."0")) return tonum(val),pos
   return parse_num_val(wrkstr,pos+1,val..c)
 end
 -- public values and functions.
@@ -59,7 +59,7 @@ function json_parse(wrkstr, pos, end_delim)
   pos=pos or 1
   -- if(pos>#wrkstr) assert'reached unexpected end of input.'
   local first=sub(wrkstr,pos,pos)
-  if match(first,"{[") then
+  if table_delims[first] then
     local obj,key,delim_found={},true,true
     pos+=1
     while true do
@@ -76,17 +76,20 @@ function json_parse(wrkstr, pos, end_delim)
   end
   elseif first=='"' then
     -- parse a string (or a reference to a global object)
-    return parse_str_val(wrkstr,pos+1)
-  elseif match(first,"-0123456789") then
+    return parse_str_val(wrkstr,pos+1,true)
+  elseif tonum(first.."0") then
     -- parse a number.
     return parse_num_val(wrkstr, pos)
   elseif first==end_delim then  -- end of an object or array.
     return nil,pos+1
-  else  -- parse true, false
-    for lit_str,lit_val in pairs(_tok) do
+  else
+    -- parse true, false
+    for lit_str,lit_val in pairs({['true']=true,['false']=false}) do
       local lit_end=pos+#lit_str-1
-      if sub(wrkstr,pos,lit_end)==lit_str then return lit_val,lit_end+1 end
+      if (sub(wrkstr,pos,lit_end)==lit_str) return lit_val,lit_end+1
     end
+    -- parse unqoted string, invalid json but saves source bytes
+    return parse_str_val(wrkstr,pos,false)
     -- assert'invalid json token'
   end
 end
@@ -110,7 +113,7 @@ end
 
 -- the types of terrain that exist in the game. each is
 -- given a name and a list of allowed monster types.
-terrains={"plains","bare ground","hills","scrub","swamp","forest","foothills","mountains","tall mountain","filing cabinet","bed","water","water","deep water","deep water","bridge","brick road","brick","mismatched brick","stone","stone","road","barred window","window","brick","ladder down","ladder up","door","locked door","open door","sign","crater","cave","facility","monastery","cabin","village","helipad","fountain","chair","desk"}
+terrains=json_parse'[plains,bare ground,hills,scrub,swamp,forest,foothills,mountains,tall mountain,filing cabinet,bed,water,water,deep water,deep water,bridge,brick road,brick,mismatched brick,stone,stone,road,barred window,window,brick,ladder down,ladder up,door,locked door,open door,sign,crater,cave,facility,monastery,cabin,village,helipad,fountain,chair,desk]'
 -- counter terrain types are special as they can be talked
 -- over (essential for purchasing). there are a lot of them
 -- as all the letters are represented.
@@ -125,7 +128,7 @@ end
 
 -- basetypes are the objects we mean to use to make objects.
 -- they inherit (often indirectly) from our root object.
-basetypes=json_parse('[{"gp":0,"hp":10,"ch":1,"dmg":13,"t":[1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,38,40,41],"hos":1,"ar":1,"dex":8,"exp":2,"mva":1},{"mny":0,"newm":0,"mxm":0,"mxy":64,"fri":1,"mxx":128,"mn":0,"mnx":80},{"sf":1,"fri":false,"dg":1,"mnx":1,"mxm":27,"mxy":9,"newm":25,"mxx":9,"mny":1,"sy":1,"sz":1,"mn":0,"sx":1},{"i":70,"p":1,"ia":70,"n":"boat","fm":1,"f":2},{"i":94,"p":1,"ia":94,"n":"chest","szm":11,"shm":-2},{"i":39,"p":1,"iseq":12,"fi":1,"n":"fountain"},{"i":27,"p":1,"ia":27,"n":"ladder up","szm":20,"shm":12},{"i":26,"p":1,"ia":26,"n":"ladder down","szm":20,"shm":-3},{"i":80,"ar":0,"exp":1,"gp":10,"hos":false,"t":[1,2,3,4,11,17,22,30,40]},{"i":104,"hp":23,"ch":0,"dmg":18,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41],"ar":3,"po":1,"d":["chirp chirp!"],"exp":9},{"i":102,"gp":10,"d":["ahhrg!"],"ch":0,"dmg":18,"n":"zombie","exp":8,"t":[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41]},{"exp":5,"ch":2},{"i":82,"cs":[{},[[4,5],[15,4]]],"n":"hunter","d":["the woods are scary now.","i\'m safer at home."]},{"i":90,"ar":12,"hp":85,"dmg":60,"cs":[{},[[15,4]]],"n":"cop","d":["thanks for your help.","this is beyond my ability."]},{"i":77,"fi":1,"n":"merchant","cs":[{},[[1,4],[4,15],[6,1],[14,13]],[[1,4],[6,5],[14,10]],[[1,4],[4,15],[6,1],[14,3]]]},{"i":81,"fi":1,"n":"lady","cs":[{},[[2,9],[4,15],[13,14]],[[2,10],[4,15],[13,9]],[[2,11],[13,3]]]},{"i":92,"n":"scientist","cs":[{},[[6,12],[15,4]],[[6,12]],[[15,4]]]},{"i":78,"n":"sunbather","fi":1,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]],[[8,14]]],"d":["i saw the weirdo!","i\'m glad we\'ve got locks."]},{"i":79,"cs":[{},[[8,12],[15,4]],[[8,12]],[[15,4]]],"fi":1,"n":"bodybuilder","d":["weird stuff up north.","we\'re vacationing indoors."]},{"i":84,"n":"monk","d":["you are welcome here.","though we are troubled."],"ac":[{},[[2,5],[15,4]],[[2,4]],[2,5]]},{"i":86,"n":"student","cs":[{},[[15,4]],[[1,2],[15,4]],[[1,2]]]},{"i":75,"n":"child","cs":[{},[[15,4]],[[11,14],[3,8],[15,4]],[[11,14],[3,8]]],"d":["the animals aren\'t right.","mom says stay inside."]},{"i":88,"cs":[{},[[1,5],[8,2],[4,1],[2,12],[15,4]]],"n":"citizen"},{"mch":"food","n":"grocer"},{"mch":"armor","n":"clerk"},{"mch":"weapons","n":"vendor"},{"mch":"hospital","n":"medic"},{"mch":"guild","n":"dealer"},{"i":81,"n":"bartender","mch":"bar"},{"i":100},{},{"n":"woods weirdo","ch":-1,"t":[6]},{"n":"worker ant"},{"i":110,"n":"winged ant","t":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,38,40,41]},{"i":118,"hp":64,"dmg":23,"n":"soldier ant","exp":12},{"i":125,"n":"queen ant","hp":235,"dmg":42},{"i":123,"exp":5,"mva":0,"hp":10,"dmg":5,"fi":1,"n":"ant larva","t":[22]},{"i":124,"n":"ant eggs","hp":5,"ia":124},{"i":106,"gp":8,"hp":5,"po":1,"exp":4,"n":"large spider"},{"i":108,"gp":2,"hp":4,"dmg":9,"t":[1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,38,40,41],"po":1,"n":"large rat","exp":2,"eat":1},{"i":96,"n":"coyote","ch":3,"d":["grrr!"]},{"i":120,"n":"lynx","ch":3,"d":["grar!"]},{"i":112,"hp":7,"po":1,"dmg":9,"ch":1,"ns":["snake","serpent"],"t":[4,5,6,7]},{"i":114,"n":"rattlesnake","exp":6,"po":1},{"i":116,"hp":20,"exp":7,"n":"large eel","t":[5,12,13,14,15,16]},{"i":95,"hp":8,"po":1,"fi":1,"ch":1,"n":"scorpion"},{"i":122,"gp":10,"eat":1,"fi":1,"exp":2,"cs":[{},[[3,9],[11,10]],[[3,14],[11,15]]],"n":"slime","t":[22,23]},{"i":98,"hp":25,"exp":9,"ns":["big catfish","sturgeon"],"t":[12,13,14,15,16]}]')
+basetypes=json_parse('[{gp:0,hp:10,ch:1,dmg:13,t:[1,2,3,4,5,6,7,8,10,16,17,26,27,30,31,32,38,40,41],hos:1,ar:1,dex:8,exp:2,mva:1},{mny:0,newm:0,mxm:0,mxy:64,fri:1,mxx:128,mn:0,mnx:80},{sf:1,fri:false,dg:1,mnx:1,mxm:27,mxy:9,newm:25,mxx:9,mny:1,sy:1,sz:1,mn:0,sx:1},{i:70,p:1,ia:70,n:boat,fm:1,f:2},{i:94,p:1,ia:94,n:chest,szm:11,shm:-2},{i:39,p:1,iseq:12,fi:1,n:fountain},{i:27,p:1,ia:27,n:ladder up,szm:20,shm:12},{i:26,p:1,ia:26,n:ladder down,szm:20,shm:-3},{i:80,ar:0,exp:1,gp:10,hos:false,t:[1,2,3,4,11,17,22,30,40]},{i:104,hp:23,ch:0,dmg:18,t:[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41],ar:3,po:1,d:[chirp chirp!],exp:9},{i:102,gp:10,d:[ahhrg!],ch:0,dmg:18,n:zombie,exp:8,t:[1,2,3,4,5,6,7,8,9,10,16,17,22,26,27,30,31,32,38,40,41]},{exp:5,ch:2},{i:82,cs:[{},[[4,5],[15,4]]],n:hunter,d:[the woods are scary now.,i\'m safer at home.]},{i:90,ar:12,hp:85,dmg:60,cs:[{},[[15,4]]],n:cop,d:[thanks for your help.,this is beyond my ability.]},{i:77,fi:1,n:merchant,cs:[{},[[1,4],[4,15],[6,1],[14,13]],[[1,4],[6,5],[14,10]],[[1,4],[4,15],[6,1],[14,3]]]},{i:81,fi:1,n:lady,cs:[{},[[2,9],[4,15],[13,14]],[[2,10],[4,15],[13,9]],[[2,11],[13,3]]]},{i:92,n:scientist,cs:[{},[[6,12],[15,4]],[[6,12]],[[15,4]]]},{i:78,n:sunbather,fi:1,cs:[{},[[8,12],[15,4]],[[8,12]],[[15,4]],[[8,14]]],d:[i saw the weirdo!,i\'m glad we\'ve got locks.]},{i:79,cs:[{},[[8,12],[15,4]],[[8,12]],[[15,4]]],fi:1,n:bodybuilder,d:[weird stuff up north.,we\'re vacationing indoors.]},{i:84,n:monk,d:[you are welcome here.,though we are troubled.],ac:[{},[[2,5],[15,4]],[[2,4]],[2,5]]},{i:86,n:student,cs:[{},[[15,4]],[[1,2],[15,4]],[[1,2]]]},{i:75,n:child,cs:[{},[[15,4]],[[11,14],[3,8],[15,4]],[[11,14],[3,8]]],d:[the animals aren\'t right.,mom says stay inside.]},{i:88,cs:[{},[[1,5],[8,2],[4,1],[2,12],[15,4]]],n:citizen},{mch:food,n:grocer},{mch:armor,n:clerk},{mch:weapons,n:vendor},{mch:hospital,n:medic},{mch:guild,n:dealer},{i:81,n:bartender,mch:bar},{i:100},{},{n:woods weirdo,ch:-1,t:[6]},{n:worker ant},{i:110,n:winged ant,t:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,22,25,26,27,30,31,32,38,40,41]},{i:118,hp:64,dmg:23,n:soldier ant,exp:12},{i:125,n:queen ant,hp:235,dmg:42},{i:123,exp:5,mva:0,hp:10,dmg:5,fi:1,n:ant larva,t:[22]},{i:124,n:ant eggs,hp:5,ia:124},{i:106,gp:8,hp:5,po:1,exp:4,n:large spider},{i:108,gp:2,hp:4,dmg:9,t:[1,2,3,4,5,6,7,8,10,16,17,22,26,27,30,31,32,38,40,41],po:1,n:large rat,exp:2,eat:1},{i:96,n:coyote,ch:3,d:[grrr!]},{i:120,n:lynx,ch:3,d:[grar!]},{i:112,hp:7,po:1,dmg:9,ch:1,ns:[snake,serpent],t:[4,5,6,7]},{i:114,n:rattlesnake,exp:6,po:1},{i:116,hp:20,exp:7,n:large eel,t:[5,12,13,14,15,16]},{i:95,hp:8,po:1,fi:1,ch:1,n:scorpion},{i:122,gp:10,eat:1,fi:1,exp:2,cs:[{},[[3,9],[11,10]],[[3,14],[11,15]]],n:slime,t:[22,23]},{i:98,hp:25,exp:9,ns:[big catfish,sturgeon],t:[12,13,14,15,16]}]')
 shiptype=basetypes[4]
 
 -- set our base objects base values. the latter portion is
@@ -203,11 +206,7 @@ shop={
   food=function()
     return checkpurchase({"$12 for 25 food; a\80\80\82\79\86\69? "},
       function(cmd)
-        if cmd=='a' then
-          return hero.gp>=12
-        else
-          return nil
-        end
+        return cmd=='a' and hero.gp>=12 or nil
       end,
       function()
         hero.gp-=12
@@ -245,15 +244,11 @@ shop={
   bar=function()
     return checkpurchase({"$5 per drink; a\80\80\82\79\86\69? "},
       function(cmd)
-        if cmd=='a' then
-          return hero.gp>=5
-        else
-          return nil
-        end
+        return cmd=='a' and hero.gp>=5 or nil
       end,
       function()
         hero.gp-=5
-        rumors=json_parse('["i think they\'re aliens.","funny citronella smell.","they smell like lemons.","they act like zombies.","they look burned.","the cult knows something.","they spook the animals."]')
+        rumors=json_parse('[i think they\'re aliens.,funny citronella smell.,they smell like lemons.,they act like zombies.,they look burned.,the cult knows something.,they spook the animals.]')
         update_lines{"while socializing, you hear:"}
         return '"'..rumors[flr(rnd(7)+1)]..'"'
       end
@@ -285,18 +280,18 @@ function makenameforamount(itemtype)
 end
 
 -- armor definitions
-armors=json_parse('{"south":{"n":"cloth","a":8,"p":12},"west":{"n":"leather","a":23,"p":99},"east":{"n":"flak","a":40,"p":300},"north":{"n":"vest","a":70}}')
+armors=json_parse('{south:{n:cloth,a:8,p:12},west:{n:leather,a:23,p:99},east:{n:flak,a:40,p:300},north:{n:vest,a:70}}')
 armornames=makenameforamount(armors)
 
 -- weapon definitions
-weapons=json_parse('{"d":{"n":"dagger","a":8,"p":8},"c":{"n":"club","a":12,"p":40},"a":{"n":"axe","a":18,"p":75},"s":{"n":"shotgun","a":40}}')
+weapons=json_parse('{d:{n:dagger,a:8,p:8},c:{n:club,a:12,p:40},a:{n:axe,a:18,p:75},s:{n:shotgun,a:40}}')
 weaponnames=makenameforamount(weapons)
 
 -- spell definitions
-spells=json_parse('{"a":{"n":"aim","c":3,"a":1},"f":{"n":"first aid","c":5,"a":1,"p":8},"c":{"n":"cure","c":7,"p":10},"x":{"n":"medic","a":6,"p":25}}')
+spells=json_parse('{a:{n:aim,c:3,a:1},f:{n:first aid,c:5,a:1,p:8},c:{n:cure,c:7,p:10},x:{n:medic,a:6,p:25}}')
 
 -- tool definitions
-tools=json_parse('{"west":{"n":"4 batteries","attr":"ts","p":12,"q":4},"east":{"n":"a key","attr":"keys","p":23,"q":1}}')
+tools=json_parse('{west:{n:"4 batteries",attr:ts,p:12,q:4},east:{n:a key,attr:keys,p:23,q:1}}')
 
 function setmap()
   local songstrt=curmap.ss
@@ -309,9 +304,9 @@ end
 function initobjs()
   -- the maps structure holds information about all of the regular
   -- places in the game, dungeons as well as towns.
-  maps=json_parse('[{"mny":24,"sn":[{"x":107,"msg":["an engagement ring; steve","was ready to propose."],"y":27},{"x":102,"msg":["mary studied astronomy","as a hobby."],"y":33},{"x":107,"msg":["lou was a mixed martial","arts champion."],"y":33}],"n":"village","mxx":112,"c":[{"x":91,"y":27,"id":26},{"pn":"fred","y":30,"x":89,"id":13},{"x":85,"y":27,"id":25},{"x":100,"y":44,"id":24},{"x":108,"y":37,"id":29},{"x":87,"d":["welcome to anteform valley.","we\'re all glad you\'re here."],"y":37,"id":16},{"pn":"anne","y":51,"x":86,"id":22},{"x":80,"y":52,"pn":"flip","d":["greybeard hid his treasure!","it\'s on big sister island!"],"id":22},{"x":109,"y":40,"pn":"gwen","d":["steve, lou, & mary are gone.","i\'m not straying far."],"id":23},{"x":98,"y":47,"pn":"ralph","d":["radio square is southwest.","folks are missing there too."],"id":23},{"x":108,"y":30,"pn":"sally","d":["please find steve.","our rooms are adjacent."],"id":21},{"pn":"bruce","y":37,"x":105,"id":14}],"mxy":56,"i":[{"x":103,"y":38,"id":6}],"ex":57,"sy":54,"sx":96,"ey":37},{"sn":[{"x":120,"msg":["a myrmecology paper by","dr. greene."],"y":6},{"x":105,"msg":["a paper on irregular growth","in animals."],"y":11},{"x":120,"msg":["data on valley insect","populations."],"y":11}],"n":"thinktank","c":[{"x":116,"mva":0,"y":18,"pn":"artemis","d":["spooky stuff\'s afoot.","missing people; crazy animals."],"id":14},{"x":110,"y":17,"id":24},{"x":106,"y":1,"id":27},{"x":111,"y":7,"pn":"dr. wong","d":["concentrated it can burn.","a simple carboxyl."],"id":17},{"x":120,"y":20,"pn":"dr. tetrado","d":["find dr. tucker.","he\'s figured it out."],"id":17},{"x":110,"y":22,"pn":"dr. greene","d":["several of us are missing.","those researching up north."],"id":17}],"i":[{"x":123,"tm":3,"y":4,"tz":0,"tx":126,"ty":33,"id":8}],"mxy":24,"mnx":104,"ex":26,"sy":23,"sx":116,"ey":33},{"mny":32,"sn":[{"x":123,"msg":["a paper on insect","pheromones."],"y":33},{"x":124,"msg":["a paper on formic acid","& its effects."],"y":33},{"x":123,"msg":["a paper on ants controlling","aphids."],"y":35},{"x":113,"msg":["a diagram of modified aphid","brains."],"y":33}],"n":"the basement","c":[{"x":115,"y":34,"pn":"dr. tucker","d":["it\'s semiochemicals.","controlled living corpses."],"id":17},{"x":119,"y":33,"pn":"dr. agawon","d":["they\'re literally brain dead.","higher functions burnt out."],"id":17}],"mnx":112,"mxy":43,"sy":33,"sx":126,"i":[{"x":126,"tm":2,"y":33,"tz":0,"tx":123,"ty":4,"id":7}]},{"sn":[{"x":92,"msg":"he\'ll rise again!","y":20},{"x":100,"msg":["a secret prophesy about the","eschaton starting here."],"y":9}],"n":"monastery","mxx":105,"c":[{"pn":"bro. meinrad","y":21,"x":89,"id":20},{"x":85,"y":15,"id":27},{"x":99,"y":15,"id":24},{"x":92,"y":1,"pn":"sis. pat","d":["i saw the flash in heaven.","the animals now punish us."],"id":20},{"x":82,"y":5,"pn":"learner jo","d":["i found the star jelly.","i think it turned the beasts."],"id":21},{"x":90,"y":6,"pn":"sis. gail","d":["god sent us a sign.","i saw his star fall to earth."],"id":20}],"mxy":24,"i":[{"x":84,"tm":5,"y":9,"tz":0,"tx":113,"ty":31,"id":7},{"x":92,"y":6,"id":6}],"ex":34,"sy":23,"sx":92,"ey":17},{"mny":24,"sn":[{"x":126,"msg":["a list of the missing;","many monks & nuns are gone."],"y":29}],"n":"the top floor","c":[{"x":117,"y":27,"pn":"bro. stamos","d":["we know of your quest.","we will help as we can."],"id":20},{"x":125,"y":30,"pn":"mother francine","d":["some of us were taken.","they are now possessed."],"id":20},{"x":126,"y":26,"pn":"father ted","d":["our dead brothers & sisters.","they are beset by demons."],"id":20}],"mnx":112,"mxy":33,"sy":31,"sx":113,"i":[{"x":113,"tm":4,"y":31,"tz":0,"tx":84,"ty":9,"id":8}]},{"mny":56,"sn":[{"x":105,"msg":["no one\'s been here in awhile.","seems the hermit\'s missing too."],"y":61}],"n":"hermit cabin","mxx":113,"i":[{"x":110,"y":61,"id":4}],"mnx":103,"ex":3,"sy":57,"sx":111,"ey":47},{"mny":43,"sn":[{"x":114,"msg":["the dj was investigating","the monks for the news."],"y":53},{"x":114,"msg":["some expired coupons & a","copy of \'coyote waits\'."],"y":56},{"x":114,"msg":["a zombie comic book; someone","drew a robe on the zombie."],"y":59}],"n":"radio square","c":[{"x":114,"y":45,"id":26},{"x":123,"y":60,"id":24},{"x":123,"y":44,"id":28},{"x":126,"y":46,"pn":"becky","d":["the hermit has a boat.","west past the billabong."],"id":13},{"x":114,"y":48,"pn":"jack","d":["it\'s in the n.e. cabin.","you can borrow my shotgun."],"id":13},{"x":121,"y":53,"pn":"dj jazzy joe","d":["the monks have seen them.","the woods weirdos."],"i":80,"id":15},{"x":124,"y":58,"pn":"emma","d":["hang out in the bar none.","good woods weirdos discussion."],"id":23}],"mnx":112,"ex":34,"sy":62,"sx":119,"ey":53},{"mny":56,"n":"southern cabin","mxx":104,"c":[{"x":101,"y":59,"pn":"sue","d":["you can borrow my vest.","you\'ll need it."],"id":13}],"mnx":96,"ex":38,"sy":62,"sx":100,"ey":60},{"mny":56,"n":"pennisula cabin","mxx":104,"c":[{"x":99,"y":58,"pn":"jim","d":["weird stuff up north.","we\'re vacationing indoors."],"id":19},{"x":98,"y":58,"pn":"daisy","d":["i saw the weirdo!","i\'m glad we\'ve got locks."],"id":18}],"mnx":96,"ex":56,"sy":62,"sx":100,"ey":24},{"mny":56,"n":"lakeside cabin","mxx":104,"c":[{"x":98,"y":58,"pn":"jane","d":["find my friend to the south.","she\'ll help."],"id":18}],"mnx":96,"ex":41,"sy":62,"sx":100,"ey":39},{"mny":56,"sn":[{"x":101,"msg":["a sketch of an ant","moving a rock."],"y":60}],"n":"western cabin","mxx":104,"mnx":96,"ex":21,"sy":62,"sx":100,"ey":28},{"mny":56,"mxx":104,"sx":100,"mnx":96,"ex":75,"sy":62,"n":"hunting cabin","ey":3},{"mny":56,"mxm":15,"n":"the queen\'s chamber","mxx":96,"ss":14,"c":[{"x":83,"y":60,"id":36},{"x":93,"y":58,"id":37},{"x":89,"y":57,"id":35},{"x":89,"y":62,"id":35},{"x":94,"y":57,"id":35}],"i":[{"x":94,"tm":16,"y":62,"tz":1,"tx":3,"ty":6,"id":7},{"x":83,"y":59,"id":38},{"x":84,"y":59,"id":38},{"x":84,"y":60,"id":38}],"mnx":80,"newm":26,"sy":31,"sx":113,"fri":false},{"l":[[0,-196,782,13263,15564,12288,16380,16384],[2,-12481,961,12348,16332,12,-3124,192],[12301,13260,192,15612,12348,13056,-3076,192]],"i":[{"x":1,"y":8,"z":1,"id":7},{"x":8,"y":3,"z":2,"id":7},{"x":8,"y":1,"z":3,"id":7},{"x":4,"y":8,"z":3,"id":5}],"ex":57,"sy":8,"n":"greybeard\'s cave","ey":33},{"l":[[205,15360,2876,16320,12351,-3328,1020,-19711],[48,16128,14332,768,-244,780,13119,28672]],"n":"vetusaur mine","ss":14,"c":[{"x":7,"z":1,"y":8,"ch":-2,"id":33}],"i":[{"x":8,"y":8,"z":1,"id":7},{"x":8,"tm":0,"z":1,"y":1,"tz":0,"tx":3,"ty":5,"id":7},{"x":3,"y":3,"z":2,"id":7},{"x":1,"y":8,"z":2,"id":7}],"ex":3,"sy":8,"sx":8,"ey":9},{"ss":14,"sx":4,"l":[[204,12480,13308,12300,16332,14348,16380,256]],"i":[{"x":4,"y":8,"z":1,"id":7},{"x":3,"tm":13,"z":1,"y":6,"tz":0,"tx":94,"ty":62,"id":8}],"ex":7,"sy":8,"n":"formika mine","ey":3}]')
+  maps=json_parse('[{mny:24,sn:[{x:107,msg:[an engagement ring; steve,was ready to propose.],y:27},{x:102,msg:[mary studied astronomy,as a hobby.],y:33},{x:107,msg:[lou was a mixed martial,arts champion.],y:33}],n:village,mxx:112,c:[{x:91,y:27,id:26},{pn:fred,y:30,x:89,id:13},{x:85,y:27,id:25},{x:100,y:44,id:24},{x:108,y:37,id:29},{x:87,d:[welcome to anteform valley.,we\'re all glad you\'re here.],y:37,id:16},{pn:anne,y:51,x:86,id:22},{x:80,y:52,pn:flip,d:[greybeard hid his treasure!,it\'s on big sister island!],id:22},{x:109,y:40,pn:gwen,d:["steve, lou, & mary are gone.",i\'m not straying far.],id:23},{x:98,y:47,pn:ralph,d:[radio square is southwest.,folks are missing there too.],id:23},{x:108,y:30,pn:sally,d:[please find steve.,our rooms are adjacent.],id:21},{pn:bruce,y:37,x:105,id:14}],mxy:56,i:[{x:103,y:38,id:6}],ex:57,sy:54,sx:96,ey:37},{sn:[{x:120,msg:[a myrmecology paper by,dr. greene.],y:6},{x:105,msg:[a paper on irregular growth,in animals.],y:11},{x:120,msg:[data on valley insect,populations.],y:11}],n:thinktank,c:[{x:116,mva:0,y:18,pn:artemis,d:[spooky stuff\'s afoot.,missing people; crazy animals.],id:14},{x:110,y:17,id:24},{x:106,y:1,id:27},{x:111,y:7,pn:dr. wong,d:[concentrated it can burn.,a simple carboxyl.],id:17},{x:120,y:20,pn:dr. tetrado,d:[find dr. tucker.,he\'s figured it out.],id:17},{x:110,y:22,pn:dr. greene,d:[several of us are missing.,those researching up north.],id:17}],i:[{x:123,tm:3,y:4,tz:0,tx:126,ty:33,id:8}],mxy:24,mnx:104,ex:26,sy:23,sx:116,ey:33},{mny:32,sn:[{x:123,msg:[a paper on insect,pheromones.],y:33},{x:124,msg:[a paper on formic acid,& its effects.],y:33},{x:123,msg:[a paper on ants controlling,aphids.],y:35},{x:113,msg:[a diagram of modified aphid,brains.],y:33}],n:the basement,c:[{x:115,y:34,pn:dr. tucker,d:[it\'s semiochemicals.,controlled living corpses.],id:17},{x:119,y:33,pn:dr. agawon,d:[they\'re literally brain dead.,higher functions burnt out.],id:17}],mnx:112,mxy:43,sy:33,sx:126,i:[{x:126,tm:2,y:33,tz:0,tx:123,ty:4,id:7}]},{sn:[{x:92,msg:he\'ll rise again!,y:20},{x:100,msg:[a secret prophesy about the,eschaton starting here.],y:9}],n:monastery,mxx:105,c:[{pn:bro. meinrad,y:21,x:89,id:20},{x:85,y:15,id:27},{x:99,y:15,id:24},{x:92,y:1,pn:sis. pat,d:[i saw the flash in heaven.,the animals now punish us.],id:20},{x:82,y:5,pn:learner jo,d:[i found the star jelly.,i think it turned the beasts.],id:21},{x:90,y:6,pn:sis. gail,d:[god sent us a sign.,i saw his star fall to earth.],id:20}],mxy:24,i:[{x:84,tm:5,y:9,tz:0,tx:113,ty:31,id:7},{x:92,y:6,id:6}],ex:34,sy:23,sx:92,ey:17},{mny:24,sn:[{x:126,msg:[a list of the missing;,many monks & nuns are gone.],y:29}],n:the top floor,c:[{x:117,y:27,pn:bro. stamos,d:[we know of your quest.,we will help as we can.],id:20},{x:125,y:30,pn:mother francine,d:[some of us were taken.,they are now possessed.],id:20},{x:126,y:26,pn:father ted,d:[our dead brothers & sisters.,they are beset by demons.],id:20}],mnx:112,mxy:33,sy:31,sx:113,i:[{x:113,tm:4,y:31,tz:0,tx:84,ty:9,id:8}]},{mny:56,sn:[{x:105,msg:[no one\'s been here in awhile.,seems the hermit\'s missing too.],y:61}],n:hermit cabin,mxx:113,i:[{x:110,y:61,id:4}],mnx:103,ex:3,sy:57,sx:111,ey:47},{mny:43,sn:[{x:114,msg:[the dj was investigating,the monks for the news.],y:53},{x:114,msg:[some expired coupons & a,copy of \'coyote waits\'.],y:56},{x:114,msg:[a zombie comic book; someone,drew a robe on the zombie.],y:59}],n:radio square,c:[{x:114,y:45,id:26},{x:123,y:60,id:24},{x:123,y:44,id:28},{x:126,y:46,pn:becky,d:[the hermit has a boat.,west past the billabong.],id:13},{x:114,y:48,pn:jack,d:[it\'s in the n.e. cabin.,you can borrow my shotgun.],id:13},{x:121,y:53,pn:dj jazzy joe,d:[the monks have seen them.,the woods weirdos.],i:80,id:15},{x:124,y:58,pn:emma,d:[hang out in the bar none.,good woods weirdos discussion.],id:23}],mnx:112,ex:34,sy:62,sx:119,ey:53},{mny:56,n:southern cabin,mxx:104,c:[{x:101,y:59,pn:sue,d:[you can borrow my vest.,you\'ll need it.],id:13}],mnx:96,ex:38,sy:62,sx:100,ey:60},{mny:56,n:pennisula cabin,mxx:104,c:[{x:99,y:58,pn:jim,d:[weird stuff up north.,we\'re vacationing indoors.],id:19},{x:98,y:58,pn:daisy,d:[i saw the weirdo!,i\'m glad we\'ve got locks.],id:18}],mnx:96,ex:56,sy:62,sx:100,ey:24},{mny:56,n:lakeside cabin,mxx:104,c:[{x:98,y:58,pn:jane,d:[find my friend to the south.,she\'ll help.],id:18}],mnx:96,ex:41,sy:62,sx:100,ey:39},{mny:56,sn:[{x:101,msg:[a sketch of an ant,moving a rock.],y:60}],n:western cabin,mxx:104,mnx:96,ex:21,sy:62,sx:100,ey:28},{mny:56,mxx:104,sx:100,mnx:96,ex:75,sy:62,n:hunting cabin,ey:3},{mny:56,mxm:15,n:the queen\'s chamber,mxx:96,ss:14,c:[{x:83,y:60,id:36},{x:93,y:58,id:37},{x:89,y:57,id:35},{x:89,y:62,id:35},{x:94,y:57,id:35}],i:[{x:94,tm:16,y:62,tz:1,tx:3,ty:6,id:7},{x:83,y:59,id:38},{x:84,y:59,id:38},{x:84,y:60,id:38}],mnx:80,newm:26,sy:31,sx:113,fri:false},{l:[[0,-196,782,13263,15564,12288,16380,16384],[2,-12481,961,12348,16332,12,-3124,192],[12301,13260,192,15612,12348,13056,-3076,192]],i:[{x:1,y:8,z:1,id:7},{x:8,y:3,z:2,id:7},{x:8,y:1,z:3,id:7},{x:4,y:8,z:3,id:5}],ex:57,sy:8,n:greybeard\'s cave,ey:33},{l:[[205,15360,2876,16320,12351,-3328,1020,-19711],[48,16128,14332,768,-244,780,13119,28672]],n:vetusaur mine,ss:14,c:[{x:7,z:1,y:8,ch:-2,id:33}],i:[{x:8,y:8,z:1,id:7},{x:8,tm:0,z:1,y:1,tz:0,tx:3,ty:5,id:7},{x:3,y:3,z:2,id:7},{x:1,y:8,z:2,id:7}],ex:3,sy:8,sx:8,ey:9},{ss:14,sx:4,l:[[204,12480,13308,12300,16332,14348,16380,256]],i:[{x:4,y:8,z:1,id:7},{x:3,tm:13,z:1,y:6,tz:0,tx:94,ty:62,id:8}],ex:7,sy:8,n:formika mine,ey:3}]')
   -- map 0 is special; it's the world map, the overview map.
-  maps[0]=json_parse('{"n":"anteform valley","mnx":0,"mny":0,"mxx":80,"mxy":64,"newm":10,"mxm":11,"fri":false,"ss":0,"sn":[{"x":64,"y":43,"msg":"nw village"},{"x":68,"y":40,"msg":"n monastery"},{"x":68,"y":40,"msg":"w thinktank"},{"x":58,"y":21,"msg":"w monastery"},{"x":24,"y":3,"msg":["a meteorite hit here. it\'s","corrupted the water."]}]}')
+  maps[0]=json_parse('{n:anteform valley,mnx:0,mny:0,mxx:80,mxy:64,newm:10,mxm:11,fri:false,ss:0,sn:[{x:64,y:43,msg:nw village},{x:68,y:40,msg:n monastery},{x:68,y:40,msg:w thinktank},{x:58,y:21,msg:w monastery},{x:24,y:3,msg:[a meteorite hit here. it\'s,corrupted the water.]}]}')
 
   -- the creatures structure holds the live copy saying which
   -- creatures (both human and monster) are where in the world.
@@ -321,15 +316,9 @@ function initobjs()
 
   -- perform the per-map data structure initializations.
   for mapnum=0,#maps do
-    local maptype
     curmap=maps[mapnum]
     if mapnum>0 then
-      if curmap.l then
-        maptype=basetypes[3]
-      else
-        maptype=basetypes[2]
-      end
-      makemetaobj(curmap,maptype)
+      makemetaobj(curmap,basetypes[curmap.l and 3 or 2])
     end
     curmap.w,curmap.h=curmap.mxx-curmap.mnx,curmap.mxy-curmap.mny
     creatures[mapnum],curmap.con={},{}
@@ -358,9 +347,9 @@ function initobjs()
   -- the hero is the player character. although human, it has
   -- enough differences that there is no advantage to inheriting
   -- the human type.
-  hero=json_parse('{"i":0,"ar":0,"dmg":0,"x":67,"y":50,"z":0,"exp":0,"lvl":0,"str":8,"int":8,"dex":8,"st":0,"hd":0,"f":0,"gp":20,"fd":45,"mvp":0,"mp":8,"hp":24,"keys":3,"ts":2,"lit":0}')
+  hero=json_parse('{i:0,ar:0,dmg:0,x:67,y:50,z:0,exp:0,lvl:0,str:8,int:8,dex:8,st:0,hd:0,f:0,gp:20,fd:45,mvp:0,mp:8,hp:24,keys:3,ts:2,lit:0}')
   hero.color=rnd(10)>6 and 4 or 15
- 
+
   -- make the map info global for efficiency
   mapnum=0
   setmap()
@@ -395,14 +384,10 @@ function listcommands()
   end
 end
 
-attrlist={'ar','dmg','x','y','str','int','dex','st','i','color','f','keys','ts','exp','lvl','gp','fd','mp','hp'}
-
-function combinevalues(highval,lowval)
-  return bor(shl(highval,8),lowval)
-end
+attrlist=json_parse'[ar,dmg,x,y,str,int,dex,st,i,color,f,keys,ts,exp,lvl,gp,fd,mp,hp]'
 
 function savegame()
-  if mapnum~=0 then
+  if mapnum>0 then
     update_lines{"sorry, only outside."}
   else
     local storagenum=0
@@ -413,14 +398,14 @@ function savegame()
     if hero.i>1 then
       boatx,boaty=0,0
     end
-    dset(storagenum,combinevalues(boatx,boaty))
+    dset(storagenum,combinevalues(boatx*256+boaty))
     dset(storagenum+1,phase)
     storagenum+=2
     for creaturenum=1,11 do
       local creature=creatures[0][creaturenum]
       if creature then
         dset(storagenum,creature.id)
-        dset(storagenum+1,combinevalues(creature.x,creature.y))
+        dset(storagenum+1,combinevalues(creature.x*256+creature.y))
       else
         dset(storagenum,0)
       end
@@ -449,13 +434,10 @@ function loadgame()
   storagenum+=2
   for creaturenum=1,11 do
     creatureid=dget(storagenum)
-    if creatureid~=0 then
-      creaturex,creaturey=separatevalues(dget(storagenum+1))
-      definemonster{ot=basetypes[creatureid],x=creaturex,y=creaturey,mn=0}
-      storagenum+=2
-    else
-      break
-    end
+    if (creatureid==0) break
+    creaturex,creaturey=separatevalues(dget(storagenum+1))
+    definemonster{ot=basetypes[creatureid],x=creaturex,y=creaturey,mn=0}
+    storagenum+=2
   end
   update_lines{"game loaded."}
 end
@@ -496,10 +478,7 @@ function entermap(targmap,targmapnum,targx,targy,targz)
   hero.x,hero.y=targx or targmap.sx,targy or targmap.sy
   mapnum=targmapnum
   setmap()
-  if targmap.dg then
-     _draw=dungeon_draw
-     hero.f,hero.z=targmap.sf,targmap.sz
-  end
+  if (targmap.dg) _draw,hero.f,hero.z=dungeon_draw,targmap.sf,targmap.sz
   return "entering "..targmap.n.."."
 end
 
@@ -752,9 +731,7 @@ function create_monster()
   end
   if monsterx then
     local monsterspot=mget(monsterx,monstery)
-    if curmap.dg then
-      monsterspot=getdungeonblk(monsterx,monstery,monsterz,1)
-    end
+    if (curmap.dg) monsterspot=getdungeonblk(monsterx,monstery,monsterz,1)
     for objtype in all(terrainmonsters[monsterspot]) do
       if rnd(200)<objtype.ch then
         definemonster{ot=objtype,x=monsterx,y=monstery,z=monsterz,mn=mapnum}
@@ -766,11 +743,7 @@ end
 
 function deducthp(damage)
   hero.hp-=ceil(damage)
-  if hero.hp<=0 then
-    msg=losemsg
-    -- draw_state=_draw
-    _draw=msg_draw
-  end
+  if (hero.hp<=0) msg,_draw=losemsg,msg_draw -- draw_state=_draw
 end
 
 function deductfood(amount)
@@ -784,7 +757,7 @@ function deductfood(amount)
 end
 
 function not_over_32767(num)
-  return min(num,32767)
+  return num<-16383 and 32767 or num
 end
 
 function increasexp(amount)
@@ -803,40 +776,33 @@ end
 -- world updates
 
 function checkdungeonmove(direction)
-  local newx,newy=hero.x,hero.y
-  local xcoord,ycoord,zcoord=hero.x,hero.y,hero.z
+  local newx,newy,newz=hero.x,hero.y,hero.z
   local cmd=direction>0 and 'advance' or 'retreat'
   local item
   local iscreature=false
   if hero.f==1 then
     newy-=direction
-    result=getdungeonblk(xcoord,newy,zcoord)
-    item=contents[xcoord][newy][zcoord]
   elseif hero.f==2 then
     newx+=direction
-    result=getdungeonblk(newx,ycoord,zcoord)
-    item=contents[newx][ycoord][zcoord]
   elseif hero.f==3 then
     newy+=direction
-    result=getdungeonblk(xcoord,newy,zcoord)
-    item=contents[xcoord][newy][zcoord]
   else
     newx-=direction
-    result=getdungeonblk(newx,ycoord,zcoord)
-    item=contents[newx][ycoord][zcoord]
   end
+  result=getdungeonblk(newx,newy,newz)
+  item=contents[xcoord][newy][newz]
   if item and item.hp then
     iscreature=true
   end
   if result==3 or iscreature then
     blocked(cmd)
+    newx,newy=hero.x,hero.y
   else
-    xcoord,ycoord=newx,newy
     sfx(0)
     update_lines{cmd}
   end
   turnmade=true
-  return xcoord,ycoord,zcoord
+  return newx,newy,newz
 end
 
 function checkexit(xcoord,ycoord)
@@ -844,15 +810,12 @@ function checkexit(xcoord,ycoord)
     update_lines{cmd,"exiting "..curmap.n.."."}
     mapnum=0
     return true
-  else
-    return false
   end
 end
 
 function blocked(cmd)
   sfx(4)
   update_lines{cmd,"blocked!"}
-  return false
 end
 
 -- this is kind of weird; the ship icons ought to be rearranged
@@ -917,9 +880,7 @@ function checkmove(xcoord,ycoord,cmd)
     end
   end
   if movesuccess then
-    if hero.i==0 then
-      sfx(0)
-    end
+    if (hero.i==0) sfx(0)
     if newloc==5 and rnd(10)>6 then
       update_lines{cmd,"poisoned!"}
       hero.st=bor(hero.st,1)
@@ -932,20 +893,17 @@ function checkmove(xcoord,ycoord,cmd)
 end
 
 function check_sign(xcoord,ycoord)
-  local response=nil
   for sign in all(curmap.sn) do
     if xcoord==sign.x and ycoord==sign.y then
       if mget(xcoord,ycoord)==31 then
-       -- it's an actual sign
-       response={" (read sign)",sign.msg}
+        -- it's an actual sign
+        return {" (read sign)",sign.msg}
       elseif xcoord==hero.x and ycoord==hero.y then
-       -- it's in a desk or filing cabinet or something
-       response=sign.msg
+        -- it's in a desk or filing cabinet or something
+        return sign.msg
       end
-      break
     end
   end
-  return response
 end
 
 function look_results(ldir,xcoord,ycoord)
@@ -984,9 +942,7 @@ function attack_results(adir,xcoord,ycoord,magic)
   local cmd="attack: "..adir
   local zcoord,creature=hero.z,contents[xcoord][ycoord][hero.z]
   local damage=flr(rnd(hero.str+hero.lvl+hero.dmg))
-  if magic then
-    damage+=magic
-  end
+  damage+=(magic or 0)
   --if creature then
     --logit('creature: '..(creature.name or 'nil')..' '..(creature.x or 'nil')..','..(creature.y or 'nil')..','..(creature.z or 'nil'))
   --else
@@ -1045,8 +1001,7 @@ function attack_results(adir,xcoord,ycoord,magic)
 end
 
 function squaredistance(x1,y1,x2,y2)
-  local dx,dy=abs(x1-x2),abs(y1-y2)
-  return dx+dy
+  return abs(x1-x2)+abs(y1-y2)
 end
 
 function calculatemoves(creature)
@@ -1083,20 +1038,20 @@ function movecreatures()
             else
               currentdistance=squaredistance(spots[facing],creature.y,xcoord,ycoord)
             end
-            if currentdistance<bestdistance or (currentdistance==bestdistance and rnd(10)<5) then
+            if currentdistance<bestdistance+rnd()-.5 then
               bestdistance,bestfacing=currentdistance,facing
             end
           end
           if bestfacing%2==1 then
-              desiredy=spots[bestfacing]
+            desiredy=spots[bestfacing]
           else
             desiredx=spots[bestfacing]
           end
           creature.f=bestfacing
         else
           -- neutral & friendly creatures just do their own thing
-          if rnd(10)<5 then
-            if cfacing and rnd(10)<5 then
+          if rnd()<.5 then
+            if cfacing and rnd()<.5 then
               if cfacing%2==1 then
                 desiredy=spots[cfacing]
               else
@@ -1114,9 +1069,7 @@ function movecreatures()
           end
         end
         local newloc=mget(desiredx,desiredy)
-        if curmap.dg then
-          newloc=getdungeonblk(desiredx,desiredy,desiredz,1)
-        end
+        if (curmap.dg) newloc=getdungeonblk(desiredx,desiredy,desiredz,1)
         local canmove=false
         for terrain in all(creature.t) do
           if newloc==terrain and creature.mva>creature.nm then
@@ -1213,7 +1166,7 @@ end
 -- drawing routines
 
 function delay(numofcycles)
-  for delaycount=0,numofcycles do
+  for delaycount=1,numofcycles do
     flip()
   end
 end
@@ -1234,38 +1187,40 @@ function animatespr(sprnum)
   fset(sprnum,2,true)
 end
 
+function print_r(str, x, ...)
+  print(str, x - 4 * #tostr(str), ...)
+end
+
 function draw_stats()
-  local linestart,midlinestart,longlinestart=106,110,119
+  local linestart,lineend=106,127
   print("cond",linestart,0,5)
-  print(band(hero.st,1)==1 and 'p' or 'g',125,0,6)
+  print_r(band(hero.st,1)==1 and 'p' or 'g',lineend,0,6)
   print("lvl",linestart,8,5)
-  print(hero.lvl,longlinestart,8,6)
+  print_r(hero. lvl,lineend,8,6)
   print("hp",linestart,16,5)
-  print(hero.hp,linestart+8,16,6)
+  print_r(hero.hp,lineend,16,6)
   print("ap",linestart,24,5)
-  print(hero.mp,linestart+8,24,6)
+  print_r(hero.mp,lineend,24,6)
   print("$",linestart,32,5)
-  print(hero.gp,midlinestart,32,6)
+  print_r(hero.gp,lineend,32,6)
   print("f",linestart,40,5)
-  print(hero.fd,midlinestart,40,6)
+  print_r(hero.fd,lineend,40,6)
   print("exp",linestart,48,5)
-  print(hero.exp,linestart,55,6)
+  print_r(hero.exp,lineend,55,6)
   print("dex",linestart,63,5)
-  print(hero.dex,longlinestart,63,6)
+  print_r(hero.dex,lineend,63,6)
   print("int",linestart,71,5)
-  print(hero.int,longlinestart,71,6)
+  print_r(hero.int,lineend,71,6)
   print("str",linestart,79,5)
-  print(hero.str,longlinestart,79,6)
+  print_r(hero.str,lineend,79,6)
   for linenum=1,numoflines do
-    print(lines[(curline-linenum)%numoflines+1],0,128-linenum*8)
+    print(lines[(curline-linenum)%numoflines+1],0,129-linenum*8)
   end
 end
 
 function substitutecolors(colorsubs)
-  if colorsubs then
-    for colorsub in all(colorsubs) do
-      pal(colorsub[1],colorsub[2])
-    end
+  for colorsub in all(colorsubs or {}) do
+    pal(colorsub[1],colorsub[2])
   end
 end
 
@@ -1328,9 +1283,7 @@ function getdungeonblk(mapx,mapy,mapz,asterrain)
 end
 
 function triplereverse(triple)
-  local tmp=triple[1]
-  triple[1]=triple[3]
-  triple[3]=tmp
+  triple[1],triple[3]=triple[3],triple[1]
 end
 
 function getdungeonblks(mapx,mapy,mapz,facing)
@@ -1344,9 +1297,7 @@ function getdungeonblks(mapx,mapy,mapz,facing)
         y=viewy
       })
     end
-    if facing==4 then
-      triplereverse(blks)
-    end
+    if (facing==4) triplereverse(blks)
   else
     -- we're looking for a row
     for viewx=mapx-1,mapx+1 do
@@ -1356,9 +1307,7 @@ function getdungeonblks(mapx,mapy,mapz,facing)
         y=mapy
       })
     end
-    if facing==3 then
-      triplereverse(blks)
-    end
+    if (facing==3) triplereverse(blks)
   end
   return blks
 end
@@ -1370,16 +1319,12 @@ function getdungeonview(mapx,mapy,mapz,facing)
     for viewx=mapx+4-facing,mapx+2-facing,-1 do
       add(blks,getdungeonblks(viewx,viewy,mapz,facing))
     end
-    if facing==4 then
-       triplereverse(blks)
-    end
+    if (facing==4) triplereverse(blks)
   else
     for viewy=mapy-3+facing,mapy-1+facing do
       add(blks,getdungeonblks(viewx,viewy,mapz,facing))
     end
-    if facing==3 then
-      triplereverse(blks)
-    end
+    if (facing==3) triplereverse(blks)
   end
   return blks
 end
@@ -1905,4 +1850,3 @@ __music__
 00 67734344
 00 68744344
 00 69754344
-
