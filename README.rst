@@ -114,17 +114,17 @@ what's needed, but at the moment unless this `special branch of picotool`_ is ru
 Design Notes
 ------------
 
-Anteform is mostly data-driven using the "Minima Engine". It uses a JSON data structure
-to define the people, creatures, and objects, and another JSON data structure to define
-all the maps and dungeons. Command sequencing uses coroutines in order to avoid
-overly-complicated state machines.
+Anteform is mostly data-driven using the "Minima Engine". It uses a JSON-like data
+structure to define the people, creatures, and objects, and another JSON-like data
+structure to define all the maps and dungeons. Command sequencing uses coroutines
+in order to avoid overly-complicated state machines.
 
 Other Notes
 -----------
 
 This version makes use of a stripped-down version of Tyler Neylon's `json.lua`_ routine
-to parse JSON data. The additional `Lua`_ utility script `convert.lua` is used to make it
-easier to lay out a dungeon map and turn it into something the game can use.
+to parse JSON-like data. The additional `Lua`_ utility script `convert.lua` is used to
+make it easier to lay out a dungeon map and turn it into something the game can use.
 
 .. _Anteform at Lexaloffle page: https://www.lexaloffle.com/bbs/?tid=35093
 .. _Anteform Itch.io page: https://feneric.itch.io/anteform
